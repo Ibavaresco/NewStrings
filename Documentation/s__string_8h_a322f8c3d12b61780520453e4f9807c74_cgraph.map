@@ -1,0 +1,16 @@
+<map id="s_extract_l" name="s_extract_l">
+<area shape="rect" id="Node000001" title="Extracts a sequence of characters from the s_string src starting at index start and with length len,..." alt="" coords="5,81,91,108"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#ac37fd17d1fd45a07841e30cdd04e4967" title="Copies the contents of the C&#45;string pointed to by src into the s_string pointed to by dst...." alt="" coords="139,5,224,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,78,142,38,144,42,75,83"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#aa4c996504575702e516ad08ac66afe0f" title="Copies up to len characters of the contents of the s_string pointed to by src into the s_string point..." alt="" coords="144,81,218,108"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="91,92,128,92,128,97,91,97"/>
+<area shape="rect" id="Node000006" href="$s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="283,132,350,159"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="92,105,139,117,268,138,267,143,138,123,91,110"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="409,31,502,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="224,16,289,17,362,23,395,28,394,33,361,28,289,22,224,21"/>
+<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="218,81,271,67,393,48,394,53,273,72,220,86"/>
+<area shape="rect" id="Node000005" href="$s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="272,81,361,108"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="219,92,256,92,256,97,219,97"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="220,106,269,125,267,130,218,111"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="342,129,360,118,426,66,429,70,363,122,345,134"/>
+</map>

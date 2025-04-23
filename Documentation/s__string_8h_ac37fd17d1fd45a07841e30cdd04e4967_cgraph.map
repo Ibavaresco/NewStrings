@@ -1,0 +1,5 @@
+<map id="s_strcpy_c" name="s_strcpy_c">
+<area shape="rect" id="Node000001" title="Copies the contents of the C&#45;string pointed to by src into the s_string pointed to by dst...." alt="" coords="5,5,91,32"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="139,5,231,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,16,123,16,123,21,91,21"/>
+</map>

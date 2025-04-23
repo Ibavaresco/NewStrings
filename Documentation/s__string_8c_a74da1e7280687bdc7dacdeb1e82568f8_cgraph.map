@@ -1,0 +1,8 @@
+<map id="s_strcat_c" name="s_strcat_c">
+<area shape="rect" id="Node000001" title="Appends the contents of the C&#45;string pointed to by src to the end of the s_string pointed to by dst...." alt="" coords="5,31,88,57"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="136,5,203,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,33,120,26,121,31,89,38"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="251,31,343,57"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="88,41,236,41,236,47,88,47"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,23,236,29,235,34,203,28"/>
+</map>

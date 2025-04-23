@@ -1,0 +1,17 @@
+<map id="s_strndup" name="s_strndup">
+<area shape="rect" id="Node000001" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..." alt="" coords="5,81,84,108"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#a524bdb86ae17ef9bdcfea829297ab74d" title="Calculates the size in bytes required to hold an s_string object capable of storing up to len charact..." alt="" coords="136,5,226,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="67,79,130,42,138,37,141,42,133,46,70,83"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#accb0272379ce63d85157c2c9a5712d6a" title=" " alt="" coords="132,56,230,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="84,85,116,79,117,84,85,90"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#aa0ac0f285325a37d133e38bb08994870" title="Copies the contents of the s_string pointed to by src into the s_string pointed to by dst...." alt="" coords="145,107,216,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="85,99,131,108,130,113,84,105"/>
+<area shape="rect" id="Node000006" href="$s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="289,157,356,184"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="65,106,96,126,133,143,206,160,274,167,273,172,205,165,131,148,93,130,62,110"/>
+<area shape="rect" id="Node000005" href="$s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="278,56,367,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="216,105,268,86,270,91,218,110"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="218,130,275,151,273,156,216,135"/>
+<area shape="rect" id="Node000007" href="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="415,132,508,159"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="217,121,400,137,400,142,217,126"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="356,162,400,154,401,159,357,167"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="s_extract_ec" name="s_extract_ec">
+<area shape="rect" id="Node000001" title="Extracts a sequence of characters from the C&#45;string src located between indexes start and end,..." alt="" coords="5,31,102,57"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#ac37fd17d1fd45a07841e30cdd04e4967" title="Copies the contents of the C&#45;string pointed to by src into the s_string pointed to by dst...." alt="" coords="151,5,236,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,33,135,26,136,32,103,38"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#a34121ad74651e8e161a765b8fb0eb0eb" title="Copies up to len characters of the contents of the C&#45;string pointed to by src into the s_string point..." alt="" coords="150,56,238,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="103,50,135,56,134,61,102,55"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="286,31,378,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="237,24,271,30,270,35,236,29"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="238,59,270,53,271,58,239,64"/>
+</map>

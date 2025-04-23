@@ -1,0 +1,8 @@
+<map id="s_insert_lc" name="s_insert_lc">
+<area shape="rect" id="Node000001" title="Inserts a sequence of characters obtained from the beginning of the C&#45;string src into the s_string ds..." alt="" coords="5,31,90,57"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="138,5,205,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,33,122,26,123,31,91,38"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="253,31,345,57"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="90,41,238,41,238,47,90,47"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="206,23,238,29,237,34,205,28"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="s_strcpy" name="s_strcpy">
+<area shape="rect" id="Node000001" title="Copies the contents of the s_string pointed to by src into the s_string pointed to by dst...." alt="" coords="132,56,203,83"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#ae781d04a30584504bc9571af44c3dfed" title="Creates in the heap a dynamically allocated copy of the s_string src." alt="" coords="9,5,80,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,52,78,35,80,30,120,47"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#a1c51110f8c0944134180378c3e335be4" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..." alt="" coords="7,56,82,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="116,72,82,72,82,67,116,67"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#ace608387294ab1f23a90682dbfd0d113" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..." alt="" coords="5,107,84,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="120,91,80,109,78,104,118,87"/>
+</map>
