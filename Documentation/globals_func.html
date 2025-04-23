@@ -29,6 +29,7 @@
   <td id="projectalign">
    <div id="projectname">NewStrings
    </div>
+   <div id="projectbrief">A library with a new implementation of strings in C. Introduces a new type &#39;s_string&#39; to be used instead of the traditional &#39;array of char&#39;</div>
   </td>
  </tr>
  </tbody>
@@ -106,8 +107,11 @@ $(function(){initNavTree('globals_func.html',''); initResizable(true); });
 
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
 <li>c_strcmp_s()&#160;:&#160;<a class="el" href="s__string_8c.html#a0256b44d9227f70d2ecf5f0edc996407">s_string.c</a></li>
+<li>c_stricmp_s()&#160;:&#160;<a class="el" href="s__string_8c.html#ad14976e25f933f1c17a8a42fa25abb5d">s_string.c</a></li>
+<li>c_stristr_s()&#160;:&#160;<a class="el" href="s__string_8c.html#a849e611ec8d2fde099f77927b4a6b441">s_string.c</a>, <a class="el" href="s__string_8h.html#a565b0db0aef9541f62691d2d4de76fba">s_string.h</a></li>
 <li>c_strncmp_s()&#160;:&#160;<a class="el" href="s__string_8c.html#aa5370680c5d67dfe07ab01f61e66c213">s_string.c</a></li>
-<li>c_strstr_s()&#160;:&#160;<a class="el" href="s__string_8c.html#ae86c4307985b8dd6f96939e0ea964dd4">s_string.c</a></li>
+<li>c_strnicmp_s()&#160;:&#160;<a class="el" href="s__string_8c.html#a811e55e04315508f12ba116a195e5e4c">s_string.c</a></li>
+<li>c_strstr_s()&#160;:&#160;<a class="el" href="s__string_8c.html#ae86c4307985b8dd6f96939e0ea964dd4">s_string.c</a>, <a class="el" href="s__string_8h.html#aef9e4172a8eaa3952a9014e89e3b8208">s_string.h</a></li>
 </ul>
 
 
@@ -142,10 +146,11 @@ $(function(){initNavTree('globals_func.html',''); initResizable(true); });
 <li>s_strcspn_c()&#160;:&#160;<a class="el" href="s__string_8c.html#a926a52690ace4ef21dfec514ee0cd907">s_string.c</a>, <a class="el" href="s__string_8h.html#a926a52690ace4ef21dfec514ee0cd907">s_string.h</a></li>
 <li>s_strdup()&#160;:&#160;<a class="el" href="s__string_8c.html#ae781d04a30584504bc9571af44c3dfed">s_string.c</a>, <a class="el" href="s__string_8h.html#ae781d04a30584504bc9571af44c3dfed">s_string.h</a></li>
 <li>s_strdup_c()&#160;:&#160;<a class="el" href="s__string_8c.html#a8926457f169b6dc28a5b2ac9f8cb69b1">s_string.c</a>, <a class="el" href="s__string_8h.html#a8926457f169b6dc28a5b2ac9f8cb69b1">s_string.h</a></li>
-<li>s_stricmp()&#160;:&#160;<a class="el" href="s__string_8h.html#a76340c1f1f00a13fe9fe465aaeb40cc3">s_string.h</a></li>
-<li>s_stricmp_c()&#160;:&#160;<a class="el" href="s__string_8h.html#afef25b56af7813df184bd7d0696c5120">s_string.h</a></li>
-<li>s_stristr()&#160;:&#160;<a class="el" href="s__string_8h.html#a63411eeb45f802f0cad87aa7a8f760c3">s_string.h</a></li>
-<li>s_stristr_c()&#160;:&#160;<a class="el" href="s__string_8h.html#a22ba41a886374ba76a3c9cdb16d17de4">s_string.h</a></li>
+<li>s_strichr()&#160;:&#160;<a class="el" href="s__string_8c.html#ac75ae9f092304366bff48eecc4e082b3">s_string.c</a>, <a class="el" href="s__string_8h.html#ab80babef6dd13cda5373eeb78939f689">s_string.h</a></li>
+<li>s_stricmp()&#160;:&#160;<a class="el" href="s__string_8c.html#a76340c1f1f00a13fe9fe465aaeb40cc3">s_string.c</a>, <a class="el" href="s__string_8h.html#a76340c1f1f00a13fe9fe465aaeb40cc3">s_string.h</a></li>
+<li>s_stricmp_c()&#160;:&#160;<a class="el" href="s__string_8c.html#afef25b56af7813df184bd7d0696c5120">s_string.c</a>, <a class="el" href="s__string_8h.html#afef25b56af7813df184bd7d0696c5120">s_string.h</a></li>
+<li>s_stristr()&#160;:&#160;<a class="el" href="s__string_8c.html#a6258c5ade4a9d8aa43179d037f5a5ba5">s_string.c</a>, <a class="el" href="s__string_8h.html#a63411eeb45f802f0cad87aa7a8f760c3">s_string.h</a></li>
+<li>s_stristr_c()&#160;:&#160;<a class="el" href="s__string_8c.html#adebcf6a5f159140dfa79b9b5c17a14f9">s_string.c</a>, <a class="el" href="s__string_8h.html#a22ba41a886374ba76a3c9cdb16d17de4">s_string.h</a></li>
 <li>s_strlcat()&#160;:&#160;<a class="el" href="s__string_8c.html#af39e07f60a37fe93cf92a6f399f227e9">s_string.c</a>, <a class="el" href="s__string_8h.html#af39e07f60a37fe93cf92a6f399f227e9">s_string.h</a></li>
 <li>s_strlcat_c()&#160;:&#160;<a class="el" href="s__string_8c.html#a4fe36725567e50e6dcf7a3f6e14fc08b">s_string.c</a>, <a class="el" href="s__string_8h.html#a4fe36725567e50e6dcf7a3f6e14fc08b">s_string.h</a></li>
 <li>s_strlcpy()&#160;:&#160;<a class="el" href="s__string_8c.html#aa4c996504575702e516ad08ac66afe0f">s_string.c</a>, <a class="el" href="s__string_8h.html#aa4c996504575702e516ad08ac66afe0f">s_string.h</a></li>
@@ -160,12 +165,13 @@ $(function(){initNavTree('globals_func.html',''); initResizable(true); });
 <li>s_strncmp_c()&#160;:&#160;<a class="el" href="s__string_8c.html#a8016b2f66529f9605cabeddabad5e4a3">s_string.c</a>, <a class="el" href="s__string_8h.html#a8016b2f66529f9605cabeddabad5e4a3">s_string.h</a></li>
 <li>s_strndup()&#160;:&#160;<a class="el" href="s__string_8c.html#ace608387294ab1f23a90682dbfd0d113">s_string.c</a>, <a class="el" href="s__string_8h.html#ace608387294ab1f23a90682dbfd0d113">s_string.h</a></li>
 <li>s_strndup_c()&#160;:&#160;<a class="el" href="s__string_8c.html#ad6e3b6c23ef45a180fa8da2ab04ac51e">s_string.c</a>, <a class="el" href="s__string_8h.html#ad6e3b6c23ef45a180fa8da2ab04ac51e">s_string.h</a></li>
-<li>s_strnicmp()&#160;:&#160;<a class="el" href="s__string_8h.html#adbb9a338794c03a1438d8059c5ca923a">s_string.h</a></li>
-<li>s_strnicmp_c()&#160;:&#160;<a class="el" href="s__string_8h.html#ae571ada50081c2e5cbac1b4cb66c0fc8">s_string.h</a></li>
+<li>s_strnicmp()&#160;:&#160;<a class="el" href="s__string_8c.html#adbb9a338794c03a1438d8059c5ca923a">s_string.c</a>, <a class="el" href="s__string_8h.html#adbb9a338794c03a1438d8059c5ca923a">s_string.h</a></li>
+<li>s_strnicmp_c()&#160;:&#160;<a class="el" href="s__string_8c.html#ae571ada50081c2e5cbac1b4cb66c0fc8">s_string.c</a>, <a class="el" href="s__string_8h.html#ae571ada50081c2e5cbac1b4cb66c0fc8">s_string.h</a></li>
 <li>s_strnlen()&#160;:&#160;<a class="el" href="s__string_8c.html#adcce7114e7ef53d6a79cbe62c6132e82">s_string.c</a>, <a class="el" href="s__string_8h.html#adcce7114e7ef53d6a79cbe62c6132e82">s_string.h</a></li>
 <li>s_strpbrk()&#160;:&#160;<a class="el" href="s__string_8c.html#a6f9affc0f31d4a50923d6ecc699e0f91">s_string.c</a>, <a class="el" href="s__string_8h.html#a6f9affc0f31d4a50923d6ecc699e0f91">s_string.h</a></li>
 <li>s_strpbrk_c()&#160;:&#160;<a class="el" href="s__string_8c.html#a5b6484dfd758e58fd94f8bccc8e78dc4">s_string.c</a>, <a class="el" href="s__string_8h.html#a5b6484dfd758e58fd94f8bccc8e78dc4">s_string.h</a></li>
 <li>s_strrchr()&#160;:&#160;<a class="el" href="s__string_8c.html#ab1940a04a4405a7448abfcac3ca0e906">s_string.c</a>, <a class="el" href="s__string_8h.html#a04ce0a2476abc8d28b2a68f18b9cc16d">s_string.h</a></li>
+<li>s_strrichr()&#160;:&#160;<a class="el" href="s__string_8c.html#a66601e744840a3069c7b0c3438343904">s_string.c</a>, <a class="el" href="s__string_8h.html#af8f411ea20bd3100cbea99a3fbad1a5c">s_string.h</a></li>
 <li>s_strspn()&#160;:&#160;<a class="el" href="s__string_8c.html#a7f7ec0917b6a39e064c3f8f7530556ff">s_string.c</a>, <a class="el" href="s__string_8h.html#a7f7ec0917b6a39e064c3f8f7530556ff">s_string.h</a></li>
 <li>s_strspn_c()&#160;:&#160;<a class="el" href="s__string_8c.html#ac0e4edb87f7ec63c7877be5223c2bcc0">s_string.c</a>, <a class="el" href="s__string_8h.html#ac0e4edb87f7ec63c7877be5223c2bcc0">s_string.h</a></li>
 <li>s_strstr()&#160;:&#160;<a class="el" href="s__string_8c.html#ab923bd0ce99d2e59b299a25e7eaa1b05">s_string.c</a>, <a class="el" href="s__string_8h.html#afcd394e81598d5f5437428bd67d27f3b">s_string.h</a></li>

@@ -1,0 +1,9 @@
+<map id="s_stricmp" name="s_stricmp">
+<area shape="rect" id="Node000001" title="Compares two s_strings dst and src character by character ignoring the case." alt="" coords="5,31,84,57"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="132,5,221,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,34,116,28,117,33,85,39"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="143,56,210,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="85,49,128,57,127,63,84,54"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="269,56,361,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="211,67,254,67,254,72,211,72"/>
+</map>

@@ -29,6 +29,7 @@
   <td id="projectalign">
    <div id="projectname">NewStrings
    </div>
+   <div id="projectbrief">A library with a new implementation of strings in C. Introduces a new type &#39;s_string&#39; to be used instead of the traditional &#39;array of char&#39;</div>
   </td>
  </tr>
  </tbody>
@@ -105,21 +106,24 @@ $(function(){initNavTree('s__string_8c.html',''); initResizable(true); });
 <div class="contents">
 <div class="textblock"><code>#include &lt;string.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="s__string_8h_source.html">s_string.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for s_string.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="s__string_8c__incl.png" border="0" usemap="#as__string_8c" alt=""/></div>
 <map name="as__string_8c" id="as__string_8c">
-<area shape="rect" title=" " alt="" coords="86,5,165,32"/>
+<area shape="rect" title=" " alt="" coords="130,5,209,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,70,107"/>
-<area shape="poly" title=" " alt="" coords="112,35,66,72,63,68,108,30"/>
+<area shape="poly" title=" " alt="" coords="148,35,75,75,72,70,145,30"/>
 <area shape="rect" title=" " alt="" coords="94,80,157,107"/>
-<area shape="poly" title=" " alt="" coords="128,33,128,64,123,64,123,33"/>
-<area shape="rect" href="s__string_8h.html" title=" " alt="" coords="181,80,259,107"/>
-<area shape="poly" title=" " alt="" coords="144,30,193,68,190,73,140,35"/>
-<area shape="rect" title=" " alt="" coords="188,155,252,181"/>
-<area shape="poly" title=" " alt="" coords="223,107,223,139,218,139,218,107"/>
+<area shape="poly" title=" " alt="" coords="164,34,143,68,139,65,160,31"/>
+<area shape="rect" title=" " alt="" coords="181,80,246,107"/>
+<area shape="poly" title=" " alt="" coords="179,31,200,65,196,68,175,34"/>
+<area shape="rect" href="s__string_8h.html" title=" " alt="" coords="270,80,349,107"/>
+<area shape="poly" title=" " alt="" coords="195,30,273,70,270,75,193,35"/>
+<area shape="rect" title=" " alt="" coords="277,155,342,181"/>
+<area shape="poly" title=" " alt="" coords="312,107,312,139,307,139,307,107"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -201,6 +205,14 @@ Functions</h2></td></tr>
 <tr class="separator:abb7c32786917cd65194f0ad7eb74a981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0256b44d9227f70d2ecf5f0edc996407" id="r_a0256b44d9227f70d2ecf5f0edc996407"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0256b44d9227f70d2ecf5f0edc996407">c_strcmp_s</a> (const char *restrict dst, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src)</td></tr>
 <tr class="separator:a0256b44d9227f70d2ecf5f0edc996407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76340c1f1f00a13fe9fe465aaeb40cc3" id="r_a76340c1f1f00a13fe9fe465aaeb40cc3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76340c1f1f00a13fe9fe465aaeb40cc3">s_stricmp</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src)</td></tr>
+<tr class="memdesc:a76340c1f1f00a13fe9fe465aaeb40cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two s_strings <em class="arg">dst</em> and <em class="arg">src</em> character by character ignoring the case.  <br /></td></tr>
+<tr class="separator:a76340c1f1f00a13fe9fe465aaeb40cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afef25b56af7813df184bd7d0696c5120" id="r_afef25b56af7813df184bd7d0696c5120"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afef25b56af7813df184bd7d0696c5120">s_stricmp_c</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const char *restrict src)</td></tr>
+<tr class="memdesc:afef25b56af7813df184bd7d0696c5120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the <a class="el" href="structs__string.html">s_string</a> <em class="arg">dst</em> with the C-string <em class="arg">src</em> character by character ignoring the case.  <br /></td></tr>
+<tr class="separator:afef25b56af7813df184bd7d0696c5120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad14976e25f933f1c17a8a42fa25abb5d" id="r_ad14976e25f933f1c17a8a42fa25abb5d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad14976e25f933f1c17a8a42fa25abb5d">c_stricmp_s</a> (const char *restrict dst, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src)</td></tr>
+<tr class="separator:ad14976e25f933f1c17a8a42fa25abb5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8deb3ecd910c3fd2abab6da43a16e14" id="r_ae8deb3ecd910c3fd2abab6da43a16e14"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8deb3ecd910c3fd2abab6da43a16e14">s_strncmp</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, size_t len)</td></tr>
 <tr class="memdesc:ae8deb3ecd910c3fd2abab6da43a16e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares up to <em class="arg">len</em> characters of two s_strings <em class="arg">dst</em> and <em class="arg">src</em> character by character.  <br /></td></tr>
 <tr class="separator:ae8deb3ecd910c3fd2abab6da43a16e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,21 +221,39 @@ Functions</h2></td></tr>
 <tr class="separator:a8016b2f66529f9605cabeddabad5e4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5370680c5d67dfe07ab01f61e66c213" id="r_aa5370680c5d67dfe07ab01f61e66c213"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5370680c5d67dfe07ab01f61e66c213">c_strncmp_s</a> (const char *restrict dst, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, size_t len)</td></tr>
 <tr class="separator:aa5370680c5d67dfe07ab01f61e66c213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb9a338794c03a1438d8059c5ca923a" id="r_adbb9a338794c03a1438d8059c5ca923a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbb9a338794c03a1438d8059c5ca923a">s_strnicmp</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, size_t len)</td></tr>
+<tr class="memdesc:adbb9a338794c03a1438d8059c5ca923a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares up to <em class="arg">len</em> characters of two s_strings <em class="arg">dst</em> and <em class="arg">src</em> character by character ignoring the case.  <br /></td></tr>
+<tr class="separator:adbb9a338794c03a1438d8059c5ca923a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae571ada50081c2e5cbac1b4cb66c0fc8" id="r_ae571ada50081c2e5cbac1b4cb66c0fc8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae571ada50081c2e5cbac1b4cb66c0fc8">s_strnicmp_c</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const char *restrict src, size_t len)</td></tr>
+<tr class="memdesc:ae571ada50081c2e5cbac1b4cb66c0fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares up to <em class="arg">len</em> characters of an <a class="el" href="structs__string.html">s_string</a> <em class="arg">dst</em> and a C-string <em class="arg">src</em> character by character ignoring the case.  <br /></td></tr>
+<tr class="separator:ae571ada50081c2e5cbac1b4cb66c0fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a811e55e04315508f12ba116a195e5e4c" id="r_a811e55e04315508f12ba116a195e5e4c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a811e55e04315508f12ba116a195e5e4c">c_strnicmp_s</a> (const char *restrict dst, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, size_t len)</td></tr>
+<tr class="separator:a811e55e04315508f12ba116a195e5e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a888ef6791ca2741e569d92124335c8" id="r_a3a888ef6791ca2741e569d92124335c8"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a888ef6791ca2741e569d92124335c8">s_strchr</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, int c, ssize_t start)</td></tr>
 <tr class="separator:a3a888ef6791ca2741e569d92124335c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1940a04a4405a7448abfcac3ca0e906" id="r_ab1940a04a4405a7448abfcac3ca0e906"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1940a04a4405a7448abfcac3ca0e906">s_strrchr</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, int c, ssize_t start)</td></tr>
 <tr class="separator:ab1940a04a4405a7448abfcac3ca0e906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac75ae9f092304366bff48eecc4e082b3" id="r_ac75ae9f092304366bff48eecc4e082b3"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac75ae9f092304366bff48eecc4e082b3">s_strichr</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, int c, ssize_t start)</td></tr>
+<tr class="separator:ac75ae9f092304366bff48eecc4e082b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66601e744840a3069c7b0c3438343904" id="r_a66601e744840a3069c7b0c3438343904"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66601e744840a3069c7b0c3438343904">s_strrichr</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, int c, ssize_t start)</td></tr>
+<tr class="separator:a66601e744840a3069c7b0c3438343904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab923bd0ce99d2e59b299a25e7eaa1b05" id="r_ab923bd0ce99d2e59b299a25e7eaa1b05"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab923bd0ce99d2e59b299a25e7eaa1b05">s_strstr</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *src, ssize_t start)</td></tr>
 <tr class="separator:ab923bd0ce99d2e59b299a25e7eaa1b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54f3df3a1785fd7228626079eaee175c" id="r_a54f3df3a1785fd7228626079eaee175c"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54f3df3a1785fd7228626079eaee175c">s_strstr_c</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, const char *src, ssize_t start)</td></tr>
 <tr class="separator:a54f3df3a1785fd7228626079eaee175c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae86c4307985b8dd6f96939e0ea964dd4" id="r_ae86c4307985b8dd6f96939e0ea964dd4"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae86c4307985b8dd6f96939e0ea964dd4">c_strstr_s</a> (const char *str, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *src, ssize_t start)</td></tr>
 <tr class="separator:ae86c4307985b8dd6f96939e0ea964dd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6258c5ade4a9d8aa43179d037f5a5ba5" id="r_a6258c5ade4a9d8aa43179d037f5a5ba5"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6258c5ade4a9d8aa43179d037f5a5ba5">s_stristr</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *src, ssize_t start)</td></tr>
+<tr class="separator:a6258c5ade4a9d8aa43179d037f5a5ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adebcf6a5f159140dfa79b9b5c17a14f9" id="r_adebcf6a5f159140dfa79b9b5c17a14f9"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adebcf6a5f159140dfa79b9b5c17a14f9">s_stristr_c</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *str, const char *src, ssize_t start)</td></tr>
+<tr class="separator:adebcf6a5f159140dfa79b9b5c17a14f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a849e611ec8d2fde099f77927b4a6b441" id="r_a849e611ec8d2fde099f77927b4a6b441"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a849e611ec8d2fde099f77927b4a6b441">c_stristr_s</a> (const char *str, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *src, ssize_t start)</td></tr>
+<tr class="separator:a849e611ec8d2fde099f77927b4a6b441"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f9affc0f31d4a50923d6ecc699e0f91" id="r_a6f9affc0f31d4a50923d6ecc699e0f91"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f9affc0f31d4a50923d6ecc699e0f91">s_strpbrk</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict str, const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict charset, ssize_t start)</td></tr>
 <tr class="memdesc:a6f9affc0f31d4a50923d6ecc699e0f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the first occurrence of any character from the <a class="el" href="structs__string.html">s_string</a> <em class="arg">charset</em> in the <a class="el" href="structs__string.html">s_string</a> <em class="arg">str</em>, or -1 if the two strings have no characters in common.  <br /></td></tr>
 <tr class="separator:a6f9affc0f31d4a50923d6ecc699e0f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b6484dfd758e58fd94f8bccc8e78dc4" id="r_a5b6484dfd758e58fd94f8bccc8e78dc4"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b6484dfd758e58fd94f8bccc8e78dc4">s_strpbrk_c</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict str, const char *restrict charset, ssize_t start)</td></tr>
-<tr class="memdesc:a5b6484dfd758e58fd94f8bccc8e78dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the first occurrence of any character from the <a class="el" href="structs__string.html">s_string</a> <em class="arg">charset</em> in the C-string <em class="arg">str</em>, or -1 if the two strings have no characters in common.  <br /></td></tr>
+<tr class="memdesc:a5b6484dfd758e58fd94f8bccc8e78dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the first occurrence of any character from the C-string <em class="arg">charset</em> in the <a class="el" href="structs__string.html">s_string</a> <em class="arg">str</em>, or -1 if the two strings have no characters in common.  <br /></td></tr>
 <tr class="separator:a5b6484dfd758e58fd94f8bccc8e78dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae781d04a30584504bc9571af44c3dfed" id="r_ae781d04a30584504bc9571af44c3dfed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae781d04a30584504bc9571af44c3dfed">s_strdup</a> (const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src)</td></tr>
 <tr class="memdesc:ae781d04a30584504bc9571af44c3dfed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates in the heap a dynamically allocated copy of the <a class="el" href="structs__string.html">s_string</a> <em class="arg">src</em>.  <br /></td></tr>
@@ -489,6 +519,81 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="ad14976e25f933f1c17a8a42fa25abb5d" name="ad14976e25f933f1c17a8a42fa25abb5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad14976e25f933f1c17a8a42fa25abb5d">&#9670;&#160;</a></span>c_stricmp_s()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int c_stricmp_s </td>
+          <td>(</td>
+          <td class="paramtype">const char *restrict</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>src</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_ad14976e25f933f1c17a8a42fa25abb5d_cgraph.png" border="0" usemap="#as__string_8c_ad14976e25f933f1c17a8a42fa25abb5d_cgraph" alt=""/></div>
+<map name="as__string_8c_ad14976e25f933f1c17a8a42fa25abb5d_cgraph" id="as__string_8c_ad14976e25f933f1c17a8a42fa25abb5d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,98,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="146,5,235,32"/>
+<area shape="poly" title=" " alt="" coords="98,33,130,27,131,32,99,38"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="157,56,224,83"/>
+<area shape="poly" title=" " alt="" coords="99,50,142,58,141,63,98,55"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="283,56,375,83"/>
+<area shape="poly" title=" " alt="" coords="225,67,268,67,268,72,225,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a849e611ec8d2fde099f77927b4a6b441" name="a849e611ec8d2fde099f77927b4a6b441"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a849e611ec8d2fde099f77927b4a6b441">&#9670;&#160;</a></span>c_stristr_s()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t c_stristr_s </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>str</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t</td>          <td class="paramname"><span class="paramname"><em>start</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_a849e611ec8d2fde099f77927b4a6b441_cgraph.png" border="0" usemap="#as__string_8c_a849e611ec8d2fde099f77927b4a6b441_cgraph" alt=""/></div>
+<map name="as__string_8c_a849e611ec8d2fde099f77927b4a6b441_cgraph" id="as__string_8c_a849e611ec8d2fde099f77927b4a6b441_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,88,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="136,5,225,32"/>
+<area shape="poly" title=" " alt="" coords="88,34,120,27,121,33,89,39"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="147,56,214,83"/>
+<area shape="poly" title=" " alt="" coords="89,49,132,58,131,63,88,54"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="273,56,365,83"/>
+<area shape="poly" title=" " alt="" coords="215,67,258,67,258,72,215,72"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="aa5370680c5d67dfe07ab01f61e66c213" name="aa5370680c5d67dfe07ab01f61e66c213"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5370680c5d67dfe07ab01f61e66c213">&#9670;&#160;</a></span>c_strncmp_s()</h2>
 
@@ -524,6 +629,46 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="102,50,146,58,145,63,102,55"/>
 <area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="287,56,379,83"/>
 <area shape="poly" title=" " alt="" coords="229,67,272,67,272,72,229,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a811e55e04315508f12ba116a195e5e4c" name="a811e55e04315508f12ba116a195e5e4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a811e55e04315508f12ba116a195e5e4c">&#9670;&#160;</a></span>c_strnicmp_s()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int c_strnicmp_s </td>
+          <td>(</td>
+          <td class="paramtype">const char *restrict</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_a811e55e04315508f12ba116a195e5e4c_cgraph.png" border="0" usemap="#as__string_8c_a811e55e04315508f12ba116a195e5e4c_cgraph" alt=""/></div>
+<map name="as__string_8c_a811e55e04315508f12ba116a195e5e4c_cgraph" id="as__string_8c_a811e55e04315508f12ba116a195e5e4c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,105,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="153,5,242,32"/>
+<area shape="poly" title=" " alt="" coords="105,33,137,27,138,32,106,38"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="164,56,231,83"/>
+<area shape="poly" title=" " alt="" coords="106,50,149,58,148,63,105,55"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="290,56,382,83"/>
+<area shape="poly" title=" " alt="" coords="232,67,275,67,275,72,232,72"/>
 </map>
 </div>
 
@@ -686,85 +831,105 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="s__string_8c_a2d9d72d91c14e31869f8dbf5c55a92a2_icgraph.png" border="0" usemap="#as__string_8c_a2d9d72d91c14e31869f8dbf5c55a92a2_icgraph" alt=""/></div>
 <map name="as__string_8c_a2d9d72d91c14e31869f8dbf5c55a92a2_icgraph" id="as__string_8c_a2d9d72d91c14e31869f8dbf5c55a92a2_icgraph">
-<area shape="rect" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="287,867,376,893"/>
-<area shape="rect" href="s__string_8c.html#a0256b44d9227f70d2ecf5f0edc996407" title=" " alt="" coords="144,5,234,32"/>
-<area shape="poly" title=" " alt="" coords="328,851,327,689,317,449,306,324,290,209,267,113,253,75,237,46,225,34,229,31,241,42,258,73,272,111,295,208,312,324,323,449,333,689,333,851"/>
-<area shape="rect" href="s__string_8c.html#aa5370680c5d67dfe07ab01f61e66c213" title=" " alt="" coords="141,56,237,83"/>
-<area shape="poly" title=" " alt="" coords="328,851,326,698,315,473,304,357,287,249,265,159,252,124,237,96,225,85,229,81,241,93,257,121,270,157,293,248,309,356,320,473,331,698,333,851"/>
-<area shape="rect" href="s__string_8c.html#ae86c4307985b8dd6f96939e0ea964dd4" title=" " alt="" coords="149,107,228,133"/>
-<area shape="poly" title=" " alt="" coords="328,851,324,706,312,497,301,389,285,289,264,205,251,172,237,147,225,136,229,132,241,144,256,170,269,204,290,288,306,388,318,497,330,706,333,851"/>
-<area shape="rect" href="s__string_8c.html#a5448dfd5f1f73e3a465b265cf4d3a5f9" title="Returns the value of the character at position index of s_string str." alt="" coords="153,157,224,184"/>
-<area shape="poly" title=" " alt="" coords="327,851,323,715,310,521,298,421,282,328,262,251,250,221,237,198,223,185,227,181,241,194,255,219,267,250,288,327,303,420,315,520,328,715,333,851"/>
-<area shape="rect" href="s__string_8c.html#a87d0b1ecc69281fa7838fe69614b89d6" title="Extracts a sequence of characters of length len from s_string src, starting at index srcstart and ins..." alt="" coords="149,208,229,235"/>
-<area shape="poly" title=" " alt="" coords="327,851,321,724,307,545,295,453,280,368,261,298,237,248,225,237,229,233,241,245,266,296,285,367,300,452,312,544,327,723,332,851"/>
-<area shape="rect" href="s__string_8c.html#a199110a9f1fb62576398bbe3a6bd1845" title="Extracts a sequence of characters from the s_string src located between indexes start and end,..." alt="" coords="144,259,234,285"/>
-<area shape="poly" title=" " alt="" coords="327,851,320,733,304,569,292,485,277,408,259,344,237,299,225,288,229,284,241,296,264,342,283,407,298,484,309,569,325,733,332,851"/>
-<area shape="rect" href="s__string_8c.html#a799754db581681229535d434fd59e8fa" title="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..." alt="" coords="139,309,239,336"/>
-<area shape="poly" title=" " alt="" coords="326,851,318,743,301,594,289,518,275,448,257,390,237,350,225,339,229,335,241,346,262,388,280,447,295,517,307,593,323,742,331,851"/>
-<area shape="rect" href="s__string_8c.html#a7d1cb9fdae1ec187e97fc377bd0dddc7" title="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..." alt="" coords="141,360,237,387"/>
-<area shape="poly" title=" " alt="" coords="326,852,316,752,299,618,272,488,256,436,237,400,224,389,228,385,241,397,261,434,277,487,304,618,321,752,331,851"/>
-<area shape="rect" href="s__string_8c.html#aa878df4b89916f2f3782e3adc2823a5a" title="Inserts a sequence of characters obtained from the beginning of the s_string src into the s_string ds..." alt="" coords="148,411,230,437"/>
-<area shape="poly" title=" " alt="" coords="325,852,314,762,296,643,270,528,254,483,237,451,224,440,228,436,241,448,259,480,275,526,301,642,319,761,330,851"/>
-<area shape="rect" href="s__string_8c.html#a94319607258af550ad3edb6d9d9ecf83" title="Inserts a sequence of characters obtained from the beginning of the s_string src into the s_string ds..." alt="" coords="150,461,228,488"/>
-<area shape="poly" title=" " alt="" coords="328,851,326,783,314,691,303,641,287,592,265,545,237,502,224,491,228,487,241,498,270,542,292,590,308,640,320,690,331,782,334,851"/>
-<area shape="rect" href="s__string_8c.html#a8cf73a165134e93d13a0f22058e52146" title="Appends the contents of the s_string pointed to by src to the end of the s_string pointed to by dst...." alt="" coords="155,512,223,539"/>
-<area shape="poly" title=" " alt="" coords="327,852,322,791,309,713,297,670,282,629,262,589,237,552,222,540,225,536,241,549,266,586,287,626,302,669,314,712,328,791,332,851"/>
-<area shape="rect" href="s__string_8c.html#a3a888ef6791ca2741e569d92124335c8" title=" " alt="" coords="155,563,223,589"/>
-<area shape="poly" title=" " alt="" coords="325,851,318,800,303,734,276,665,259,633,237,603,222,591,225,587,241,599,263,630,281,663,308,733,323,799,331,851"/>
-<area shape="rect" href="s__string_8c.html#afed30d0781465b2f9e425a253e411a3d" title="Compares two s_strings dst and src character by character." alt="" coords="151,613,226,640"/>
-<area shape="poly" title=" " alt="" coords="323,852,313,810,296,757,271,703,237,654,223,642,226,638,241,650,276,700,301,755,318,808,328,851"/>
-<area shape="rect" href="s__string_8c.html#abb7c32786917cd65194f0ad7eb74a981" title="Compares the s_string dst with the C&#45;string src character by character." alt="" coords="144,664,234,691"/>
-<area shape="poly" title=" " alt="" coords="319,853,290,781,266,740,237,705,222,693,225,689,241,701,271,737,294,778,324,851"/>
-<area shape="rect" href="s__string_8c.html#aa0ac0f285325a37d133e38bb08994870" title="Copies the contents of the s_string pointed to by src into the s_string pointed to by dst...." alt="" coords="153,715,224,741"/>
-<area shape="poly" title=" " alt="" coords="314,854,282,805,261,779,237,755,221,744,224,740,241,751,265,775,286,802,318,851"/>
-<area shape="rect" href="s__string_8c.html#a04248a23b21c93a6664f85b83c33450f" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="150,765,228,792"/>
-<area shape="poly" title=" " alt="" coords="303,858,237,806,218,795,221,790,241,802,306,854"/>
-<area shape="rect" href="s__string_8c.html#a926a52690ace4ef21dfec514ee0cd907" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="143,816,235,843"/>
-<area shape="poly" title=" " alt="" coords="276,863,228,846,230,841,278,858"/>
-<area shape="rect" href="s__string_8c.html#af39e07f60a37fe93cf92a6f399f227e9" title="Appends characters from the beginning of the s_string pointed to by src to the end of the s_string po..." alt="" coords="153,867,224,893"/>
-<area shape="poly" title=" " alt="" coords="271,883,225,883,225,877,271,877"/>
-<area shape="rect" href="s__string_8c.html#aa4c996504575702e516ad08ac66afe0f" title="Copies up to len characters of the contents of the s_string pointed to by src into the s_string point..." alt="" coords="152,917,226,944"/>
-<area shape="poly" title=" " alt="" coords="279,902,227,920,225,915,277,897"/>
-<area shape="rect" href="s__string_8c.html#a93b5817f0e2cc7820c05a3129141f31a" title="Appends up to len characters from the beginning of the s_string pointed to by src to the end of the s..." alt="" coords="151,968,226,995"/>
-<area shape="poly" title=" " alt="" coords="306,906,241,958,221,970,218,965,237,954,303,902"/>
-<area shape="rect" href="s__string_8c.html#ae8deb3ecd910c3fd2abab6da43a16e14" title="Compares up to len characters of two s_strings dst and src character by character." alt="" coords="148,1019,230,1045"/>
-<area shape="poly" title=" " alt="" coords="318,909,286,958,265,985,241,1009,224,1020,221,1016,237,1005,261,981,282,955,314,906"/>
-<area shape="rect" href="s__string_8c.html#a8016b2f66529f9605cabeddabad5e4a3" title="Compares up to len characters of an s_string dst and a C&#45;string src character by character." alt="" coords="141,1069,237,1096"/>
-<area shape="poly" title=" " alt="" coords="324,909,294,982,271,1023,241,1059,225,1071,222,1067,237,1055,266,1020,290,979,319,907"/>
-<area shape="rect" href="s__string_8c.html#a6f9affc0f31d4a50923d6ecc699e0f91" title="Returns the position of the first occurrence of any character from the s_string charset in the s_stri..." alt="" coords="151,1120,226,1147"/>
-<area shape="poly" title=" " alt="" coords="328,909,318,952,301,1005,276,1060,241,1110,226,1122,223,1118,237,1106,271,1057,296,1003,313,950,323,908"/>
-<area shape="rect" href="s__string_8c.html#a5b6484dfd758e58fd94f8bccc8e78dc4" title="Returns the position of the first occurrence of any character from the s_string charset in the C&#45;stri..." alt="" coords="144,1171,234,1197"/>
-<area shape="poly" title=" " alt="" coords="331,909,323,961,308,1027,281,1097,263,1130,241,1160,227,1172,223,1168,237,1157,259,1127,276,1095,303,1026,318,960,325,909"/>
-<area shape="rect" href="s__string_8c.html#ab1940a04a4405a7448abfcac3ca0e906" title=" " alt="" coords="153,1221,225,1248"/>
-<area shape="poly" title=" " alt="" coords="332,909,328,969,314,1048,302,1091,287,1134,266,1174,241,1211,227,1223,224,1219,237,1208,262,1171,282,1131,297,1090,309,1047,322,969,327,908"/>
-<area shape="rect" href="s__string_8c.html#a7f7ec0917b6a39e064c3f8f7530556ff" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="153,1272,224,1299"/>
-<area shape="poly" title=" " alt="" coords="334,909,331,978,320,1070,308,1120,292,1170,270,1218,241,1262,227,1274,223,1270,237,1258,265,1215,287,1168,303,1119,314,1069,326,977,328,909"/>
-<area shape="rect" href="s__string_8c.html#ac0e4edb87f7ec63c7877be5223c2bcc0" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="146,1323,232,1349"/>
-<area shape="poly" title=" " alt="" coords="330,909,319,999,301,1118,275,1234,259,1280,241,1312,228,1324,224,1320,237,1309,254,1277,270,1232,296,1117,314,998,325,908"/>
-<area shape="rect" href="s__string_8c.html#ab923bd0ce99d2e59b299a25e7eaa1b05" title=" " alt="" coords="156,1373,222,1400"/>
-<area shape="poly" title=" " alt="" coords="331,909,321,1008,304,1142,277,1273,261,1326,241,1363,223,1378,220,1374,237,1360,256,1324,272,1272,299,1142,316,1008,326,908"/>
-<area shape="rect" href="s__string_8c.html#a54f3df3a1785fd7228626079eaee175c" title=" " alt="" coords="149,1424,228,1451"/>
-<area shape="poly" title=" " alt="" coords="331,909,323,1018,307,1167,295,1243,280,1313,262,1372,241,1414,229,1425,225,1421,237,1410,257,1370,275,1312,289,1242,301,1166,318,1017,326,909"/>
-<area shape="rect" href="s__string_8c.html#a34d2038f5f2269af4a3c6031ebfbe74c" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="155,1475,223,1501"/>
-<area shape="poly" title=" " alt="" coords="332,909,325,1027,309,1191,298,1276,283,1353,264,1418,241,1464,225,1478,222,1474,237,1461,259,1416,277,1352,292,1275,304,1191,320,1027,327,909"/>
-<area shape="rect" href="s__string_8c.html#a65baa066c766e7fb71cf63f806286b7d" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="148,1525,230,1552"/>
-<area shape="poly" title=" " alt="" coords="332,909,327,1037,312,1216,300,1308,285,1393,266,1464,241,1515,229,1527,225,1523,237,1512,261,1462,280,1392,295,1307,307,1215,321,1036,327,909"/>
-<area shape="rect" href="s__string_8c.html#a498c706438e3bcb847981ffe226b4bd4" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="146,1576,232,1603"/>
-<area shape="poly" title=" " alt="" coords="333,909,328,1045,315,1240,303,1340,288,1433,267,1510,255,1541,241,1566,229,1577,225,1574,237,1562,250,1539,262,1509,282,1432,298,1339,310,1239,323,1045,327,909"/>
-<area shape="rect" href="s__string_8c.html#a95347b50532352bd9def432c46e8ef47" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="142,1627,236,1653"/>
-<area shape="poly" title=" " alt="" coords="333,909,330,1054,318,1263,306,1372,290,1472,269,1556,256,1590,241,1616,229,1628,225,1624,237,1613,251,1588,264,1555,285,1471,301,1371,312,1263,324,1054,328,909"/>
-<area shape="rect" href="s__string_8c.html#a392cc76d5cef4c2cd48a3b8f7ada59e0" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="148,1677,230,1704"/>
-<area shape="poly" title=" " alt="" coords="333,909,331,1062,320,1287,309,1404,293,1512,270,1603,257,1639,241,1667,229,1679,225,1675,237,1664,252,1636,265,1601,287,1511,304,1403,315,1287,326,1062,328,909"/>
-<area shape="rect" href="s__string_8c.html#a073cf26b00507d22fd10c3b45e2ff771" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="144,1728,234,1755"/>
-<area shape="poly" title=" " alt="" coords="333,909,333,1071,323,1311,312,1436,295,1552,272,1649,258,1687,241,1718,229,1729,225,1726,237,1714,253,1685,267,1647,290,1551,306,1436,317,1311,327,1071,328,909"/>
-<area shape="rect" href="s__string_8c.html#ae781d04a30584504bc9571af44c3dfed" title="Creates in the heap a dynamically allocated copy of the s_string src." alt="" coords="12,664,84,691"/>
-<area shape="poly" title=" " alt="" coords="138,713,83,693,85,688,140,708"/>
-<area shape="rect" href="s__string_8c.html#a1c51110f8c0944134180378c3e335be4" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..." alt="" coords="11,715,85,741"/>
-<area shape="poly" title=" " alt="" coords="137,731,86,731,86,725,137,725"/>
-<area shape="rect" href="s__string_8c.html#ace608387294ab1f23a90682dbfd0d113" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..." alt="" coords="9,765,87,792"/>
-<area shape="poly" title=" " alt="" coords="139,749,88,767,86,762,137,744"/>
-<area shape="rect" href="s__string_8c.html#a322f8c3d12b61780520453e4f9807c74" title="Extracts a sequence of characters from the s_string src starting at index start and with length len,..." alt="" coords="5,917,91,944"/>
-<area shape="poly" title=" " alt="" coords="136,933,91,933,91,928,136,928"/>
+<area shape="rect" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="280,1145,369,1172"/>
+<area shape="rect" href="s__string_8c.html#a0256b44d9227f70d2ecf5f0edc996407" title=" " alt="" coords="137,5,226,32"/>
+<area shape="poly" title=" " alt="" coords="320,1130,313,903,296,560,284,385,269,230,251,111,241,71,230,46,218,34,222,31,234,42,246,69,256,110,274,229,289,384,302,559,318,903,325,1130"/>
+<area shape="rect" href="s__string_8c.html#ad14976e25f933f1c17a8a42fa25abb5d" title=" " alt="" coords="136,56,228,83"/>
+<area shape="poly" title=" " alt="" coords="320,1130,312,913,295,585,283,419,268,271,250,158,240,120,230,96,218,85,222,81,234,93,245,118,255,157,273,271,288,418,300,585,317,913,325,1130"/>
+<area shape="rect" href="s__string_8c.html#a849e611ec8d2fde099f77927b4a6b441" title=" " alt="" coords="141,107,223,133"/>
+<area shape="poly" title=" " alt="" coords="320,1130,311,922,294,611,281,453,266,313,249,206,240,169,230,147,218,136,222,132,234,144,245,168,254,205,272,312,287,452,299,610,317,922,325,1130"/>
+<area shape="rect" href="s__string_8c.html#aa5370680c5d67dfe07ab01f61e66c213" title=" " alt="" coords="134,157,230,184"/>
+<area shape="poly" title=" " alt="" coords="320,1130,310,931,292,636,280,487,265,354,248,253,239,219,230,198,218,186,222,183,234,194,244,217,254,252,270,354,285,486,298,636,316,931,325,1130"/>
+<area shape="rect" href="s__string_8c.html#a811e55e04315508f12ba116a195e5e4c" title=" " alt="" coords="132,208,232,235"/>
+<area shape="poly" title=" " alt="" coords="319,1130,310,941,291,662,278,521,264,396,248,301,239,268,230,248,218,237,222,233,234,245,244,266,253,300,269,395,284,520,296,661,315,941,325,1130"/>
+<area shape="rect" href="s__string_8c.html#ae86c4307985b8dd6f96939e0ea964dd4" title=" " alt="" coords="142,259,222,285"/>
+<area shape="poly" title=" " alt="" coords="321,1130,321,964,312,716,301,588,284,468,261,369,246,329,230,299,218,288,222,284,234,296,251,327,266,367,289,467,306,587,317,716,326,964,326,1130"/>
+<area shape="rect" href="s__string_8c.html#a5448dfd5f1f73e3a465b265cf4d3a5f9" title="Returns the value of the character at position index of s_string str." alt="" coords="146,309,218,336"/>
+<area shape="poly" title=" " alt="" coords="321,1129,320,971,309,739,298,619,282,507,259,415,245,378,230,350,216,337,220,333,234,346,250,376,264,413,287,506,303,618,314,739,325,971,326,1129"/>
+<area shape="rect" href="s__string_8c.html#a87d0b1ecc69281fa7838fe69614b89d6" title="Extracts a sequence of characters of length len from s_string src, starting at index srcstart and ins..." alt="" coords="142,360,222,387"/>
+<area shape="poly" title=" " alt="" coords="321,1130,318,980,307,764,295,651,279,547,258,461,244,427,230,400,218,389,222,385,234,397,249,424,263,459,284,546,301,650,312,763,323,980,326,1130"/>
+<area shape="rect" href="s__string_8c.html#a199110a9f1fb62576398bbe3a6bd1845" title="Extracts a sequence of characters from the s_string src located between indexes start and end,..." alt="" coords="137,411,226,437"/>
+<area shape="poly" title=" " alt="" coords="320,1130,317,989,304,788,292,683,277,587,256,507,244,475,230,451,218,440,222,436,234,448,248,473,261,505,282,586,298,683,309,787,322,989,326,1130"/>
+<area shape="rect" href="s__string_8c.html#a799754db581681229535d434fd59e8fa" title="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..." alt="" coords="132,461,232,488"/>
+<area shape="poly" title=" " alt="" coords="320,1130,315,998,301,812,290,715,274,627,254,553,243,524,230,502,218,491,222,487,234,498,247,522,259,551,279,626,295,715,307,811,320,998,325,1130"/>
+<area shape="rect" href="s__string_8c.html#a7d1cb9fdae1ec187e97fc377bd0dddc7" title="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..." alt="" coords="134,512,230,539"/>
+<area shape="poly" title=" " alt="" coords="320,1130,313,1007,298,836,287,747,272,667,253,599,230,552,218,541,222,537,234,549,258,597,277,665,292,747,304,835,319,1007,325,1129"/>
+<area shape="rect" href="s__string_8c.html#aa878df4b89916f2f3782e3adc2823a5a" title="Inserts a sequence of characters obtained from the beginning of the s_string src into the s_string ds..." alt="" coords="141,563,222,589"/>
+<area shape="poly" title=" " alt="" coords="319,1130,312,1017,296,860,284,780,269,707,251,646,230,603,218,592,222,588,234,600,256,644,274,705,289,779,301,859,317,1016,325,1130"/>
+<area shape="rect" href="s__string_8c.html#a94319607258af550ad3edb6d9d9ecf83" title="Inserts a sequence of characters obtained from the beginning of the s_string src into the s_string ds..." alt="" coords="143,613,220,640"/>
+<area shape="poly" title=" " alt="" coords="319,1130,310,1026,293,885,267,747,249,692,230,654,217,642,221,638,234,650,254,690,272,745,298,884,315,1026,324,1130"/>
+<area shape="rect" href="s__string_8c.html#a8cf73a165134e93d13a0f22058e52146" title="Appends the contents of the s_string pointed to by src to the end of the s_string pointed to by dst...." alt="" coords="148,664,216,691"/>
+<area shape="poly" title=" " alt="" coords="318,1130,308,1036,290,909,264,787,248,738,230,704,214,691,218,687,234,701,253,736,269,785,295,908,313,1035,323,1130"/>
+<area shape="rect" href="s__string_8c.html#a3a888ef6791ca2741e569d92124335c8" title=" " alt="" coords="148,715,216,741"/>
+<area shape="poly" title=" " alt="" coords="317,1130,306,1045,287,933,261,826,246,784,230,755,215,742,218,738,234,752,251,782,266,825,292,932,311,1044,323,1129"/>
+<area shape="rect" href="s__string_8c.html#afed30d0781465b2f9e425a253e411a3d" title="Compares two s_strings dst and src character by character." alt="" coords="144,765,220,792"/>
+<area shape="poly" title=" " alt="" coords="321,1130,317,1065,304,980,293,934,277,889,256,845,230,806,217,795,221,791,234,802,261,843,282,887,298,933,310,979,323,1065,326,1129"/>
+<area shape="rect" href="s__string_8c.html#abb7c32786917cd65194f0ad7eb74a981" title="Compares the s_string dst with the C&#45;string src character by character." alt="" coords="137,816,226,843"/>
+<area shape="poly" title=" " alt="" coords="319,1130,313,1074,299,1002,272,926,253,889,230,856,217,845,220,841,234,853,258,887,277,923,304,1001,318,1073,325,1130"/>
+<area shape="rect" href="s__string_8c.html#aa0ac0f285325a37d133e38bb08994870" title="Copies the contents of the s_string pointed to by src into the s_string pointed to by dst...." alt="" coords="146,867,218,893"/>
+<area shape="poly" title=" " alt="" coords="317,1130,309,1083,292,1024,267,963,250,934,230,907,216,896,220,892,234,903,254,931,272,960,298,1023,314,1082,322,1129"/>
+<area shape="rect" href="s__string_8c.html#a04248a23b21c93a6664f85b83c33450f" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="143,917,221,944"/>
+<area shape="poly" title=" " alt="" coords="314,1131,303,1093,286,1047,262,1000,230,958,216,947,219,942,234,954,266,997,291,1045,308,1091,319,1130"/>
+<area shape="rect" href="s__string_8c.html#a926a52690ace4ef21dfec514ee0cd907" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="136,968,228,995"/>
+<area shape="poly" title=" " alt="" coords="310,1132,279,1071,257,1038,230,1009,214,997,217,993,234,1005,261,1035,283,1068,315,1130"/>
+<area shape="rect" href="s__string_8c.html#ac75ae9f092304366bff48eecc4e082b3" title=" " alt="" coords="146,1019,218,1045"/>
+<area shape="poly" title=" " alt="" coords="302,1135,271,1097,230,1059,213,1048,216,1044,234,1055,274,1093,307,1131"/>
+<area shape="rect" href="s__string_8c.html#a76340c1f1f00a13fe9fe465aaeb40cc3" title="Compares two s_strings dst and src character by character ignoring the case." alt="" coords="143,1069,221,1096"/>
+<area shape="poly" title=" " alt="" coords="284,1140,231,1110,209,1099,211,1094,233,1106,287,1135"/>
+<area shape="rect" href="s__string_8c.html#afef25b56af7813df184bd7d0696c5120" title="Compares the s_string dst with the C&#45;string src character by character ignoring the case." alt="" coords="136,1120,228,1147"/>
+<area shape="poly" title=" " alt="" coords="264,1151,228,1144,229,1139,265,1145"/>
+<area shape="rect" href="s__string_8c.html#a6258c5ade4a9d8aa43179d037f5a5ba5" title=" " alt="" coords="148,1171,216,1197"/>
+<area shape="poly" title=" " alt="" coords="265,1172,217,1181,216,1175,264,1167"/>
+<area shape="rect" href="s__string_8c.html#adebcf6a5f159140dfa79b9b5c17a14f9" title=" " alt="" coords="141,1221,223,1248"/>
+<area shape="poly" title=" " alt="" coords="287,1182,233,1212,211,1223,209,1219,231,1207,284,1178"/>
+<area shape="rect" href="s__string_8c.html#af39e07f60a37fe93cf92a6f399f227e9" title="Appends characters from the beginning of the s_string pointed to by src to the end of the s_string po..." alt="" coords="146,1272,218,1299"/>
+<area shape="poly" title=" " alt="" coords="307,1186,274,1224,234,1262,216,1274,213,1269,230,1258,271,1220,302,1183"/>
+<area shape="rect" href="s__string_8c.html#aa4c996504575702e516ad08ac66afe0f" title="Copies up to len characters of the contents of the s_string pointed to by src into the s_string point..." alt="" coords="145,1323,219,1349"/>
+<area shape="poly" title=" " alt="" coords="315,1188,283,1249,261,1282,234,1313,217,1324,214,1320,230,1309,257,1279,279,1246,310,1185"/>
+<area shape="rect" href="s__string_8c.html#a93b5817f0e2cc7820c05a3129141f31a" title="Appends up to len characters from the beginning of the s_string pointed to by src to the end of the s..." alt="" coords="144,1373,220,1400"/>
+<area shape="poly" title=" " alt="" coords="319,1188,308,1226,291,1272,266,1320,234,1363,219,1375,216,1371,230,1359,262,1317,286,1270,303,1224,314,1186"/>
+<area shape="rect" href="s__string_8c.html#ae8deb3ecd910c3fd2abab6da43a16e14" title="Compares up to len characters of two s_strings dst and src character by character." alt="" coords="141,1424,223,1451"/>
+<area shape="poly" title=" " alt="" coords="322,1188,314,1235,298,1295,272,1357,254,1387,234,1414,220,1425,216,1421,230,1410,250,1384,267,1355,292,1293,309,1234,317,1187"/>
+<area shape="rect" href="s__string_8c.html#a8016b2f66529f9605cabeddabad5e4a3" title="Compares up to len characters of an s_string dst and a C&#45;string src character by character." alt="" coords="134,1475,230,1501"/>
+<area shape="poly" title=" " alt="" coords="325,1188,318,1244,304,1317,277,1394,258,1431,234,1464,220,1476,217,1472,230,1461,253,1428,272,1392,299,1315,313,1243,319,1187"/>
+<area shape="rect" href="s__string_8c.html#adbb9a338794c03a1438d8059c5ca923a" title="Compares up to len characters of two s_strings dst and src character by character ignoring the case." alt="" coords="139,1525,224,1552"/>
+<area shape="poly" title=" " alt="" coords="326,1188,323,1252,310,1338,298,1385,282,1431,261,1475,234,1515,221,1527,217,1523,230,1512,256,1472,277,1429,293,1383,304,1337,317,1252,321,1188"/>
+<area shape="rect" href="s__string_8c.html#ae571ada50081c2e5cbac1b4cb66c0fc8" title="Compares up to len characters of an s_string dst and a C&#45;string src character by character ignoring t..." alt="" coords="132,1576,232,1603"/>
+<area shape="poly" title=" " alt="" coords="323,1188,311,1274,292,1385,266,1492,251,1535,234,1566,221,1577,217,1574,230,1562,246,1533,261,1491,287,1384,306,1273,317,1188"/>
+<area shape="rect" href="s__string_8c.html#a6f9affc0f31d4a50923d6ecc699e0f91" title="Returns the position of the first occurrence of any character from the s_string charset in the s_stri..." alt="" coords="144,1627,220,1653"/>
+<area shape="poly" title=" " alt="" coords="323,1188,313,1282,295,1409,269,1532,253,1581,234,1616,221,1628,217,1624,230,1613,248,1579,264,1531,290,1408,308,1282,318,1187"/>
+<area shape="rect" href="s__string_8c.html#a5b6484dfd758e58fd94f8bccc8e78dc4" title="Returns the position of the first occurrence of any character from the C&#45;string charset in the s_stri..." alt="" coords="137,1677,226,1704"/>
+<area shape="poly" title=" " alt="" coords="324,1188,315,1292,298,1434,272,1572,254,1628,234,1667,221,1679,217,1675,230,1664,249,1625,267,1571,293,1433,310,1291,319,1187"/>
+<area shape="rect" href="s__string_8c.html#ab1940a04a4405a7448abfcac3ca0e906" title=" " alt="" coords="146,1728,218,1755"/>
+<area shape="poly" title=" " alt="" coords="325,1188,317,1301,301,1458,289,1538,274,1612,256,1674,234,1718,220,1730,217,1726,230,1714,251,1672,269,1611,284,1537,296,1457,312,1301,319,1187"/>
+<area shape="rect" href="s__string_8c.html#a66601e744840a3069c7b0c3438343904" title=" " alt="" coords="144,1779,220,1805"/>
+<area shape="poly" title=" " alt="" coords="325,1188,319,1311,304,1482,292,1571,277,1652,258,1720,234,1768,222,1780,218,1776,230,1765,253,1718,272,1651,287,1570,298,1482,313,1310,320,1188"/>
+<area shape="rect" href="s__string_8c.html#a7f7ec0917b6a39e064c3f8f7530556ff" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="146,1829,218,1856"/>
+<area shape="poly" title=" " alt="" coords="325,1188,320,1319,307,1506,295,1603,279,1692,259,1766,247,1796,234,1819,220,1832,216,1828,230,1816,243,1793,254,1764,274,1691,290,1602,301,1506,315,1319,320,1188"/>
+<area shape="rect" href="s__string_8c.html#ac0e4edb87f7ec63c7877be5223c2bcc0" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="139,1880,224,1907"/>
+<area shape="poly" title=" " alt="" coords="326,1188,322,1328,309,1530,298,1635,282,1731,261,1812,248,1844,234,1870,222,1881,218,1878,230,1866,244,1842,256,1810,277,1730,292,1634,304,1530,317,1328,320,1187"/>
+<area shape="rect" href="s__string_8c.html#ab923bd0ce99d2e59b299a25e7eaa1b05" title=" " alt="" coords="149,1931,214,1957"/>
+<area shape="poly" title=" " alt="" coords="326,1188,323,1337,312,1554,301,1667,284,1771,263,1858,249,1893,234,1920,217,1935,213,1931,230,1917,244,1891,258,1857,279,1770,295,1666,307,1554,318,1337,321,1188"/>
+<area shape="rect" href="s__string_8c.html#a54f3df3a1785fd7228626079eaee175c" title=" " alt="" coords="142,1981,222,2008"/>
+<area shape="poly" title=" " alt="" coords="326,1188,325,1346,314,1578,303,1699,287,1811,264,1904,250,1942,234,1971,222,1983,218,1979,230,1968,245,1939,259,1903,282,1810,298,1699,309,1578,320,1346,321,1188"/>
+<area shape="rect" href="s__string_8c.html#a34d2038f5f2269af4a3c6031ebfbe74c" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="148,2032,216,2059"/>
+<area shape="poly" title=" " alt="" coords="326,1187,326,1354,317,1601,306,1730,289,1850,266,1950,251,1990,234,2022,218,2036,215,2032,230,2018,246,1988,261,1949,284,1849,301,1730,312,1601,321,1354,321,1187"/>
+<area shape="rect" href="s__string_8c.html#a65baa066c766e7fb71cf63f806286b7d" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="141,2083,223,2109"/>
+<area shape="poly" title=" " alt="" coords="325,1187,315,1377,296,1656,284,1797,269,1922,253,2018,244,2051,234,2072,222,2084,218,2080,230,2069,239,2049,248,2017,264,1921,278,1797,291,1656,310,1376,319,1187"/>
+<area shape="rect" href="s__string_8c.html#a498c706438e3bcb847981ffe226b4bd4" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="139,2133,225,2160"/>
+<area shape="poly" title=" " alt="" coords="325,1188,316,1386,298,1682,285,1831,270,1964,254,2065,244,2100,234,2123,222,2135,218,2131,230,2120,239,2099,248,2064,265,1963,280,1831,292,1681,310,1386,320,1187"/>
+<area shape="rect" href="s__string_8c.html#a95347b50532352bd9def432c46e8ef47" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="135,2184,228,2211"/>
+<area shape="poly" title=" " alt="" coords="325,1188,317,1396,299,1707,287,1865,272,2005,254,2113,245,2150,234,2174,222,2185,218,2182,230,2170,240,2148,249,2111,266,2004,281,1865,294,1707,311,1395,320,1187"/>
+<area shape="rect" href="s__string_8c.html#a392cc76d5cef4c2cd48a3b8f7ada59e0" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="141,2235,223,2261"/>
+<area shape="poly" title=" " alt="" coords="325,1187,317,1405,300,1732,288,1899,273,2047,255,2160,245,2199,234,2224,222,2236,218,2232,230,2221,240,2197,250,2159,268,2046,283,1898,295,1732,312,1404,320,1187"/>
+<area shape="rect" href="s__string_8c.html#a073cf26b00507d22fd10c3b45e2ff771" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="137,2285,226,2312"/>
+<area shape="poly" title=" " alt="" coords="325,1188,318,1414,302,1758,289,1933,274,2088,256,2207,246,2249,234,2275,222,2287,218,2283,230,2272,241,2247,251,2206,269,2088,284,1933,296,1758,313,1414,320,1188"/>
+<area shape="rect" href="s__string_8c.html#ae781d04a30584504bc9571af44c3dfed" title="Creates in the heap a dynamically allocated copy of the s_string src." alt="" coords="9,816,80,843"/>
+<area shape="poly" title=" " alt="" coords="131,864,79,845,81,840,132,859"/>
+<area shape="rect" href="s__string_8c.html#a1c51110f8c0944134180378c3e335be4" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..." alt="" coords="7,867,82,893"/>
+<area shape="poly" title=" " alt="" coords="131,883,82,883,82,877,131,877"/>
+<area shape="rect" href="s__string_8c.html#ace608387294ab1f23a90682dbfd0d113" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..." alt="" coords="5,917,84,944"/>
+<area shape="poly" title=" " alt="" coords="133,901,84,919,82,914,131,896"/>
 </map>
 </div>
 
@@ -813,9 +978,11 @@ Here is the caller graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dst</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will receive the sequence of characters from <em class="arg">src</em>. </td></tr>
+    <tr><td class="paramname">dststart</td><td>The index of the first character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
     <tr><td class="paramname">src</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will provide the sequence of characters to be copied to <em class="arg">dst</em>. </td></tr>
-    <tr><td class="paramname">start</td><td>The index of the first character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
+    <tr><td class="paramname">srcstart</td><td>The index of the first character in <em class="arg">src</em> that will be inserted in <em class="arg">dst</em>. </td></tr>
     <tr><td class="paramname">len</td><td>The length of the sequence of characters that will be copied from <em class="arg">src</em> to <em class="arg">dst</em>. </td></tr>
+    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1393,6 +1560,7 @@ Here is the call graph for this function:</div>
     <tr><td class="paramname">src</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will provide the sequence of characters to be copied to <em class="arg">dst</em>. </td></tr>
     <tr><td class="paramname">start</td><td>The index of the first character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
     <tr><td class="paramname">end</td><td>The index of the last character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
+    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1456,6 +1624,7 @@ Here is the call graph for this function:</div>
     <tr><td class="paramname">src</td><td>Pointer to the C-string that will provide the sequence of characters to be copied to <em class="arg">dst</em>. </td></tr>
     <tr><td class="paramname">start</td><td>The index of the first character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
     <tr><td class="paramname">end</td><td>The index of the last character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
+    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1517,6 +1686,7 @@ Here is the call graph for this function:</div>
     <tr><td class="paramname">src</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will provide the sequence of characters to be copied to <em class="arg">dst</em>. </td></tr>
     <tr><td class="paramname">start</td><td>The index of the first character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
     <tr><td class="paramname">len</td><td>The length of the character sequence from <em class="arg">src</em> that will be copied to <em class="arg">dst</em>. </td></tr>
+    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1580,6 +1750,7 @@ Here is the call graph for this function:</div>
     <tr><td class="paramname">src</td><td>Pointer to the C-string that will provide the sequence of characters to be copied to <em class="arg">dst</em>. </td></tr>
     <tr><td class="paramname">start</td><td>The index of the first character in <em class="arg">dst</em> that will be replaced by the characters from <em class="arg">src</em>. </td></tr>
     <tr><td class="paramname">len</td><td>The length of the character sequence from <em class="arg">src</em> that will be copied to <em class="arg">dst</em>. </td></tr>
+    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2229,6 +2400,216 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="ac75ae9f092304366bff48eecc4e082b3" name="ac75ae9f092304366bff48eecc4e082b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac75ae9f092304366bff48eecc4e082b3">&#9670;&#160;</a></span>s_strichr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_strichr </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *</td>          <td class="paramname"><span class="paramname"><em>str</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t</td>          <td class="paramname"><span class="paramname"><em>start</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_ac75ae9f092304366bff48eecc4e082b3_cgraph.png" border="0" usemap="#as__string_8c_ac75ae9f092304366bff48eecc4e082b3_cgraph" alt=""/></div>
+<map name="as__string_8c_ac75ae9f092304366bff48eecc4e082b3_cgraph" id="as__string_8c_ac75ae9f092304366bff48eecc4e082b3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,77,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="125,5,214,32"/>
+<area shape="poly" title=" " alt="" coords="76,34,109,28,110,33,78,40"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="136,56,203,83"/>
+<area shape="poly" title=" " alt="" coords="78,48,121,57,120,62,76,54"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="262,56,354,83"/>
+<area shape="poly" title=" " alt="" coords="204,67,247,67,247,72,204,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a76340c1f1f00a13fe9fe465aaeb40cc3" name="a76340c1f1f00a13fe9fe465aaeb40cc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76340c1f1f00a13fe9fe465aaeb40cc3">&#9670;&#160;</a></span>s_stricmp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int s_stricmp </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>src</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compares two s_strings <em class="arg">dst</em> and <em class="arg">src</em> character by character ignoring the case. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>The first <a class="el" href="structs__string.html">s_string</a> to be compared. </td></tr>
+    <tr><td class="paramname">src</td><td>The second <a class="el" href="structs__string.html">s_string</a> to be compared. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A negative value if <em class="arg">dst</em> is lexicographically before <em class="arg">src</em>, zero if both are equal and positive if <em class="arg">dst</em> is lexicographically after <em class="arg">src</em>. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_a76340c1f1f00a13fe9fe465aaeb40cc3_cgraph.png" border="0" usemap="#as__string_8c_a76340c1f1f00a13fe9fe465aaeb40cc3_cgraph" alt=""/></div>
+<map name="as__string_8c_a76340c1f1f00a13fe9fe465aaeb40cc3_cgraph" id="as__string_8c_a76340c1f1f00a13fe9fe465aaeb40cc3_cgraph">
+<area shape="rect" title="Compares two s_strings dst and src character by character ignoring the case." alt="" coords="5,31,84,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="132,5,221,32"/>
+<area shape="poly" title=" " alt="" coords="84,34,116,28,117,33,85,39"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="143,56,210,83"/>
+<area shape="poly" title=" " alt="" coords="85,49,128,57,127,63,84,54"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="269,56,361,83"/>
+<area shape="poly" title=" " alt="" coords="211,67,254,67,254,72,211,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="afef25b56af7813df184bd7d0696c5120" name="afef25b56af7813df184bd7d0696c5120"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afef25b56af7813df184bd7d0696c5120">&#9670;&#160;</a></span>s_stricmp_c()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int s_stricmp_c </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *restrict</td>          <td class="paramname"><span class="paramname"><em>src</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compares the <a class="el" href="structs__string.html">s_string</a> <em class="arg">dst</em> with the C-string <em class="arg">src</em> character by character ignoring the case. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>The first string to be compared. </td></tr>
+    <tr><td class="paramname">src</td><td>The second string to be compared. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A negative value if <em class="arg">dst</em> is lexicographically before <em class="arg">src</em>, zero if both are equal and positive if <em class="arg">dst</em> is lexicographically after <em class="arg">src</em>. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_afef25b56af7813df184bd7d0696c5120_cgraph.png" border="0" usemap="#as__string_8c_afef25b56af7813df184bd7d0696c5120_cgraph" alt=""/></div>
+<map name="as__string_8c_afef25b56af7813df184bd7d0696c5120_cgraph" id="as__string_8c_afef25b56af7813df184bd7d0696c5120_cgraph">
+<area shape="rect" title="Compares the s_string dst with the C&#45;string src character by character ignoring the case." alt="" coords="5,31,98,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="146,5,235,32"/>
+<area shape="poly" title=" " alt="" coords="98,33,130,27,131,32,99,38"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="157,56,224,83"/>
+<area shape="poly" title=" " alt="" coords="99,50,142,58,141,63,98,55"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="283,56,375,83"/>
+<area shape="poly" title=" " alt="" coords="225,67,268,67,268,72,225,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6258c5ade4a9d8aa43179d037f5a5ba5" name="a6258c5ade4a9d8aa43179d037f5a5ba5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6258c5ade4a9d8aa43179d037f5a5ba5">&#9670;&#160;</a></span>s_stristr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_stristr </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *</td>          <td class="paramname"><span class="paramname"><em>str</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t</td>          <td class="paramname"><span class="paramname"><em>start</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_a6258c5ade4a9d8aa43179d037f5a5ba5_cgraph.png" border="0" usemap="#as__string_8c_a6258c5ade4a9d8aa43179d037f5a5ba5_cgraph" alt=""/></div>
+<map name="as__string_8c_a6258c5ade4a9d8aa43179d037f5a5ba5_cgraph" id="as__string_8c_a6258c5ade4a9d8aa43179d037f5a5ba5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,74,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="122,5,211,32"/>
+<area shape="poly" title=" " alt="" coords="74,35,106,28,107,33,75,40"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="133,56,200,83"/>
+<area shape="poly" title=" " alt="" coords="75,48,118,57,117,62,74,53"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="259,56,351,83"/>
+<area shape="poly" title=" " alt="" coords="201,67,244,67,244,72,201,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="adebcf6a5f159140dfa79b9b5c17a14f9" name="adebcf6a5f159140dfa79b9b5c17a14f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adebcf6a5f159140dfa79b9b5c17a14f9">&#9670;&#160;</a></span>s_stristr_c()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_stristr_c </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *</td>          <td class="paramname"><span class="paramname"><em>str</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t</td>          <td class="paramname"><span class="paramname"><em>start</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_adebcf6a5f159140dfa79b9b5c17a14f9_cgraph.png" border="0" usemap="#as__string_8c_adebcf6a5f159140dfa79b9b5c17a14f9_cgraph" alt=""/></div>
+<map name="as__string_8c_adebcf6a5f159140dfa79b9b5c17a14f9_cgraph" id="as__string_8c_adebcf6a5f159140dfa79b9b5c17a14f9_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,88,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="136,5,225,32"/>
+<area shape="poly" title=" " alt="" coords="88,34,120,27,121,33,89,39"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="147,56,214,83"/>
+<area shape="poly" title=" " alt="" coords="89,49,132,58,131,63,88,54"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="273,56,365,83"/>
+<area shape="poly" title=" " alt="" coords="215,67,258,67,258,72,215,72"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="af39e07f60a37fe93cf92a6f399f227e9" name="af39e07f60a37fe93cf92a6f399f227e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af39e07f60a37fe93cf92a6f399f227e9">&#9670;&#160;</a></span>s_strlcat()</h2>
 
@@ -2591,114 +2972,6 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="73,16,105,16,105,21,73,21"/>
 </map>
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="s__string_8c_af14f107e68b813b0f94a2c45cc38af5a_icgraph.png" border="0" usemap="#as__string_8c_af14f107e68b813b0f94a2c45cc38af5a_icgraph" alt=""/></div>
-<map name="as__string_8c_af14f107e68b813b0f94a2c45cc38af5a_icgraph" id="as__string_8c_af14f107e68b813b0f94a2c45cc38af5a_icgraph">
-<area shape="rect" title="Returns the number of characters that the s_string str is holding." alt="" coords="289,1196,356,1223"/>
-<area shape="rect" href="s__string_8c.html#a0256b44d9227f70d2ecf5f0edc996407" title=" " alt="" coords="145,5,234,32"/>
-<area shape="poly" title=" " alt="" coords="318,1181,314,945,302,585,292,402,278,239,260,114,250,72,239,46,228,34,231,31,243,42,255,70,266,113,283,239,297,401,307,585,319,945,324,1181"/>
-<area shape="rect" href="s__string_8c.html#aa5370680c5d67dfe07ab01f61e66c213" title=" " alt="" coords="142,56,238,83"/>
-<area shape="poly" title=" " alt="" coords="318,1180,313,954,301,610,290,435,277,280,259,162,250,121,239,96,228,85,231,81,243,93,255,120,265,161,282,280,295,435,306,610,319,954,324,1180"/>
-<area shape="rect" href="s__string_8c.html#ae86c4307985b8dd6f96939e0ea964dd4" title=" " alt="" coords="150,107,230,133"/>
-<area shape="poly" title=" " alt="" coords="318,1181,313,963,299,636,289,470,275,322,259,209,249,171,239,147,228,136,231,132,243,144,254,169,264,208,281,321,294,469,305,636,318,963,323,1181"/>
-<area shape="rect" href="s__string_8c.html#a45b1ee77c4f918067a1675778ce1f68e" title="Appends a single character to the end of string dst. If dst is already at its maximum length,..." alt="" coords="139,157,241,184"/>
-<area shape="poly" title=" " alt="" coords="318,1181,312,973,298,661,287,503,274,364,258,257,249,220,239,198,227,187,231,183,243,194,254,218,263,255,279,363,293,503,303,661,317,972,323,1180"/>
-<area shape="rect" href="s__string_8c.html#a5448dfd5f1f73e3a465b265cf4d3a5f9" title="Returns the value of the character at position index of s_string str." alt="" coords="154,208,226,235"/>
-<area shape="poly" title=" " alt="" coords="318,1181,311,982,297,687,286,537,273,405,257,304,248,269,239,248,224,235,228,231,243,245,253,268,262,303,278,404,291,537,302,686,317,982,323,1180"/>
-<area shape="rect" href="s__string_8c.html#a87d0b1ecc69281fa7838fe69614b89d6" title="Extracts a sequence of characters of length len from s_string src, starting at index srcstart and ins..." alt="" coords="150,259,230,285"/>
-<area shape="poly" title=" " alt="" coords="318,1181,310,992,295,712,284,571,271,447,256,351,248,319,239,299,227,288,231,284,243,296,253,317,261,350,277,446,290,571,301,712,316,991,323,1181"/>
-<area shape="rect" href="s__string_8c.html#a199110a9f1fb62576398bbe3a6bd1845" title="Extracts a sequence of characters from the s_string src located between indexes start and end,..." alt="" coords="145,309,234,336"/>
-<area shape="poly" title=" " alt="" coords="317,1181,309,1002,292,742,268,495,254,406,239,356,220,339,224,335,243,353,259,404,274,494,297,741,314,1002,323,1180"/>
-<area shape="rect" href="s__string_8c.html#a322f8c3d12b61780520453e4f9807c74" title="Extracts a sequence of characters from the s_string src starting at index start and with length len,..." alt="" coords="5,385,91,412"/>
-<area shape="poly" title=" " alt="" coords="318,1181,313,1008,299,758,289,633,275,524,259,443,249,416,239,401,223,389,205,382,166,376,126,379,90,387,89,382,125,374,166,371,207,377,226,385,243,397,254,414,264,441,281,524,294,633,304,758,318,1007,323,1180"/>
-<area shape="rect" href="s__string_8c.html#a799754db581681229535d434fd59e8fa" title="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..." alt="" coords="140,461,240,488"/>
-<area shape="poly" title=" " alt="" coords="319,1180,318,1040,308,838,298,734,284,638,264,558,252,526,239,502,227,490,231,486,243,498,257,524,270,556,289,637,304,733,314,838,323,1040,324,1180"/>
-<area shape="rect" href="s__string_8c.html#a7d1cb9fdae1ec187e97fc377bd0dddc7" title="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..." alt="" coords="142,512,238,539"/>
-<area shape="poly" title=" " alt="" coords="319,1180,316,1049,306,862,296,766,282,677,263,604,251,575,239,552,227,541,231,537,243,549,256,572,268,602,287,676,301,765,311,862,321,1049,324,1180"/>
-<area shape="rect" href="s__string_8c.html#aa878df4b89916f2f3782e3adc2823a5a" title="Inserts a sequence of characters obtained from the beginning of the s_string src into the s_string ds..." alt="" coords="149,563,230,589"/>
-<area shape="poly" title=" " alt="" coords="318,1180,315,1058,303,886,293,798,279,717,261,650,239,603,227,592,230,588,243,600,266,648,284,716,298,797,308,886,320,1057,324,1180"/>
-<area shape="rect" href="s__string_8c.html#ab4e2d62a4f4f8f27fb90022bc412f7f6" title="Inserts a sequence of characters obtained from the beginning of the C&#45;string src into the s_string ds..." alt="" coords="146,613,234,640"/>
-<area shape="poly" title=" " alt="" coords="318,1181,313,1067,300,911,290,831,276,757,260,696,239,654,227,642,230,639,243,650,265,694,282,756,295,830,305,910,318,1067,323,1180"/>
-<area shape="rect" href="s__string_8c.html#a94319607258af550ad3edb6d9d9ecf83" title="Inserts a sequence of characters obtained from the beginning of the s_string src into the s_string ds..." alt="" coords="151,664,228,691"/>
-<area shape="poly" title=" " alt="" coords="317,1181,311,1077,297,935,287,863,274,797,258,742,239,704,227,693,230,689,243,701,263,741,279,796,292,862,303,935,316,1076,323,1180"/>
-<area shape="rect" href="s__string_8c.html#a597430e6226bb1b05ce9920e3a45086f" title="Inserts a sequence of characters obtained from the beginning of the C&#45;string src into the s_string ds..." alt="" coords="148,715,232,741"/>
-<area shape="poly" title=" " alt="" coords="317,1181,309,1086,295,960,271,837,256,789,239,755,227,744,230,740,243,752,261,787,277,836,300,959,315,1086,322,1180"/>
-<area shape="rect" href="s__string_8c.html#a75248a1d297d4e0272181fc1ae1adf6f" title="Replaces a single character of s_string dst at position index with the character in value." alt="" coords="145,765,234,792"/>
-<area shape="poly" title=" " alt="" coords="316,1180,307,1095,291,984,269,877,255,835,239,806,227,795,230,791,243,802,260,833,274,876,297,983,313,1095,321,1180"/>
-<area shape="rect" href="s__string_8c.html#a8cf73a165134e93d13a0f22058e52146" title="Appends the contents of the s_string pointed to by src to the end of the s_string pointed to by dst...." alt="" coords="156,816,224,843"/>
-<area shape="poly" title=" " alt="" coords="315,1181,305,1105,288,1009,266,917,253,881,239,856,223,843,226,839,243,853,258,879,271,916,294,1008,310,1105,321,1180"/>
-<area shape="rect" href="s__string_8c.html#a74da1e7280687bdc7dacdeb1e82568f8" title="Appends the contents of the C&#45;string pointed to by src to the end of the s_string pointed to by dst...." alt="" coords="149,867,231,893"/>
-<area shape="poly" title=" " alt="" coords="319,1180,315,1124,303,1052,279,976,261,940,239,907,226,896,229,892,243,904,266,937,284,974,308,1051,320,1124,324,1180"/>
-<area shape="rect" href="s__string_8c.html#a3a888ef6791ca2741e569d92124335c8" title=" " alt="" coords="156,917,224,944"/>
-<area shape="poly" title=" " alt="" coords="317,1181,310,1134,297,1075,274,1013,258,984,239,958,223,945,226,941,243,954,263,981,279,1011,302,1073,316,1133,322,1180"/>
-<area shape="rect" href="s__string_8c.html#afed30d0781465b2f9e425a253e411a3d" title="Compares two s_strings dst and src character by character." alt="" coords="152,968,228,995"/>
-<area shape="poly" title=" " alt="" coords="314,1182,305,1144,291,1098,269,1051,239,1008,225,997,228,993,243,1005,274,1048,296,1096,310,1142,319,1180"/>
-<area shape="rect" href="s__string_8c.html#abb7c32786917cd65194f0ad7eb74a981" title="Compares the s_string dst with the C&#45;string src character by character." alt="" coords="145,1019,234,1045"/>
-<area shape="poly" title=" " alt="" coords="308,1183,281,1125,262,1094,239,1066,216,1048,219,1044,243,1062,266,1091,286,1123,313,1180"/>
-<area shape="rect" href="s__string_8c.html#aa0ac0f285325a37d133e38bb08994870" title="Copies the contents of the s_string pointed to by src into the s_string pointed to by dst...." alt="" coords="154,1120,226,1147"/>
-<area shape="poly" title=" " alt="" coords="283,1190,214,1149,216,1145,286,1185"/>
-<area shape="rect" href="s__string_8c.html#ae781d04a30584504bc9571af44c3dfed" title="Creates in the heap a dynamically allocated copy of the s_string src." alt="" coords="12,1081,84,1108"/>
-<area shape="poly" title=" " alt="" coords="306,1183,279,1144,261,1125,240,1110,201,1096,159,1090,119,1089,84,1092,84,1086,119,1084,159,1084,202,1091,242,1106,264,1121,283,1140,310,1180"/>
-<area shape="rect" href="s__string_8c.html#a1c51110f8c0944134180378c3e335be4" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..." alt="" coords="11,1139,85,1165"/>
-<area shape="poly" title=" " alt="" coords="273,1202,85,1162,86,1157,274,1197"/>
-<area shape="rect" href="s__string_8c.html#ace608387294ab1f23a90682dbfd0d113" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..." alt="" coords="9,1215,87,1241"/>
-<area shape="poly" title=" " alt="" coords="274,1215,88,1228,87,1223,273,1210"/>
-<area shape="rect" href="s__string_8c.html#a04248a23b21c93a6664f85b83c33450f" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="151,1272,229,1299"/>
-<area shape="poly" title=" " alt="" coords="286,1233,216,1274,214,1269,283,1229"/>
-<area shape="rect" href="s__string_8c.html#a926a52690ace4ef21dfec514ee0cd907" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="144,1323,236,1349"/>
-<area shape="poly" title=" " alt="" coords="307,1237,280,1275,243,1313,225,1324,222,1320,239,1309,275,1272,303,1234"/>
-<area shape="rect" href="s__string_8c.html#af39e07f60a37fe93cf92a6f399f227e9" title="Appends characters from the beginning of the s_string pointed to by src to the end of the s_string po..." alt="" coords="154,1373,226,1400"/>
-<area shape="poly" title=" " alt="" coords="315,1239,288,1300,268,1333,243,1363,227,1375,224,1371,239,1359,264,1330,283,1297,310,1237"/>
-<area shape="rect" href="s__string_8c.html#a4fe36725567e50e6dcf7a3f6e14fc08b" title="Appends characters from the beginning of the C&#45;string pointed to by src to the end of the s_string po..." alt="" coords="147,1424,232,1451"/>
-<area shape="poly" title=" " alt="" coords="319,1238,310,1276,296,1323,274,1371,243,1414,228,1425,225,1421,239,1410,269,1368,291,1321,305,1275,314,1237"/>
-<area shape="rect" href="s__string_8c.html#aa4c996504575702e516ad08ac66afe0f" title="Copies up to len characters of the contents of the s_string pointed to by src into the s_string point..." alt="" coords="153,411,227,437"/>
-<area shape="poly" title=" " alt="" coords="319,1180,319,1031,311,814,301,702,287,598,266,511,253,477,239,451,225,439,229,435,243,448,258,475,271,510,292,597,307,701,316,814,324,1031,325,1180"/>
-<area shape="rect" href="s__string_8c.html#a93b5817f0e2cc7820c05a3129141f31a" title="Appends up to len characters from the beginning of the s_string pointed to by src to the end of the s..." alt="" coords="152,1475,228,1501"/>
-<area shape="poly" title=" " alt="" coords="322,1239,316,1286,302,1345,279,1408,263,1437,243,1464,229,1476,225,1472,239,1461,258,1435,274,1406,297,1344,310,1285,317,1238"/>
-<area shape="rect" href="s__string_8c.html#ac428e17b3fef2ac81e9fcee969d2f20a" title="Appends up to len characters from the beginning of the C&#45;string pointed to by src to the end of the s..." alt="" coords="145,1525,234,1552"/>
-<area shape="poly" title=" " alt="" coords="324,1239,320,1295,308,1367,284,1445,266,1481,243,1515,229,1527,226,1523,239,1512,261,1479,279,1443,303,1366,315,1294,319,1238"/>
-<area shape="rect" href="s__string_8c.html#ae8deb3ecd910c3fd2abab6da43a16e14" title="Compares up to len characters of two s_strings dst and src character by character." alt="" coords="149,1576,231,1603"/>
-<area shape="poly" title=" " alt="" coords="321,1239,310,1314,294,1411,271,1503,258,1539,243,1566,230,1578,226,1574,239,1562,253,1537,266,1501,288,1410,305,1313,315,1238"/>
-<area shape="rect" href="s__string_8c.html#a8016b2f66529f9605cabeddabad5e4a3" title="Compares up to len characters of an s_string dst and a C&#45;string src character by character." alt="" coords="142,1627,238,1653"/>
-<area shape="poly" title=" " alt="" coords="321,1239,313,1324,297,1436,274,1543,260,1586,243,1616,230,1628,227,1624,239,1613,255,1584,269,1542,291,1435,307,1323,316,1238"/>
-<area shape="rect" href="s__string_8c.html#adcce7114e7ef53d6a79cbe62c6132e82" title="Returns the lesser between len and the number of characters that the s_string str is holding." alt="" coords="153,1677,227,1704"/>
-<area shape="poly" title=" " alt="" coords="322,1238,315,1333,300,1460,277,1583,261,1632,243,1667,229,1679,226,1675,239,1664,256,1630,271,1581,295,1459,309,1332,317,1238"/>
-<area shape="rect" href="s__string_8c.html#a6f9affc0f31d4a50923d6ecc699e0f91" title="Returns the position of the first occurrence of any character from the s_string charset in the s_stri..." alt="" coords="152,1728,228,1755"/>
-<area shape="poly" title=" " alt="" coords="323,1238,316,1342,303,1484,292,1556,279,1623,263,1678,243,1718,230,1730,226,1726,239,1714,258,1676,274,1621,287,1555,297,1483,311,1342,317,1238"/>
-<area shape="rect" href="s__string_8c.html#a5b6484dfd758e58fd94f8bccc8e78dc4" title="Returns the position of the first occurrence of any character from the s_string charset in the C&#45;stri..." alt="" coords="145,1779,234,1805"/>
-<area shape="poly" title=" " alt="" coords="323,1238,318,1352,305,1509,295,1589,282,1663,265,1724,243,1768,230,1780,227,1776,239,1765,260,1722,276,1661,290,1588,300,1508,313,1352,318,1238"/>
-<area shape="rect" href="s__string_8c.html#ab1940a04a4405a7448abfcac3ca0e906" title=" " alt="" coords="154,1829,226,1856"/>
-<area shape="poly" title=" " alt="" coords="324,1239,320,1361,308,1533,298,1621,284,1703,266,1771,243,1819,228,1832,225,1828,239,1816,261,1769,279,1701,293,1621,303,1532,315,1361,318,1238"/>
-<area shape="rect" href="s__string_8c.html#a7f7ec0917b6a39e064c3f8f7530556ff" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="154,1880,226,1907"/>
-<area shape="poly" title=" " alt="" coords="324,1238,321,1370,311,1557,301,1653,287,1742,268,1817,256,1846,243,1870,227,1883,224,1879,239,1866,251,1844,263,1815,282,1741,296,1653,306,1556,316,1370,319,1238"/>
-<area shape="rect" href="s__string_8c.html#ac0e4edb87f7ec63c7877be5223c2bcc0" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="147,1931,232,1957"/>
-<area shape="poly" title=" " alt="" coords="324,1238,323,1379,314,1581,304,1685,289,1782,270,1863,257,1895,243,1920,231,1932,227,1928,239,1917,252,1893,264,1861,284,1781,298,1685,308,1580,318,1379,319,1238"/>
-<area shape="rect" href="s__string_8c.html#ab923bd0ce99d2e59b299a25e7eaa1b05" title=" " alt="" coords="157,1981,222,2008"/>
-<area shape="poly" title=" " alt="" coords="325,1238,324,1388,316,1605,307,1717,292,1822,271,1909,258,1944,243,1971,224,1987,221,1982,239,1968,253,1941,266,1907,287,1821,301,1717,311,1604,319,1388,319,1238"/>
-<area shape="rect" href="s__string_8c.html#a54f3df3a1785fd7228626079eaee175c" title=" " alt="" coords="150,2032,230,2059"/>
-<area shape="poly" title=" " alt="" coords="323,1238,314,1409,298,1656,274,1890,260,1974,243,2021,231,2034,227,2030,239,2019,254,1972,269,1889,293,1655,309,1409,317,1238"/>
-<area shape="rect" href="s__string_8c.html#a34d2038f5f2269af4a3c6031ebfbe74c" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="156,2083,224,2109"/>
-<area shape="poly" title=" " alt="" coords="323,1239,315,1419,299,1682,275,1931,261,2021,252,2052,243,2072,226,2087,223,2083,239,2069,247,2050,255,2020,270,1931,294,1682,310,1419,318,1238"/>
-<area shape="rect" href="s__string_8c.html#a65baa066c766e7fb71cf63f806286b7d" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="149,2133,231,2160"/>
-<area shape="poly" title=" " alt="" coords="323,1238,316,1427,301,1707,290,1848,277,1973,261,2068,253,2102,243,2123,231,2135,227,2131,239,2120,248,2100,256,2067,271,1972,284,1847,295,1706,310,1427,318,1238"/>
-<area shape="rect" href="s__string_8c.html#a498c706438e3bcb847981ffe226b4bd4" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="147,2184,233,2211"/>
-<area shape="poly" title=" " alt="" coords="323,1238,317,1437,302,1732,291,1882,278,2014,262,2116,253,2151,243,2174,231,2185,227,2181,239,2170,248,2149,257,2115,273,2014,286,1881,297,1732,311,1437,318,1238"/>
-<area shape="rect" href="s__string_8c.html#a95347b50532352bd9def432c46e8ef47" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="143,2235,236,2261"/>
-<area shape="poly" title=" " alt="" coords="323,1238,317,1446,303,1758,293,1916,279,2056,263,2163,254,2200,243,2224,231,2236,227,2232,239,2221,249,2199,258,2162,274,2055,287,1915,298,1757,312,1446,318,1238"/>
-<area shape="rect" href="s__string_8c.html#a392cc76d5cef4c2cd48a3b8f7ada59e0" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="149,2285,231,2312"/>
-<area shape="poly" title=" " alt="" coords="323,1238,318,1455,305,1783,294,1950,281,2097,264,2211,254,2250,243,2275,231,2287,228,2283,239,2272,249,2248,259,2210,275,2097,289,1949,299,1783,313,1455,318,1238"/>
-<area shape="rect" href="s__string_8c.html#a073cf26b00507d22fd10c3b45e2ff771" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="145,2336,234,2363"/>
-<area shape="poly" title=" " alt="" coords="324,1238,319,1465,306,1809,295,1984,282,2139,265,2258,255,2299,243,2326,231,2337,228,2333,239,2322,250,2297,259,2257,277,2138,290,1983,301,1809,313,1465,318,1238"/>
-<area shape="rect" href="s__string_8c.html#a155d6a8fc550a8f89c96ec26e3509b03" title="Truncates the length of string dst to at most len characters." alt="" coords="149,2387,231,2413"/>
-<area shape="poly" title=" " alt="" coords="324,1238,319,1474,307,1834,297,2017,283,2180,266,2305,255,2349,243,2376,231,2388,228,2384,239,2373,250,2347,260,2304,278,2180,292,2017,302,1833,314,1474,318,1238"/>
-<area shape="poly" title=" " alt="" coords="138,1122,83,1107,85,1102,140,1117"/>
-<area shape="poly" title=" " alt="" coords="139,1143,86,1150,85,1144,139,1137"/>
-<area shape="poly" title=" " alt="" coords="157,1158,71,1216,68,1212,154,1154"/>
-<area shape="poly" title=" " alt="" coords="137,417,91,409,92,404,138,412"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -2823,40 +3096,40 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="345,1282,345,1116,336,868,325,739,308,620,285,520,270,481,254,451,242,440,246,436,258,448,275,479,290,519,314,619,330,739,341,868,350,1115,350,1282"/>
 <area shape="rect" href="s__string_8c.html#a0256b44d9227f70d2ecf5f0edc996407" title=" " alt="" coords="160,1475,250,1501"/>
 <area shape="poly" title=" " alt="" coords="338,1340,307,1401,285,1435,258,1465,242,1476,238,1472,254,1461,281,1431,303,1398,334,1337"/>
-<area shape="rect" href="s__string_8c.html#aa5370680c5d67dfe07ab01f61e66c213" title=" " alt="" coords="157,1525,253,1552"/>
+<area shape="rect" href="s__string_8c.html#ad14976e25f933f1c17a8a42fa25abb5d" title=" " alt="" coords="159,1525,251,1552"/>
 <area shape="poly" title=" " alt="" coords="343,1340,332,1378,315,1424,290,1472,258,1515,243,1527,239,1523,254,1511,286,1469,310,1422,327,1376,338,1338"/>
-<area shape="rect" href="s__string_8c.html#ae86c4307985b8dd6f96939e0ea964dd4" title=" " alt="" coords="165,1576,244,1603"/>
+<area shape="rect" href="s__string_8c.html#a849e611ec8d2fde099f77927b4a6b441" title=" " alt="" coords="164,1576,246,1603"/>
 <area shape="poly" title=" " alt="" coords="346,1340,338,1387,321,1447,296,1509,278,1539,258,1566,243,1578,240,1573,254,1562,274,1536,291,1507,316,1445,332,1386,341,1339"/>
-<area shape="rect" href="s__string_8c.html#a5448dfd5f1f73e3a465b265cf4d3a5f9" title="Returns the value of the character at position index of s_string str." alt="" coords="169,1627,240,1653"/>
-<area shape="poly" title=" " alt="" coords="348,1340,342,1396,328,1469,301,1546,282,1583,258,1616,243,1629,239,1625,254,1613,277,1580,296,1544,323,1467,337,1395,343,1339"/>
-<area shape="rect" href="s__string_8c.html#a3a888ef6791ca2741e569d92124335c8" title=" " alt="" coords="171,1677,239,1704"/>
-<area shape="poly" title=" " alt="" coords="350,1340,346,1405,334,1490,322,1537,306,1583,285,1627,258,1667,241,1681,238,1677,254,1664,280,1624,301,1581,317,1535,328,1489,341,1404,344,1340"/>
-<area shape="rect" href="s__string_8c.html#afed30d0781465b2f9e425a253e411a3d" title="Compares two s_strings dst and src character by character." alt="" coords="167,1728,242,1755"/>
+<area shape="rect" href="s__string_8c.html#aa5370680c5d67dfe07ab01f61e66c213" title=" " alt="" coords="157,1627,253,1653"/>
+<area shape="poly" title=" " alt="" coords="348,1340,342,1396,328,1469,301,1546,282,1583,258,1616,244,1628,241,1624,254,1613,277,1580,296,1544,323,1467,337,1395,343,1339"/>
+<area shape="rect" href="s__string_8c.html#a811e55e04315508f12ba116a195e5e4c" title=" " alt="" coords="155,1677,254,1704"/>
+<area shape="poly" title=" " alt="" coords="350,1340,346,1405,334,1490,322,1537,306,1583,285,1627,258,1667,244,1679,241,1675,254,1664,280,1624,301,1581,317,1535,328,1489,341,1404,344,1340"/>
+<area shape="rect" href="s__string_8c.html#ae86c4307985b8dd6f96939e0ea964dd4" title=" " alt="" coords="165,1728,244,1755"/>
 <area shape="poly" title=" " alt="" coords="346,1340,335,1425,316,1537,290,1644,275,1687,258,1718,245,1730,241,1726,254,1714,270,1685,285,1643,311,1536,330,1424,341,1339"/>
-<area shape="rect" href="s__string_8c.html#abb7c32786917cd65194f0ad7eb74a981" title="Compares the s_string dst with the C&#45;string src character by character." alt="" coords="160,1829,250,1856"/>
+<area shape="rect" href="s__string_8c.html#a5448dfd5f1f73e3a465b265cf4d3a5f9" title="Returns the value of the character at position index of s_string str." alt="" coords="169,1829,240,1856"/>
 <area shape="poly" title=" " alt="" coords="347,1340,338,1442,320,1581,294,1718,277,1773,258,1812,238,1831,235,1827,254,1809,272,1771,288,1716,315,1580,332,1441,342,1339"/>
-<area shape="rect" href="s__string_8c.html#a04248a23b21c93a6664f85b83c33450f" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="166,1880,244,1907"/>
-<area shape="poly" title=" " alt="" coords="346,1340,310,1628,284,1783,271,1838,258,1870,245,1881,242,1878,254,1866,266,1836,279,1782,305,1628,341,1339"/>
-<area shape="rect" href="s__string_8c.html#a926a52690ace4ef21dfec514ee0cd907" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="159,1931,251,1957"/>
-<area shape="poly" title=" " alt="" coords="347,1340,311,1654,285,1825,272,1886,258,1920,245,1932,242,1928,254,1917,267,1884,280,1824,306,1654,341,1339"/>
+<area shape="rect" href="s__string_8c.html#a3a888ef6791ca2741e569d92124335c8" title=" " alt="" coords="171,1880,239,1907"/>
+<area shape="poly" title=" " alt="" coords="346,1340,310,1628,284,1783,271,1838,258,1870,241,1884,238,1880,254,1866,266,1836,279,1782,305,1628,341,1339"/>
+<area shape="rect" href="s__string_8c.html#afed30d0781465b2f9e425a253e411a3d" title="Compares two s_strings dst and src character by character." alt="" coords="167,1931,242,1957"/>
+<area shape="poly" title=" " alt="" coords="347,1340,311,1654,285,1825,272,1886,258,1920,245,1932,241,1929,254,1917,267,1884,280,1824,306,1654,341,1339"/>
+<area shape="rect" href="s__string_8c.html#abb7c32786917cd65194f0ad7eb74a981" title="Compares the s_string dst with the C&#45;string src character by character." alt="" coords="160,1981,250,2008"/>
+<area shape="poly" title=" " alt="" coords="346,1340,304,1691,278,1878,267,1940,258,1971,245,1983,242,1979,254,1968,262,1939,273,1877,299,1690,341,1339"/>
+<area shape="rect" href="s__string_8c.html#a04248a23b21c93a6664f85b83c33450f" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="166,2032,244,2059"/>
+<area shape="poly" title=" " alt="" coords="347,1340,305,1718,279,1920,268,1988,258,2021,245,2034,242,2030,254,2019,262,1987,274,1919,300,1717,341,1339"/>
+<area shape="rect" href="s__string_8c.html#a926a52690ace4ef21dfec514ee0cd907" title="Returns the position of the first character in an s_string str that belongs to a specified set of cha..." alt="" coords="159,1069,251,1096"/>
+<area shape="poly" title=" " alt="" coords="338,1283,327,1245,310,1199,286,1152,254,1110,239,1099,243,1094,258,1106,290,1149,315,1197,332,1243,343,1282"/>
+<area shape="rect" href="s__string_8c.html#ac75ae9f092304366bff48eecc4e082b3" title=" " alt="" coords="169,1120,240,1147"/>
+<area shape="poly" title=" " alt="" coords="332,1285,300,1227,279,1196,254,1167,231,1149,234,1145,258,1163,283,1193,305,1225,337,1282"/>
+<area shape="rect" href="s__string_8c.html#a76340c1f1f00a13fe9fe465aaeb40cc3" title="Compares two s_strings dst and src character by character ignoring the case." alt="" coords="166,1221,244,1248"/>
+<area shape="poly" title=" " alt="" coords="308,1292,255,1262,232,1251,235,1246,257,1258,311,1287"/>
+<area shape="rect" href="s__string_8c.html#afef25b56af7813df184bd7d0696c5120" title="Compares the s_string dst with the C&#45;string src character by character ignoring the case." alt="" coords="159,1272,251,1299"/>
+<area shape="poly" title=" " alt="" coords="299,1305,251,1296,252,1291,300,1299"/>
+<area shape="rect" href="s__string_8c.html#a6258c5ade4a9d8aa43179d037f5a5ba5" title=" " alt="" coords="171,1323,239,1349"/>
+<area shape="poly" title=" " alt="" coords="299,1322,240,1333,239,1327,298,1317"/>
+<area shape="rect" href="s__string_8c.html#adebcf6a5f159140dfa79b9b5c17a14f9" title=" " alt="" coords="164,1424,246,1451"/>
+<area shape="poly" title=" " alt="" coords="328,1338,296,1372,258,1407,232,1426,229,1421,254,1403,292,1368,324,1334"/>
 <area shape="poly" title=" " alt="" coords="348,1340,339,1538,322,1834,309,1983,295,2116,278,2217,268,2252,258,2275,245,2288,241,2284,254,2272,263,2251,272,2216,289,2115,304,1983,316,1833,334,1538,343,1339"/>
 <area shape="poly" title=" " alt="" coords="349,1340,340,1548,323,1859,311,2017,296,2157,279,2265,269,2302,258,2326,246,2337,242,2333,254,2322,264,2300,273,2264,291,2157,305,2017,318,1859,335,1547,343,1339"/>
-<area shape="rect" href="s__string_8c.html#ae8deb3ecd910c3fd2abab6da43a16e14" title="Compares up to len characters of two s_strings dst and src character by character." alt="" coords="164,1981,246,2008"/>
-<area shape="poly" title=" " alt="" coords="346,1340,304,1691,278,1878,267,1940,258,1971,245,1983,242,1979,254,1968,262,1939,273,1877,299,1690,341,1339"/>
-<area shape="rect" href="s__string_8c.html#a8016b2f66529f9605cabeddabad5e4a3" title="Compares up to len characters of an s_string dst and a C&#45;string src character by character." alt="" coords="157,2032,253,2059"/>
-<area shape="poly" title=" " alt="" coords="347,1340,305,1718,279,1920,268,1988,258,2021,245,2034,242,2030,254,2019,262,1987,274,1919,300,1717,341,1339"/>
-<area shape="rect" href="s__string_8c.html#adcce7114e7ef53d6a79cbe62c6132e82" title="Returns the lesser between len and the number of characters that the s_string str is holding." alt="" coords="168,1069,242,1096"/>
-<area shape="poly" title=" " alt="" coords="338,1283,327,1245,310,1199,286,1152,254,1110,239,1099,243,1094,258,1106,290,1149,315,1197,332,1243,343,1282"/>
-<area shape="rect" href="s__string_8c.html#a6f9affc0f31d4a50923d6ecc699e0f91" title="Returns the position of the first occurrence of any character from the s_string charset in the s_stri..." alt="" coords="167,1120,242,1147"/>
-<area shape="poly" title=" " alt="" coords="332,1285,300,1227,279,1196,254,1167,231,1149,234,1145,258,1163,283,1193,305,1225,337,1282"/>
-<area shape="rect" href="s__string_8c.html#a5b6484dfd758e58fd94f8bccc8e78dc4" title="Returns the position of the first occurrence of any character from the s_string charset in the C&#45;stri..." alt="" coords="160,1221,250,1248"/>
-<area shape="poly" title=" " alt="" coords="308,1292,255,1262,232,1251,235,1246,257,1258,311,1287"/>
-<area shape="rect" href="s__string_8c.html#ab1940a04a4405a7448abfcac3ca0e906" title=" " alt="" coords="169,1272,241,1299"/>
-<area shape="poly" title=" " alt="" coords="299,1305,241,1294,242,1289,300,1299"/>
-<area shape="rect" href="s__string_8c.html#a7f7ec0917b6a39e064c3f8f7530556ff" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="169,1323,240,1349"/>
-<area shape="poly" title=" " alt="" coords="300,1322,241,1332,240,1327,299,1317"/>
-<area shape="rect" href="s__string_8c.html#ac0e4edb87f7ec63c7877be5223c2bcc0" title="Returns the position of the first character in an s_string str that doesn&#39;t belong to a specified set..." alt="" coords="162,1424,248,1451"/>
-<area shape="poly" title=" " alt="" coords="328,1338,296,1372,258,1407,232,1426,229,1421,254,1403,292,1368,324,1334"/>
 </map>
 </div>
 
@@ -3186,6 +3459,108 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="adbb9a338794c03a1438d8059c5ca923a" name="adbb9a338794c03a1438d8059c5ca923a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbb9a338794c03a1438d8059c5ca923a">&#9670;&#160;</a></span>s_strnicmp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int s_strnicmp </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compares up to <em class="arg">len</em> characters of two s_strings <em class="arg">dst</em> and <em class="arg">src</em> character by character ignoring the case. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>The first <a class="el" href="structs__string.html">s_string</a> to be compared. </td></tr>
+    <tr><td class="paramname">src</td><td>The second <a class="el" href="structs__string.html">s_string</a> to be compared. </td></tr>
+    <tr><td class="paramname">len</td><td>The maximum number of characters to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A negative value if <em class="arg">dst</em> is lexicographically before <em class="arg">src</em>, zero if both are equal and positive if <em class="arg">dst</em> is lexicographically after <em class="arg">src</em>. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_adbb9a338794c03a1438d8059c5ca923a_cgraph.png" border="0" usemap="#as__string_8c_adbb9a338794c03a1438d8059c5ca923a_cgraph" alt=""/></div>
+<map name="as__string_8c_adbb9a338794c03a1438d8059c5ca923a_cgraph" id="as__string_8c_adbb9a338794c03a1438d8059c5ca923a_cgraph">
+<area shape="rect" title="Compares up to len characters of two s_strings dst and src character by character ignoring the case." alt="" coords="5,31,91,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="139,5,228,32"/>
+<area shape="poly" title=" " alt="" coords="91,33,123,27,124,33,92,39"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="150,56,217,83"/>
+<area shape="poly" title=" " alt="" coords="92,49,135,58,134,63,91,55"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="276,56,368,83"/>
+<area shape="poly" title=" " alt="" coords="218,67,261,67,261,72,218,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae571ada50081c2e5cbac1b4cb66c0fc8" name="ae571ada50081c2e5cbac1b4cb66c0fc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae571ada50081c2e5cbac1b4cb66c0fc8">&#9670;&#160;</a></span>s_strnicmp_c()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int s_strnicmp_c </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *restrict</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compares up to <em class="arg">len</em> characters of an <a class="el" href="structs__string.html">s_string</a> <em class="arg">dst</em> and a C-string <em class="arg">src</em> character by character ignoring the case. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>The first string to be compared. </td></tr>
+    <tr><td class="paramname">src</td><td>The second string to be compared. </td></tr>
+    <tr><td class="paramname">len</td><td>The maximum number of characters to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A negative value if <em class="arg">dst</em> is lexicographically before <em class="arg">src</em>, zero if both are equal, and positive if <em class="arg">dst</em> is lexicographically after <em class="arg">src</em>. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_ae571ada50081c2e5cbac1b4cb66c0fc8_cgraph.png" border="0" usemap="#as__string_8c_ae571ada50081c2e5cbac1b4cb66c0fc8_cgraph" alt=""/></div>
+<map name="as__string_8c_ae571ada50081c2e5cbac1b4cb66c0fc8_cgraph" id="as__string_8c_ae571ada50081c2e5cbac1b4cb66c0fc8_cgraph">
+<area shape="rect" title="Compares up to len characters of an s_string dst and a C&#45;string src character by character ignoring t..." alt="" coords="5,31,105,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="153,5,242,32"/>
+<area shape="poly" title=" " alt="" coords="105,33,137,27,138,32,106,38"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="164,56,231,83"/>
+<area shape="poly" title=" " alt="" coords="106,50,149,58,148,63,105,55"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="290,56,382,83"/>
+<area shape="poly" title=" " alt="" coords="232,67,275,67,275,72,232,72"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="adcce7114e7ef53d6a79cbe62c6132e82" name="adcce7114e7ef53d6a79cbe62c6132e82"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adcce7114e7ef53d6a79cbe62c6132e82">&#9670;&#160;</a></span>s_strnlen()</h2>
 
@@ -3304,7 +3679,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the position of the first occurrence of any character from the <a class="el" href="structs__string.html">s_string</a> <em class="arg">charset</em> in the C-string <em class="arg">str</em>, or -1 if the two strings have no characters in common. </p>
+<p>Returns the position of the first occurrence of any character from the C-string <em class="arg">charset</em> in the <a class="el" href="structs__string.html">s_string</a> <em class="arg">str</em>, or -1 if the two strings have no characters in common. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will be scanned to find any characters from <em class="arg">charset</em>. </td></tr>
@@ -3319,7 +3694,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="s__string_8c_a5b6484dfd758e58fd94f8bccc8e78dc4_cgraph.png" border="0" usemap="#as__string_8c_a5b6484dfd758e58fd94f8bccc8e78dc4_cgraph" alt=""/></div>
 <map name="as__string_8c_a5b6484dfd758e58fd94f8bccc8e78dc4_cgraph" id="as__string_8c_a5b6484dfd758e58fd94f8bccc8e78dc4_cgraph">
-<area shape="rect" title="Returns the position of the first occurrence of any character from the s_string charset in the C&#45;stri..." alt="" coords="5,31,95,57"/>
+<area shape="rect" title="Returns the position of the first occurrence of any character from the C&#45;string charset in the s_stri..." alt="" coords="5,31,95,57"/>
 <area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="143,5,232,32"/>
 <area shape="poly" title=" " alt="" coords="95,33,127,27,128,32,96,38"/>
 <area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="154,56,221,83"/>
@@ -3366,6 +3741,46 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="79,49,122,57,121,62,78,54"/>
 <area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="263,56,355,83"/>
 <area shape="poly" title=" " alt="" coords="205,67,248,67,248,72,205,72"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a66601e744840a3069c7b0c3438343904" name="a66601e744840a3069c7b0c3438343904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66601e744840a3069c7b0c3438343904">&#9670;&#160;</a></span>s_strrichr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_strrichr </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *</td>          <td class="paramname"><span class="paramname"><em>str</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t</td>          <td class="paramname"><span class="paramname"><em>start</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_a66601e744840a3069c7b0c3438343904_cgraph.png" border="0" usemap="#as__string_8c_a66601e744840a3069c7b0c3438343904_cgraph" alt=""/></div>
+<map name="as__string_8c_a66601e744840a3069c7b0c3438343904_cgraph" id="as__string_8c_a66601e744840a3069c7b0c3438343904_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,81,57"/>
+<area shape="rect" href="s__string_8c.html#a2d9d72d91c14e31869f8dbf5c55a92a2" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str...." alt="" coords="129,5,218,32"/>
+<area shape="poly" title=" " alt="" coords="81,34,113,28,114,33,82,39"/>
+<area shape="rect" href="s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a" title="Returns the number of characters that the s_string str is holding." alt="" coords="140,56,207,83"/>
+<area shape="poly" title=" " alt="" coords="82,49,125,57,124,62,81,54"/>
+<area shape="rect" href="s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="266,56,358,83"/>
+<area shape="poly" title=" " alt="" coords="208,67,251,67,251,72,208,72"/>
 </map>
 </div>
 
