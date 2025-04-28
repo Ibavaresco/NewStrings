@@ -59,15 +59,43 @@ typedef struct s_string s_string_t;
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
+				maxsize can be at most 254 characters. The resulting string is
+				initialized with constant \a src.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+\param	src		A C-string (null terminated array of characters) that will be
+				the initial value of the s_string.
+*//*==========================================================================*/
+#define static_s_string_tiny_i( name, maxsize, src )        static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
+                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), _##name##_buffer, src };
+/*=========================================================================*//**
+\brief          Creates a static (static local or file scope variable) s_string
+				object capable of holding up to \a maxsize characters. \a
 				maxsize can be at most 254 characters. The resulting string
 				starts empty.
 \param	name    The name of the variable.
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define static_s_string_tiny( name, maxsize )               static uint8_t _##name##_buffer[1+1+1+maxsize+1]={ 0x21, ( maxsize >> 0 ) & 0xff,\
-                                                            0x00, 0x00 }; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer
+#define static_s_string_tiny( name, maxsize )               static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
+                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a static (static local or file scope variable) s_string
+				object capable of holding up to \a maxsize characters. \a
+				maxsize can be at most 65534 characters. The resulting string is
+				initialized with constant \a src.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+\param	src		A C-string (null terminated array of characters) that will be
+				the initial value of the s_string.
+*//*==========================================================================*/
+#define static_s_string_small_i( name, maxsize, src )       static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
+                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -77,35 +105,106 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define static_s_string_small( name, maxsize )              static uint8_t _##name##_buffer[1+2+2+maxsize+1]={ 0x29, ( maxsize >> 0 ) & 0xff, \
-                                                            ( maxsize >> 8 )& 0xff, \
-                                                            0x00, 0x00, 0x00 }; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer
+#define static_s_string_small( name, maxsize )              static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
+                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a global s_string object capable of holding up to \a
-				maxsize characters. \a maxsize can be at most 254 characters.
-				Must be used only at file scope. The resulting string starts
-				empty.
+\brief          Creates a static (static local or file scope variable) s_string
+				object capable of holding up to \a maxsize characters. \a
+				maxsize can be at most 4294967284 characters. The resulting
+				string is initialized with constant \a src.
 \param	name    The name of the variable.
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define global_s_string_tiny( name, maxsize )               static uint8_t _##name##_buffer[1+1+1+maxsize+1]={ 0x21, ( maxsize >> 0 ) & 0xff, \
-                                                            0x00, 0x00 }; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer
+#define static_s_string_large_i( name, maxsize, src )       static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
+                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a global s_string object capable of holding up to \a
-				maxsize characters. \a maxsize can be at most 65534 characters.
-				Must be used only at file scope. The resulting string starts
-				empty.
+\brief          Creates a static (static local or file scope variable) s_string
+				object capable of holding up to \a maxsize characters. \a
+				maxsize can be at most 4294967284 characters. The resulting
+				string starts empty.
 \param	name    The name of the variable.
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define global_s_string_small( name, maxsize )              static uint8_t _##name##_buffer[1+2+2+maxsize+1]={ 0x29, ( maxsize >> 0 ) & 0xff, \
-                                                            ( maxsize >> 8 )& 0xff, \
-                                                            0x00, 0x00, 0x00 }; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer
+#define static_s_string_large( name, maxsize )              static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
+                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a static (static local or file scope variable) s_string
+				object capable of holding up to \a maxsize characters. \a
+				maxsize can be at most 254 characters. The resulting string is
+				initialized with constant \a src.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+\param	src		A C-string (null terminated array of characters) that will be
+				the initial value of the s_string.
+*//*==========================================================================*/
+#define global_s_string_tiny_i( name, maxsize, src )        static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
+                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), _##name##_buffer, src };
+/*=========================================================================*//**
+\brief          Creates a global file scope s_string object capable of holding
+                up to \a maxsize characters. \a maxsize can be at most 254
+                characters. The resulting string starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define global_s_string_tiny( name, maxsize )               static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
+                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a global file scope s_string object capable of holding
+                up to \a maxsize characters. \a maxsize can be at most 65534
+                characters. The resulting string is initialized with constant \a
+                src.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+\param	src		A C-string (null terminated array of characters) that will be
+				the initial value of the s_string.
+*//*==========================================================================*/
+#define global_s_string_small_i( name, maxsize, src )       static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
+                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
+/*=========================================================================*//**
+\brief          Creates a global file scope s_string object capable of holding
+                up to \a maxsize characters. \a maxsize can be at most 65534
+                characters. The resulting string starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define global_s_string_small( name, maxsize )              static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
+                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a GLOBAL file scope s_string object capable of holding
+                up to \a maxsize characters. \a maxsize can be at most
+                4294967284 characters. The resulting string is initialized with
+                constant \a src.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define global_s_string_large_i( name, maxsize, src )       static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
+                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
+/*=========================================================================*//**
+\brief          Creates a global file scope s_string object capable of holding
+                up to \a maxsize characters. \a maxsize can be at most
+                4294967284 characters. The resulting string starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define global_s_string_large( name, maxsize )              static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
+                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
+                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
 /*=========================================================================*//**
 \brief          Returns the smaller of two ssize_t (signed) values.
 \param a		The first value.

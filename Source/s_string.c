@@ -257,14 +257,15 @@ static char *s_cstr( s_string_t * restrict str )
 /*============================================================================*/
 const char *s_constcstr( const s_string_t * restrict str )
 	{
-	size_t  NumCounters;
-	size_t  Offset;
+    static const char   EmptyString = '\0';
+	size_t              NumCounters;
+	size_t              Offset;
 
 	if( str == NULL )
-		return NULL;
+		return &EmptyString;
 
 	if( str->MustBeZero != 0 )
-		return NULL;
+		return &EmptyString;
 
 	NumCounters	= 1 + str->Sizes;
 	Offset		= ( str->Area == 3 ? sizeof( size_t ) : 0 ) + NumCounters * ( 1 << str->Bits );
@@ -2866,4 +2867,67 @@ void _s_string_init( s_string_t *str, size_t len, int area )
 
     *Ptr            = '\0';
     }
+/*============================================================================*/
+/* Create a dummy variable in the section "s_string_init". This section holds
+the initialization information for all the static s_strings. If we do not create
+the dummy variable and no other static s_string exists, the section will not be
+created. */
+static const void __attribute__((section("s_string_init"),used)) *s_string_init_dummy    = (void*)0x123456789abcdef0;
+
+/* This symbol will be created by the linker with the address to the start of
+section "s_string_init". If the section doesn't exist, this symbol will not be
+created, resulting in a linker error. */
+extern const void *__start_s_string_init;
+
+/* This symbol will be created by the linker with the address to the end of
+section "s_string_init". If the section doesn't exist, this symbol will not be
+created, resulting in a linker error. */
+extern const void *__stop_s_string_init;
+/*============================================================================*/
+/* This function will be called before function 'main', to initialize all static
+s_string objects. */
+
+#include <stdio.h>
+
+__attribute__((constructor)) void __s_string_global_init( void )
+	{
+    const void  **p;
+
+    for( p = &__start_s_string_init; p < &__stop_s_string_init; p++ )
+        {
+        uint64_t    Temp    =(uint64_t)*p;
+        uint64_t    Length  = Temp >> 8;
+
+        switch( (uint8_t)Temp )
+            {
+            default:
+                break;
+            case 0x21:
+                Length  = Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+            case 0x23:
+                Length  = Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+            case 0x25:
+                {
+                Length  = Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
+                s_string_t  *Str    = (s_string_t*)*++p;
+                _s_string_init( Str, Length, 0 );
+                s_strcpy_c( Str, *++p );
+                break;
+                }
+            case 0x22:
+                Length  = Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+            case 0x24:
+                Length  = Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+            case 0x26:
+                {
+                Length  = Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
+                s_string_t  *Str    = (s_string_t*)*++p;
+                _s_string_init( Str, Length, 0 );
+                s_strcpy_c( Str, "" );
+                break;
+                }
+            }
+        }
+    printf( "\n" );
+	}
 /*============================================================================*/
