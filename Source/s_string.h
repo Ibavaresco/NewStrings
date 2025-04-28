@@ -133,10 +133,10 @@ typedef struct s_string s_string_t;
                                                             static s_string_t * const name = (s_string_t*)_##name##_buffer; \
                                                             static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 254 characters. The resulting string is
-				initialized with constant \a src.
+\brief          Creates a global file scope s_string object capable of holding
+                up to \a maxsize characters. \a maxsize can be at most 254
+                characters. The resulting string is nitialized with constant \a
+                src.
 \param	name    The name of the variable.
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
@@ -183,7 +183,7 @@ typedef struct s_string s_string_t;
                                                             s_string_t * const name = (s_string_t*)_##name##_buffer; \
                                                             static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a GLOBAL file scope s_string object capable of holding
+\brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most
                 4294967284 characters. The resulting string is initialized with
                 constant \a src.
