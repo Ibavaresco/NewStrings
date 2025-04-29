@@ -206,6 +206,32 @@ typedef struct s_string s_string_t;
                                                             s_string_t * const name = (s_string_t*)_##name##_buffer; \
                                                             static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
 /*=========================================================================*//**
+\brief          Creates a structure field of type s_string capable of holding
+                up to \a maxsize characters. \a maxsize can be at most 65534
+                characters.
+\param	name    The name of the field.
+\param	maxsize The maximum number of characters that the field will be able to
+				store.
+*//*==========================================================================*/
+#define field_s_string(name,maxsize)        s_string_t  *(name);uint8_t _##name##_buffer[1+2+2+(maxsize)+1]
+/*=========================================================================*//**
+\brief          Initialize an s_string field in a structure.
+\param	s       The name of the structure variable. If it is a pointer it must
+                be dereferenced.
+\param	name    The name of the s_string field to be initialized.
+*//*==========================================================================*/
+#define field_s_string_init(s,name)         do{(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);}while(0)
+/*=========================================================================*//**
+\brief          Initialize an s_string field in a structure with an initial
+                value.
+\param	s       The name of the structure variable. If it is a pointerm it must
+                be dereferenced.
+\param	name    The name of the s_string field to be initialized.
+\param	src		A C-string (null terminated array of characters) that will be
+				the initial value of the field.
+*//*==========================================================================*/
+#define field_s_string_init_i(s,name,src)   do{(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);s_strcpy_c((s).name,src);}while(0)
+/*=========================================================================*//**
 \brief          Returns the smaller of two ssize_t (signed) values.
 \param a		The first value.
 \param b		The second value.
