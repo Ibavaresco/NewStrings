@@ -135,7 +135,7 @@ typedef struct s_string s_string_t;
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most 254
-                characters. The resulting string is nitialized with constant \a
+                characters. The resulting string is initialized with constant \a
                 src.
 \param	name    The name of the variable.
 \param	maxsize The maximum number of characters that the object will be able to
