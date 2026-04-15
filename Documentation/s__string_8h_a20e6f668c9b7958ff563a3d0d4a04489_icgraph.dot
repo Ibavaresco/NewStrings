@@ -1,0 +1,18 @@
+digraph "s_strcpy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="s_strcpy",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Copies the contents of the s_string pointed to by src into the s_string pointed to by dst...."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="s_strdup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a4d85fb34202cf5e7014462a8c518e126",tooltip="Creates in the heap a dynamically allocated copy of the s_string src."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="s_strldup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a6a8a6ade9838bf318eca056818186087",tooltip="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="s_strndup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a20745735edaaaec6e5bee9264186ec0c",tooltip="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="SplitPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8c.html#a0cddf3f8d387d298a9eb59a5a96320b5",tooltip=" "];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8c.html#ad021e264f22928004ae9a99cd789662c",tooltip=" "];
+}

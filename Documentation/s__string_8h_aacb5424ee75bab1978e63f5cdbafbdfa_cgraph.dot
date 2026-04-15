@@ -1,0 +1,23 @@
+digraph "s_strtok_m"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="s_strtok_m",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Finds the next token in the s_string str delimited by characters from the s_string delim,..."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="s_constcstr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#af6e9eaeb8ce8edae351613d8496d3c19",tooltip="Returns a 'const char*' to the C-string that holds the characters in s_string str,..."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="s_strlen",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#af14f107e68b813b0f94a2c45cc38af5a",tooltip="Returns the number of characters that the s_string str is holding."];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="s_strmaxlen",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#acf24d98b9f1057c966b8e13651588dfd",tooltip="Returns the maximum number of characters that the s_string str can hold."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="s_strldup_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#a8bddf0a9b74d167bb77daba8182fcb5e",tooltip="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..."];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="_s_calcsize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#a524bdb86ae17ef9bdcfea829297ab74d",tooltip="Calculates the size in bytes required to hold an s_string object capable of storing up to len charact..."];
+  Node5 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="_s_string_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#accb0272379ce63d85157c2c9a5712d6a",tooltip=" "];
+  Node5 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="s_strcpy_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#ac37fd17d1fd45a07841e30cdd04e4967",tooltip="Copies the contents of the C-string pointed to by src into the s_string pointed to by dst...."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

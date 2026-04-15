@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['s_5fstring_0',['s_string',['../structs__string.html',1,'']]]
+  ['my_5fstruct_5ft_112',['my_struct_t',['../structmy__struct__t.html',1,'']]]
 ];

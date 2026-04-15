@@ -300,6 +300,15 @@ size_t       s_strlen       ( const s_string_t * restrict str );
 				length of \a str is longer.
 \returns        The length of the s_string \a str.
 *//*==========================================================================*/
+size_t       s_strllen      ( const s_string_t * restrict str, size_t len );
+/*=========================================================================*//**
+\brief          Returns the greater between \a len and the number of characters
+				that the s_string \a str is holding.
+\param str      Pointer to the s_string.
+\param len      The minimum value that the function must return, in case the
+				length of \a str is shorter.
+\returns        The length of the s_string \a str.
+*//*==========================================================================*/
 size_t       s_strnlen      ( const s_string_t * restrict str, size_t len );
 /*=========================================================================*//**
 \brief          Finds the first occurrence of character \a c in the s_string \a
@@ -493,6 +502,26 @@ ssize_t      s_setcharat    (       s_string_t * restrict dst, ssize_t index, in
 				appended or a negative value if an error occurred.
 *//*==========================================================================*/
 ssize_t      s_appendchar   (       s_string_t * restrict dst, int value );
+/*=========================================================================*//**
+\brief          Deletes a portion of s_string \a str between indexes \a start and
+				\a end, inclusive.
+\param str      Pointer to the s_string to have characters deleted.
+\param start    The index of the first character of the portion to be deleted.
+\param end      The index of the last character of the portion to be deleted.
+\returns        The new length of \a dst after the deletion or a negative value
+				if an error occurred.
+*//*==========================================================================*/
+ssize_t      s_delete_e		(       s_string_t * restrict str, ssize_t start, ssize_t end );
+/*=========================================================================*//**
+\brief          Deletes a portion of s_string \a str starting at index \a start
+				and with length \a 'len'.
+\param str      Pointer to the s_string to have characters deleted.
+\param start    The index of the first character of the portion to be deleted.
+\param len      The length of the portion to be deleted.
+\returns        The new length of \a dst after the deletion or a negative value
+				if an error occurred.
+*//*==========================================================================*/
+ssize_t      s_delete_l		(       s_string_t * restrict str, ssize_t start, size_t len );
 /*=========================================================================*//**
 \brief          Truncates the length of string \a dst to at most \a len
 				characters.

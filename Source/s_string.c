@@ -174,9 +174,14 @@ size_t s_strlen( const s_string_t * restrict str )
 	return 0;
 	}
 /*============================================================================*/
-size_t s_strnlen( const s_string_t * restrict str, size_t len )
+size_t s_strllen( const s_string_t * restrict str, size_t len )
 	{
 	return ssmin( len, s_strlen( str ));
+	}
+/*============================================================================*/
+size_t s_strnlen( const s_string_t * restrict str, size_t len )
+	{
+	return ssmax( len, s_strlen( str ));
 	}
 /*============================================================================*/
 static int SetUsedLen( s_string_t * restrict str, size_t NewLength )
@@ -896,6 +901,7 @@ int s_strcmp( const s_string_t * restrict dst, ssize_t dststart, const s_string_
 	size_t		DstLen, SrcLen;
 
 
+#if 0
 	/* Both dst and src are null pointers... */
 	if( dst == NULL && src == NULL )
 		/* ...so both are equal. */
@@ -908,12 +914,24 @@ int s_strcmp( const s_string_t * restrict dst, ssize_t dststart, const s_string_
 	if( src == NULL )
 		/* ...so dst is bigger than src. */
 		return +1;
-
+#else
 	DstLen		= s_strlen( dst );
+	SrcLen		= s_strlen( src );
+
+	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
+	if( DstLen == 0 && SrcLen == 0 )
+		/* ...so they are equal. */
+		return 0;
+	if( DstLen == 0 )
+		return -1;
+	if( SrcLen == 0 )
+		return +1;
+#endif
+//	DstLen		= s_strlen( dst );
 	if( dststart < -(ssize_t)DstLen || dststart >= DstLen )
 		dststart	= DstLen;
 
-	SrcLen		= s_strlen( src );
+//	SrcLen		= s_strlen( src );
 	if( srcstart < -(ssize_t)SrcLen || srcstart >= SrcLen )
 		srcstart	= SrcLen;
 

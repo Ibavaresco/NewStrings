@@ -1,5 +1,6 @@
 /*=============================================================================*/
 #include <stdio.h>
+#include <string.h>
 /*=============================================================================*/
 #include "s_string.h"
 /*=============================================================================*/
@@ -13,6 +14,9 @@ void SplitPath( const s_string_t *pFullPath, s_string_t *pPath, s_string_t *pNam
 	{
 	ssize_t	p, q;
 
+	if( pFullPath == NULL || ( pPath == NULL && pName == NULL && pExt == NULL ))
+		return;
+
 	/* Search 'pFullPath' for a path separator character, starting from the end towards the beginning...*/
 	if(( p = s_strrchr( pFullPath, -1, PATH_SEPARATOR_CHAR )) >= 0 )
 		{
@@ -24,8 +28,8 @@ void SplitPath( const s_string_t *pFullPath, s_string_t *pPath, s_string_t *pNam
 		p++;
 		}
 #if			!defined __linux__
-	/* Search 'pFullPath' for a drive separator character, starting from the end towards the beginning...*/
-	else if(( p = s_strrchr( pFullPath, -1, ':' )) >= 0 )
+	/* Search 'pFullPath' for a device separator character, starting from the beginning towards the end...*/
+	else if(( p = s_strchr( pFullPath, 0, ':' )) >= 0 )
 		{
 		/* ...the character was found. */
 		if( pPath != NULL )	// This test is superfluous because 's_extract_e' is safe and tests for NULL pointers.
@@ -71,11 +75,11 @@ void SplitPath( const s_string_t *pFullPath, s_string_t *pPath, s_string_t *pNam
 /*============================================================================*/
 int main( int ArgC, char *ArgV[] )
 	{
-	auto_s_string( Argi, 256 );
-	auto_s_string( Path, 256 );
-	auto_s_string( Name, 256 );
-	auto_s_string( Ext, 256 );
-	int	i;
+	auto_s_string(	Argi, 256 );
+	auto_s_string(	Path, 256 );
+	auto_s_string(	Name, 256 );
+	auto_s_string(	Ext, 256 );
+	int				i;
 
 	for( i = 0; i < ArgC; i++ )
 		{

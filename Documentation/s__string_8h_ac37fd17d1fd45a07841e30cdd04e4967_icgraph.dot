@@ -1,0 +1,40 @@
+digraph "s_strcpy_c"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="s_strcpy_c",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Copies the contents of the C-string pointed to by src into the s_string pointed to by dst...."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8c.html#ad021e264f22928004ae9a99cd789662c",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="s_extract_e",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a199110a9f1fb62576398bbe3a6bd1845",tooltip="Extracts a sequence of characters from the s_string src located between indexes start and end,..."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="SplitPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8c.html#a0cddf3f8d387d298a9eb59a5a96320b5",tooltip=" "];
+  Node4 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="s_extract_ec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a33a80e3ac73ee71053d0073e9710d844",tooltip="Extracts a sequence of characters from the C-string src located between indexes start and end,..."];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="s_extract_l",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a322f8c3d12b61780520453e4f9807c74",tooltip="Extracts a sequence of characters from the s_string src starting at index start and with length len,..."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="s_extract_lc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a214400bcd8af2e7ac2993d1eeeb3624d",tooltip="Extracts a sequence of characters from the C-string src starting at index start and with length len,..."];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="s_strdup_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#abcc1dec3d61ed0c7871e3ca2e70c7cc6",tooltip="Creates in the heap a dynamically allocated copy of the C-string src."];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="s_strldup_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a8bddf0a9b74d167bb77daba8182fcb5e",tooltip="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..."];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="s_strtok_m",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#aacb5424ee75bab1978e63f5cdbafbdfa",tooltip="Finds the next token in the s_string str delimited by characters from the s_string delim,..."];
+  Node9 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="s_strtok_mc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a0848db477e083c28ff6ad35c319b5e07",tooltip="Finds the next token in the s_string str delimited by characters from the C-string delim,..."];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="s_strndup_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a3099b7c07a21832fb1552597960e604d",tooltip="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..."];
+  Node12 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="s_extract_me",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#ac89b1e336195d4961cca989b79a88bd7",tooltip="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..."];
+  Node12 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="s_extract_mec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a6ddc78218e41406d132739188b35183c",tooltip="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..."];
+  Node12 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="s_extract_ml",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#ae694ad8294aae0de35d6f4246162e72b",tooltip="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..."];
+  Node12 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="s_extract_mlc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8h.html#a0003afff6be3d13ef6203e10db920e22",tooltip="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}
