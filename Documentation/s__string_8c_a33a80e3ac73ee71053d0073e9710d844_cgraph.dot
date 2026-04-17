@@ -8,5 +8,5 @@ digraph "s_extract_ec"
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="s_strcpy_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#ac37fd17d1fd45a07841e30cdd04e4967",tooltip="Copies the contents of the C-string pointed to by src into the s_string pointed to by dst...."];
   Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="s_strlcpy_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#a34121ad74651e8e161a765b8fb0eb0eb",tooltip="Copies up to len characters of the contents of the C-string pointed to by src into the s_string point..."];
+  Node3 [label="s_strlcpy_c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$s__string_8c.html#ad3bd2c4f1992d26c6d33c83c1ab6be1c",tooltip="Copies up to len characters of the contents of the C-string pointed to by src into the s_string point..."];
 }
