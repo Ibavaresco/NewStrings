@@ -264,7 +264,7 @@ const char *s_constcstr( const s_string_t * restrict str, ssize_t start )
 	{
 	static const char	EmptyString[] = "";
 	size_t				NumCounters;
-	size_t				Offset;
+	ssize_t				Offset;
 	ssize_t				UsedLen;
 
 	if( str == NULL || str->MustBeZero != 0 )
@@ -272,7 +272,7 @@ const char *s_constcstr( const s_string_t * restrict str, ssize_t start )
 
 	UsedLen	= s_strlen( str );
 
-	if( start < -(ssize_t)UsedLen || start >= (ssize_t)UsedLen )
+	if( start < -UsedLen || start >= UsedLen )
 		return EmptyString;
 
 	if( start < 0 )
@@ -618,7 +618,7 @@ int s_strcat_c( s_string_t * restrict dst, const char * restrict src )
 	return DstUsedLen;
 	}
 /*============================================================================*/
-int s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, size_t len )
+int s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
 	{
 	ssize_t		ResultLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -3172,7 +3172,206 @@ ssize_t s_extract_lc( s_string_t * restrict dst, const char * restrict src, ssiz
 	return s_strlcpy_c( dst, src, len );
 	}
 /*============================================================================*/
-ssize_t s_replace_e( s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler )
+ssize_t s_fill_l( s_string_t * restrict dst, ssize_t start, ssize_t len, int filler )
+	{
+	}
+/*============================================================================*/
+ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart )
+	{
+	}
+/*============================================================================*/
+ssize_t s_fill_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const char		  * restrict src )
+	{
+	}
+/*=========================================================================*//**
+s_replace_de tested OK!
+*//*==========================================================================*/
+ssize_t s_replace_de( s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler )
+	{
+	ssize_t		SrcLen, DstLen, DstMaxLen, Len, TransfLen;
+	ssize_t 	LeftFill	= 0, RightFill	= 0;
+	char		*DstPtr;
+	const char	*SrcPtr;
+
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
+		return -1;
+
+	DstMaxLen	= s_strmaxlen( dst );
+
+	if( start >= DstMaxLen )
+		return 0;
+
+	DstLen		= s_strlen( dst );
+
+	if( end < -DstLen )
+		return 0;
+
+	if( end < 0 )
+		end	   += DstLen;
+	else if( end >= DstMaxLen )
+		end		= DstMaxLen - 1;
+
+	if( start < 0 )
+		start  += DstLen;
+
+	if( end < start )
+		return -1;
+
+	SrcLen		= s_strlen( src );
+
+	if( srcstart < 0 )
+		srcstart   += SrcLen;
+
+	Len			= end - start + 1;
+
+	if( start < 0 )
+		{
+		Len			= end - 0 + 1;
+		srcstart   -= start;
+		start		= 0;
+		}
+
+	TransfLen		= Len;
+
+	if( srcstart < -Len || srcstart >= SrcLen )
+		{
+		if( filler != '\0' )
+			LeftFill	= Len;
+		srcstart	= SrcLen;
+		TransfLen	= 0;
+		}
+	else if( srcstart < 0 )
+		{
+		if( filler != '\0' )
+			LeftFill	= -srcstart;
+		else
+			{
+			start	   -= srcstart;
+			Len		   += srcstart;
+			}
+		TransfLen  += srcstart;
+		srcstart	= 0;
+		}
+
+	if( Len - LeftFill > SrcLen - srcstart )
+		{
+		TransfLen	= SrcLen - srcstart;
+		if( filler != '\0' )
+			RightFill	= Len - LeftFill - TransfLen;
+		else
+			Len		    = LeftFill + TransfLen;;
+		}
+
+	/* There are one or more gaps to fill, but the filler is zero... */
+	if( filler == 0 && ( LeftFill > 0 || RightFill > 0 || start > DstLen ))
+		/* ...the operation is not possible. */
+		return -1;
+
+	if(( DstPtr = s_cstr( dst )) == NULL )
+		return -1;
+
+	if(( SrcPtr = s_constcstr( src, 0 )) == NULL )
+		return -1;
+
+	/* There s a gap between the current end of the string and the start position... */
+	if( start > DstLen )
+		/* ...let's fill the gap with the 'filler'. */
+		memset( &DstPtr[DstLen], filler, start - DstLen );
+
+	/* There is a gap on the left of the destination... */
+	if( LeftFill > 0 )
+		/* ...let's fill the gap with the 'filler'. */
+		memset( &DstPtr[start], filler, LeftFill );
+
+	if( TransfLen > 0 )
+		memcpy( &DstPtr[start+LeftFill], &SrcPtr[srcstart], TransfLen );
+
+	if( RightFill > 0 )
+		memset( &DstPtr[start+LeftFill+TransfLen], filler, RightFill );
+
+	/* Let's calculate how many characters were changed in the destination. */
+	LeftFill		= 0;
+	if( start > DstLen )
+		LeftFill	= start - DstLen;
+
+	if( start + Len > DstLen )
+		DstLen		= start + Len;
+
+	DstPtr[DstLen]	= '\0';
+
+	SetUsedLen( dst, DstLen );
+
+	return Len + LeftFill;
+
+#if 0
+	if( end >= DstMaxLen )
+		end		= DstMaxLen - 1;
+	else if( end < 0 )
+		end	   += DstLen;
+
+	if( start < 0 )
+		start  += DstLen;
+
+	if( end < start )
+		return -1;
+
+	SrcLen		= s_strlen( src );
+
+	if( srcstart < 0 )
+		srcstart   += SrcLen;
+
+	Len	= end - start + 1;
+
+	if( start < 0 )
+		{
+		Len			= end - 0 + 1;
+		srcstart   -= start;
+		start		= 0;
+		}
+
+	if( srcstart < 0 )
+		{
+		LeftFill	= ssmin( LeftFill - srcstart, Len );
+		srcstart	= 0;
+		}
+
+	if( srcstart > SrcLen )
+		srcstart	= SrcLen;
+
+	if( srcstart + Len >= SrcLen )
+		RightFill	= SrcLen - srcstart;
+
+	/* There are one or more gaps to fill, but the filler is zero... */
+	if( filler == 0 && ( LeftFill > 0 || RightFill > 0 || start > DstLen ))
+		/* ...the operation is not possible. */
+		return -1;
+
+	if(( DstPtr = s_cstr( dst )) == NULL )
+		return -1;
+
+	if(( SrcPtr = s_constcstr( src, 0 )) == NULL )
+		return -1;
+
+	if( start > DstLen )
+		memset( &DstPtr[DstLen], filler, start - DstLen );
+
+	if( LeftFill > 0 )
+		{
+		memset( &DstPtr[start], filler, LeftFill );
+		start  += LeftFill;
+		}
+
+	memcpy( &DstPtr[start], &SrcPtr[srcstart], Len - LeftFill - RightFill );
+	start  += Len - LeftFill - RightFill;
+
+	if( RightFill > 0 )
+		memset( &DstPtr[start], filler, RightFill );
+
+	return Len;
+#endif
+	}
+/*============================================================================*/
+ssize_t s_replace_se( s_string_t * restrict dst, ssize_t start, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler )
 	{
 	ssize_t	SrcLen, DstLen, DstMaxLen, Len, SrcStart;
 	char	*DstPtr;
@@ -3180,13 +3379,19 @@ ssize_t s_replace_e( s_string_t * restrict dst, ssize_t start, ssize_t end, cons
 	if( dst == NULL || src == NULL )
 		return -1;
 
-	if( start >= ( DstMaxLen = s_strmaxlen( dst )))
+	DstMaxLen = s_strmaxlen( dst );
+
+	if( start >= DstMaxLen )
 		return -1;
 
-	if( end < -( DstLen = s_strlen( dst )))
+	SrcLen = s_strlen( src );
+
+	if( srcend < -SrcLen )
 		return -1;
 
 	SrcStart	= 0;
+
+	DstLen = s_strlen( dst );
 
 	if( start < -DstLen )
 		{
@@ -3196,17 +3401,15 @@ ssize_t s_replace_e( s_string_t * restrict dst, ssize_t start, ssize_t end, cons
 	else if( start < 0 )
 		start  += DstLen;
 
-	if( end >= DstMaxLen )
-		end		= DstMaxLen - 1;
-	else if( end < 0 )
-		end	   += DstLen;
+	if( srcend >= DstMaxLen )
+		srcend		= DstMaxLen - 1;
+	else if( srcend < 0 )
+		srcend	   += DstLen;
 
-	SrcLen = s_strlen( src );
-
-	if( start > end || SrcStart >= SrcLen )
+	if( srcstart > srcend || SrcStart >= SrcLen )
 		return -1;
 
-	Len			= ssmin( end - start + 1, SrcLen - SrcStart );
+	Len			= ssmin( srcend - start + 1, SrcLen - SrcStart );
 	DstPtr		= s_cstr( dst );
 
 	if( start > DstLen )
@@ -3228,7 +3431,7 @@ ssize_t s_replace_e( s_string_t * restrict dst, ssize_t start, ssize_t end, cons
 	return Len;
 	}
 /*============================================================================*/
-ssize_t s_replace_ec( s_string_t * restrict dst, ssize_t start, ssize_t end, const char * restrict src, ssize_t srcstart, int filler )
+ssize_t s_replace_ec( s_string_t * restrict dst, ssize_t start, ssize_t end, const char * restrict src, int filler )
 	{
 	ssize_t	SrcLen, DstLen, DstMaxLen, Len, SrcStart;
 	char	*DstPtr;
@@ -3341,7 +3544,7 @@ ssize_t s_replace_l( s_string_t * restrict dst, ssize_t start, ssize_t len, cons
 	return len;
 	}
 /*============================================================================*/
-ssize_t s_replace_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const char * restrict src, ssize_t srcstart, int filler )
+ssize_t s_replace_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const char * restrict src, int filler )
 	{
 	ssize_t	SrcLen, DstLen, DstMaxLen, SrcStart;
 	char	*DstPtr;
@@ -3462,7 +3665,7 @@ ssize_t s_rtrim( s_string_t * restrict str, ssize_t start )
 	}
 /*============================================================================*/
 /*TODO*/
-ssize_t s_extins_l( s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler )
+ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler )
 	{
 	ssize_t	SrcLen, DstLen, DstMaxLen;
 	ssize_t	Offset;
@@ -3530,7 +3733,7 @@ ssize_t s_extins_l( s_string_t * restrict dst, ssize_t dststart, const s_string_
 	return len;
 	}
 /*============================================================================*/
-ssize_t s_extins_lc( s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t srcstart, size_t len, int filler );
+ssize_t s_extins_lc( s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*============================================================================*/
 ssize_t _s_calcsize( ssize_t len )
 	{
@@ -3554,11 +3757,11 @@ void _s_string_init( s_string_t *str, ssize_t len, int area )
 	int		Log2Bytes;
 	char	*Ptr;
 
-	if( len < ( (size_t)1 <<  8 ) - 1 )
+	if( len < ( (ssize_t)1 <<  8 ) - 1 )
 		Log2Bytes	= 0;
-	else if( len < ( (size_t)1 << 16 ) - 1 )
+	else if( len < ( (ssize_t)1 << 16 ) - 1 )
 		Log2Bytes	= 1;
-	else if( len < ( (size_t)1 << 32 ) - 1 )
+	else if( len < ( (ssize_t)1 << 32 ) - 1 )
 		Log2Bytes	= 2;
 	else
 		Log2Bytes	= 3;

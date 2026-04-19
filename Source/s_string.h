@@ -612,7 +612,7 @@ int          s_strcat_c     (       s_string_t * restrict dst, const char       
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strlcat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, size_t len );
+int          s_strlcat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
 \brief  		Appends characters from the beginning of the C-string pointed to
 				by \a src to the end of the s_string pointed to by \a dst to
@@ -1086,25 +1086,59 @@ ssize_t      s_extract_l    (       s_string_t * restrict dst, const s_string_t 
 *//*==========================================================================*/
 ssize_t      s_extract_lc   (       s_string_t * restrict dst, const char       * restrict src, ssize_t start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Replaces a sequence of characters of the s_string \a dst, located
+\brief  		Replaces a sequence of characters of s_string \a dst, located
 				between indexes \a start and \a end with characters obtained from
-				the beginning of the s_string \a src. If there are not enough
-				characters in \a src, only the characters available will be copied.
+				the s_string \a src starting at index \a srcstart. If there are
+				not enough characters in \a src, only the characters available
+				will be copied. Characters beyond the current length of \a dst
+				can be changed and will make the string to grow, but it will not
+				grow beyond its maximum length.
+\param	dst		Pointer to the s_string that will receive the sequence of
+				characters from \a src.
+\param	start	The index of the first character in \a dst that will be replaced
+				by the characters from \a src. If \s start is negative it is
+				counted from the end towards the beginning. -1 is the last position
+				of the string.
+\param	end		The index of the last character in \a dst that will be replaced
+				by the characters from \a src. If \s end is negative it is
+				counted from the end towards the beginning. -1 is the last position
+				of the string.
+\param	src		Pointer to the s_string that will provide the sequence of
+				characters to be copied to \a dst.
+\param srcstart	The index of the first character of \a src that will be copied
+				to \a dst. If \s srcstart is negative it is counted from the end
+				towards the beginning. -1 is the last position of the string.
+\param filler   Character used to fill any extra space created by inserting
+				characters starting beyond the current length of the string.
+\returns		The number of characters of \a dst that were changed or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t      s_replace_de    (       s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler );
+/*=========================================================================*//**
+\brief  		Replaces a sequence of characters of s_string \a dst, starting at
+				index \a start with characters obtained from s-string \a src.
+				If there are not enough characters in \a src, only the characters
+				available will be copied.
 \param	dst		Pointer to the s_string that will receive the sequence of
 				characters from \a src.
 \param	start	The index of the first character in \a dst that will be replaced
 				by the characters from \a src.
-\param	end		The index of the last character in \a dst that will be replaced
-				by the characters from \a src.
-\param	src		Pointer to the s_string that will provide the sequence of
+\param	src		Pointer to the C-string that will provide the sequence of
 				characters to be copied to \a dst.
 \param srcstart
-\param filler   Character used to fill any extra space created by inserting
-				characters starting beyond the current length of the string.
-\returns		The number of characters that were copied to \a dst or a
+\param	srcend	The index of the last character in \a dst that will be replaced
+				by the characters from \a src.
+\param filler   If \a filler is '\0', characters that would come from inexistent
+				indexes in \a src (i.e. before the start or after the end) won't
+				be changed, otherwise those characters will be replaced with \a
+				filler. Also, if \a filler is not '\0', \a start can be beyond the
+				current string length and the gap between \a the string end and \a
+				start will be filled with \a filler, otherwise this type of
+				operation is now allowed and the string won't be changed.
+\returns		The number of characters of \a dst that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_e     (       s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler );
+ssize_t      s_replace_se    (       s_string_t * restrict dst, ssize_t start, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
 /*=========================================================================*//**
 \brief  		Replaces a sequence of characters of the s_string \a dst, located
 				between indexes \a start and \a end with characters obtained from
@@ -1114,17 +1148,22 @@ ssize_t      s_replace_e     (       s_string_t * restrict dst, ssize_t start, s
 				characters from \a src.
 \param	start	The index of the first character in \a dst that will be replaced
 				by the characters from \a src.
-\param	end		The index of the last character in \a dst that will be replaced
-				by the characters from \a src.
 \param	src		Pointer to the C-string that will provide the sequence of
 				characters to be copied to \a dst.
 \param srcstart
-\param filler   Character used to fill any extra space created by inserting
-				characters starting beyond the current length of the string.
-\returns		The number of characters that were copied to \a dst or a
+\param	srcend	The index of the last character in \a src that will be copied
+				to \a dst
+\param filler   If \a filler is '\0', characters that would come from inexistent
+				indexes in \a src (i.e. before the start or after the end) won't
+				be changed, otherwise those characters will be replaced with \a
+				filler. Also, if \a filler is not '\0', \a start can be beyond the
+				current string length and the gap between \a the string end and \a
+				start will be filled with \a filler, otherwise this type of
+				operation is now allowed and the string won't be changed.
+\returns		The number of characters of \a dst that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_ec    (       s_string_t * restrict dst, ssize_t start, ssize_t end, const char       * restrict src, ssize_t srcstart, int filler );
+ssize_t      s_replace_ec    (       s_string_t * restrict dst, ssize_t start, ssize_t end, const char       * restrict src, int filler );
 /*=========================================================================*//**
 \brief  		Replaces a sequence of characters of the s_string \a dst, starting
 				at index \a start and with length \a len with characters obtained
@@ -1139,9 +1178,14 @@ ssize_t      s_replace_ec    (       s_string_t * restrict dst, ssize_t start, s
 \param	src		Pointer to the s_string that will provide the sequence of
 				characters to be copied to \a dst.
 \param srcstart
-\param filler   Character used to fill any extra space created by inserting
-				characters beyond the current length of the string.
-\returns		The number of characters that were copied to \a dst or a
+\param filler   If \a filler is '\0', characters that would come from inexistent
+				indexes in \a src (i.e. before the start or after the end) won't
+				be changed, otherwise those characters will be replaced with \a
+				filler. Also, if \a filler is not '\0', \a start can be beyond the
+				current string length and the gap between \a the string end and \a
+				start will be filled with \a filler, otherwise this type of
+				operation is now allowed and the string won't be changed.
+\returns		The number of characters of \a dst that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t      s_replace_l     (       s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart, int filler );
@@ -1153,18 +1197,23 @@ ssize_t      s_replace_l     (       s_string_t * restrict dst, ssize_t start, s
 				copied.
 \param	dst		Pointer to the s_string that will receive the sequence of
 				characters from \a src.
-\param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a dst.
 \param	start	The index of the first character in \a dst that will be replaced
 				by the characters from \a src.
 \param	len		The length of the character sequence from \a src that will be
 				copied to \a dst.
-\param filler   Character used to fill any extra space created by inserting
-				characters beyond the current length of the string.
+\param	src		Pointer to the C-string that will provide the sequence of
+				characters to be copied to \a dst.
+\param	filler	If \a filler is '\0', characters that would come from inexistent
+				indexes in \a src (i.e. before the start or after the end) won't
+				be changed, otherwise those characters will be replaced with \a
+				filler. Also, if \a filler is not '\0', \a start can be beyond the
+				current string length and the gap between \a the string end and \a
+				start will be filled with \a filler, otherwise this type of
+				operation is now allowed and the string won't be changed.
 \returns		The number of characters that were copied to \a dst or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_lc    (       s_string_t * restrict dst, ssize_t start, ssize_t len, const char       * restrict src, ssize_t srcstart, int filler );
+ssize_t      s_replace_lc    (       s_string_t * restrict dst, ssize_t start, ssize_t len, const char       * restrict srcs, int filler );
 /*=========================================================================*//**
 \brief  		Extracts a sequence of characters of length \a len from s_string
 				\a src, starting at index \a srcstart and inserts it into the
@@ -1177,18 +1226,26 @@ ssize_t      s_replace_lc    (       s_string_t * restrict dst, ssize_t start, s
 				characters from \a src.
 \param	dststart The index of the first character in \a dst that will be replaced
 				by the characters from \a src.
+\param	len		The length of the sequence of characters that will be copied
+				from \a src to \a dst.
 \param	src		Pointer to the s_string that will provide the sequence of
 				characters to be copied to \a dst.
 \param	srcstart The index of the first character in \a src that will be inserted
 				in \a dst.
-\param	len		The length of the sequence of characters that will be copied
-				from \a src to \a dst.
-\param filler   Character used to fill any extra space created by inserting
-				characters beyond the current length of the string.
-\returns		The number of characters that were copied to \a dst or a
+\param filler   If \a filler is '\0', characters that would come from inexistent
+				indexes in \a src (i.e. before the start or after the end) won't
+				be changed, otherwise those characters will be replaced with \a
+				filler. Also, if \a filler is not '\0', \a start can be beyond the
+				current string length and the gap between \a the string end and \a
+				start will be filled with \a filler, otherwise this type of
+				operation is now allowed and the string won't be changed.
+\returns		The number of characters of \a dst that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_extins_l     (       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler );
+ssize_t      s_insert_de	 (       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, ssize_t srcstart, int filler );
+ssize_t      s_insert_se	 (       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
+ssize_t      s_insert_ec	 (       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, int filler );
+ssize_t      s_insert_l		 (       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*=========================================================================*//**
 \brief  		Extracts a sequence of characters of length \a len from C-string
 				\a src, starting at index \a srcstart and inserts it into the
@@ -1212,7 +1269,7 @@ ssize_t      s_extins_l     (       s_string_t * restrict dst, ssize_t dststart,
 \returns		The number of characters that were copied to \a dst or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_extins_lc    (       s_string_t * restrict dst, ssize_t dststart, const char       * restrict src, ssize_t srcstart, size_t len, int filler );
+ssize_t      s_insert_lc	 (       s_string_t * restrict dst, ssize_t dststart, const char       * restrict src, ssize_t srcstart, size_t len, int filler );
 /*=========================================================================*//**
 \brief  		Creates in the heap a dynamically allocated copy of the s_string
 				\a src.

@@ -154,9 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a74da1e7280687bdc7dacdeb1e82568f8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a74da1e7280687bdc7dacdeb1e82568f8">s_strcat_c</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const char *restrict src)</td></tr>
 <tr class="memdesc:a74da1e7280687bdc7dacdeb1e82568f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends the contents of the C-string pointed to by <em>src</em> to the end of the <a class="el" href="structs__string.html">s_string</a> pointed to by <em>dst</em>. In case the resulting string would be longer than the maximum length <em>dst</em> can hold, only enough characters to fill <em>dst</em> will be copied.  <a href="s__string_8c.html#a74da1e7280687bdc7dacdeb1e82568f8">More...</a><br /></td></tr>
 <tr class="separator:a74da1e7280687bdc7dacdeb1e82568f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec21186055d7f221fcdf49fa427416e3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#aec21186055d7f221fcdf49fa427416e3">s_strlcat</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, size_t len)</td></tr>
-<tr class="memdesc:aec21186055d7f221fcdf49fa427416e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends characters from the beginning of the <a class="el" href="structs__string.html">s_string</a> pointed to by <em>src</em> to the end of the <a class="el" href="structs__string.html">s_string</a> pointed to by <em>dst</em> to make <em>dst</em> up to <em>len</em> characters long. If <em>dst</em> is alredy <em>len</em> characters long or more, no characters will be copied. If <em>src</em> does not contain enough characters then <em>dst</em> will not reach length <em>len</em>.  <a href="s__string_8c.html#aec21186055d7f221fcdf49fa427416e3">More...</a><br /></td></tr>
-<tr class="separator:aec21186055d7f221fcdf49fa427416e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28736fbe1f1b5ccc9415e548577dee24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a28736fbe1f1b5ccc9415e548577dee24">s_strlcat</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, ssize_t len)</td></tr>
+<tr class="memdesc:a28736fbe1f1b5ccc9415e548577dee24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends characters from the beginning of the <a class="el" href="structs__string.html">s_string</a> pointed to by <em>src</em> to the end of the <a class="el" href="structs__string.html">s_string</a> pointed to by <em>dst</em> to make <em>dst</em> up to <em>len</em> characters long. If <em>dst</em> is alredy <em>len</em> characters long or more, no characters will be copied. If <em>src</em> does not contain enough characters then <em>dst</em> will not reach length <em>len</em>.  <a href="s__string_8c.html#a28736fbe1f1b5ccc9415e548577dee24">More...</a><br /></td></tr>
+<tr class="separator:a28736fbe1f1b5ccc9415e548577dee24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae606fecc5b08243891195159481fa2a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#ae606fecc5b08243891195159481fa2a1">s_strlcat_c</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const char *restrict src, ssize_t len)</td></tr>
 <tr class="memdesc:ae606fecc5b08243891195159481fa2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends characters from the beginning of the C-string pointed to by <em>src</em> to the end of the <a class="el" href="structs__string.html">s_string</a> pointed to by <em>dst</em> to make <em>dst</em> up to <em>len</em> characters long. If <em>dst</em> is alredy <em>len</em> characters long or more, no characters will be copied. If <em>src</em> does not contain enough characters then <em>dst</em> will not reach length <em>len</em>.  <a href="s__string_8c.html#ae606fecc5b08243891195159481fa2a1">More...</a><br /></td></tr>
 <tr class="separator:ae606fecc5b08243891195159481fa2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -316,18 +316,27 @@ Functions</h2></td></tr>
 <tr class="memitem:a176cc7995dcb56167cd7cf0c897bf723"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a176cc7995dcb56167cd7cf0c897bf723">s_extract_lc</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, const char *restrict src, ssize_t start, ssize_t len)</td></tr>
 <tr class="memdesc:a176cc7995dcb56167cd7cf0c897bf723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a sequence of characters from the C-string <em>src</em> starting at index <em>start</em> and with length <em>len</em>, and copies it to <a class="el" href="structs__string.html">s_string</a> <em>dst</em>. The original content of <em>dst</em> is lost. If <em>dst</em> cannot hold all the characters, only the characters that will fit in <em>dst</em> will be copied.  <a href="s__string_8c.html#a176cc7995dcb56167cd7cf0c897bf723">More...</a><br /></td></tr>
 <tr class="separator:a176cc7995dcb56167cd7cf0c897bf723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14216cf6284ce954c63b3b4739fa1d35"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a14216cf6284ce954c63b3b4739fa1d35">s_replace_e</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t end, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, int filler)</td></tr>
-<tr class="memdesc:a14216cf6284ce954c63b3b4739fa1d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, located between indexes <em>start</em> and <em>end</em> with characters obtained from the beginning of the <a class="el" href="structs__string.html">s_string</a> <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied.  <a href="s__string_8c.html#a14216cf6284ce954c63b3b4739fa1d35">More...</a><br /></td></tr>
-<tr class="separator:a14216cf6284ce954c63b3b4739fa1d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac804c0790394bc8a2782182cd2f91ff"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#aac804c0790394bc8a2782182cd2f91ff">s_replace_ec</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t end, const char *restrict src, ssize_t srcstart, int filler)</td></tr>
-<tr class="memdesc:aac804c0790394bc8a2782182cd2f91ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, located between indexes <em>start</em> and <em>end</em> with characters obtained from the beginning of the C-string <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied.  <a href="s__string_8c.html#aac804c0790394bc8a2782182cd2f91ff">More...</a><br /></td></tr>
-<tr class="separator:aac804c0790394bc8a2782182cd2f91ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9851c2b0e40fe26f510115b65631dcde"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a9851c2b0e40fe26f510115b65631dcde">s_fill_l</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t len, int filler)</td></tr>
+<tr class="separator:a9851c2b0e40fe26f510115b65631dcde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa078479ccc69bdac2a159f1de76781d3"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#aa078479ccc69bdac2a159f1de76781d3">s_fill_ls</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t len, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart)</td></tr>
+<tr class="separator:aa078479ccc69bdac2a159f1de76781d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb7c2bdc227cbd838980c4bf17bddab9"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#afb7c2bdc227cbd838980c4bf17bddab9">s_fill_lc</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t len, const char *restrict src)</td></tr>
+<tr class="separator:afb7c2bdc227cbd838980c4bf17bddab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe1675e4627cfcef8c92ff5babd8012"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a3fe1675e4627cfcef8c92ff5babd8012">s_replace_de</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t end, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, int filler)</td></tr>
+<tr class="memdesc:a3fe1675e4627cfcef8c92ff5babd8012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, located between indexes <em>start</em> and <em>end</em> with characters obtained from the <a class="el" href="structs__string.html">s_string</a> <em>src</em> starting at index <em>srcstart</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied. Characters beyond the current length of <em>dst</em> can be changed and will make the string to grow, but it will not grow beyond its maximum length.  <a href="s__string_8c.html#a3fe1675e4627cfcef8c92ff5babd8012">More...</a><br /></td></tr>
+<tr class="separator:a3fe1675e4627cfcef8c92ff5babd8012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8268f579d6269e410f86e208728f02b7"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a8268f579d6269e410f86e208728f02b7">s_replace_se</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, ssize_t srcend, int filler)</td></tr>
+<tr class="memdesc:a8268f579d6269e410f86e208728f02b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, starting at index <em>start</em> with characters obtained from s-string <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied.  <a href="s__string_8c.html#a8268f579d6269e410f86e208728f02b7">More...</a><br /></td></tr>
+<tr class="separator:a8268f579d6269e410f86e208728f02b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab77110c2e86901bb7b8f5650e126e907"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#ab77110c2e86901bb7b8f5650e126e907">s_replace_ec</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t end, const char *restrict src, int filler)</td></tr>
+<tr class="memdesc:ab77110c2e86901bb7b8f5650e126e907"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, located between indexes <em>start</em> and <em>end</em> with characters obtained from the beginning of the C-string <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied.  <a href="s__string_8c.html#ab77110c2e86901bb7b8f5650e126e907">More...</a><br /></td></tr>
+<tr class="separator:ab77110c2e86901bb7b8f5650e126e907"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae532c0c345bbde54717565eb35780ddd"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#ae532c0c345bbde54717565eb35780ddd">s_replace_l</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t len, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, int filler)</td></tr>
 <tr class="memdesc:ae532c0c345bbde54717565eb35780ddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, starting at index <em>start</em> and with length <em>len</em> with characters obtained from the beginning of the <a class="el" href="structs__string.html">s_string</a> <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied.  <a href="s__string_8c.html#ae532c0c345bbde54717565eb35780ddd">More...</a><br /></td></tr>
 <tr class="separator:ae532c0c345bbde54717565eb35780ddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71156981660804cd3c82c97c1304b395"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a71156981660804cd3c82c97c1304b395">s_replace_lc</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t len, const char *restrict src, ssize_t srcstart, int filler)</td></tr>
-<tr class="memdesc:a71156981660804cd3c82c97c1304b395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, starting at index <em>start</em> and with length <em>len</em> with characters obtained from the beginning of the C-string <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied.  <a href="s__string_8c.html#a71156981660804cd3c82c97c1304b395">More...</a><br /></td></tr>
-<tr class="separator:a71156981660804cd3c82c97c1304b395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac1c107987a873af158a59de4c0cbae6"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#aac1c107987a873af158a59de4c0cbae6">s_replace_lc</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t start, ssize_t len, const char *restrict src, int filler)</td></tr>
+<tr class="memdesc:aac1c107987a873af158a59de4c0cbae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces a sequence of characters of the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, starting at index <em>start</em> and with length <em>len</em> with characters obtained from the beginning of the C-string <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied.  <a href="s__string_8c.html#aac1c107987a873af158a59de4c0cbae6">More...</a><br /></td></tr>
+<tr class="separator:aac1c107987a873af158a59de4c0cbae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e1ea6af73f54d382973a6ffcf3054fc"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a4e1ea6af73f54d382973a6ffcf3054fc">s_strlwr</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict str, ssize_t start)</td></tr>
 <tr class="separator:a4e1ea6af73f54d382973a6ffcf3054fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbd44bd25c1d3ce405f593da0952f6d7"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#adbd44bd25c1d3ce405f593da0952f6d7">s_strupr</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict str, ssize_t start)</td></tr>
@@ -336,11 +345,10 @@ Functions</h2></td></tr>
 <tr class="separator:a7ba930115b8afb5548e3322d60d67fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a904bd9a2a6d4a08c0c2df6f24282becd"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a904bd9a2a6d4a08c0c2df6f24282becd">s_rtrim</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict str, ssize_t start)</td></tr>
 <tr class="separator:a904bd9a2a6d4a08c0c2df6f24282becd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe2d14f6f5d28938450f0d90cef3d3d3"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#afe2d14f6f5d28938450f0d90cef3d3d3">s_extins_l</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t dststart, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, ssize_t len, int filler)</td></tr>
-<tr class="memdesc:afe2d14f6f5d28938450f0d90cef3d3d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a sequence of characters of length <em>len</em> from <a class="el" href="structs__string.html">s_string</a> <em>src</em>, starting at index <em>srcstart</em> and inserts it into the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, starting at index <em>dststart</em>. If there are not enough characters in <em>src</em> from <em>srcstart</em> to its end, only the characters available will be copied. If there is no room in <em>dst</em> from <em>dststart</em> to its maximum length, the extra characters will be ignored.  <a href="s__string_8c.html#afe2d14f6f5d28938450f0d90cef3d3d3">More...</a><br /></td></tr>
-<tr class="separator:afe2d14f6f5d28938450f0d90cef3d3d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a691035bc52336ebcea708eb78767b865"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a691035bc52336ebcea708eb78767b865">s_extins_lc</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t dststart, const char *restrict src, ssize_t srcstart, size_t len, int filler)</td></tr>
-<tr class="separator:a691035bc52336ebcea708eb78767b865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61a5665aab837f0f132754ad8a535b3d"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a61a5665aab837f0f132754ad8a535b3d">s_insert_l</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t dststart, const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict src, ssize_t srcstart, ssize_t len, int filler)</td></tr>
+<tr class="separator:a61a5665aab837f0f132754ad8a535b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae80d8a8e3e02b2b881b55f2f64b01b51"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#ae80d8a8e3e02b2b881b55f2f64b01b51">s_extins_lc</a> (<a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict dst, ssize_t dststart, const char *restrict src, ssize_t srcstart, ssize_t len, int filler)</td></tr>
+<tr class="separator:ae80d8a8e3e02b2b881b55f2f64b01b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a736cd54729381f541f72a4e30ae8de07"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s__string_8c.html#a736cd54729381f541f72a4e30ae8de07">_s_calcsize</a> (ssize_t len)</td></tr>
 <tr class="memdesc:a736cd54729381f541f72a4e30ae8de07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the size in bytes required to hold an <a class="el" href="structs__string.html">s_string</a> object capable of storing up to <em>len</em> characters. This function is not intended to be called directly by the programmer's code.  <a href="s__string_8c.html#a736cd54729381f541f72a4e30ae8de07">More...</a><br /></td></tr>
 <tr class="separator:a736cd54729381f541f72a4e30ae8de07"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -909,79 +917,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="afe2d14f6f5d28938450f0d90cef3d3d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe2d14f6f5d28938450f0d90cef3d3d3">&#9670;&nbsp;</a></span>s_extins_l()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ssize_t s_extins_l </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
-          <td class="paramname"><em>dst</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ssize_t&#160;</td>
-          <td class="paramname"><em>dststart</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ssize_t&#160;</td>
-          <td class="paramname"><em>srcstart</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ssize_t&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>filler</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Extracts a sequence of characters of length <em>len</em> from <a class="el" href="structs__string.html">s_string</a> <em>src</em>, starting at index <em>srcstart</em> and inserts it into the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, starting at index <em>dststart</em>. If there are not enough characters in <em>src</em> from <em>srcstart</em> to its end, only the characters available will be copied. If there is no room in <em>dst</em> from <em>dststart</em> to its maximum length, the extra characters will be ignored. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dst</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will receive the sequence of characters from <em>src</em>. </td></tr>
-    <tr><td class="paramname">dststart</td><td>The index of the first character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
-    <tr><td class="paramname">src</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will provide the sequence of characters to be copied to <em>dst</em>. </td></tr>
-    <tr><td class="paramname">srcstart</td><td>The index of the first character in <em>src</em> that will be inserted in <em>dst</em>. </td></tr>
-    <tr><td class="paramname">len</td><td>The length of the sequence of characters that will be copied from <em>src</em> to <em>dst</em>. </td></tr>
-    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The number of characters that were copied to <em>dst</em> or a negative value in case of error. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="s__string_8c_afe2d14f6f5d28938450f0d90cef3d3d3_cgraph.png" border="0" usemap="#as__string_8c_afe2d14f6f5d28938450f0d90cef3d3d3_cgraph" alt=""/></div>
-</div>
-
-</div>
-</div>
-<a id="a691035bc52336ebcea708eb78767b865"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a691035bc52336ebcea708eb78767b865">&#9670;&nbsp;</a></span>s_extins_lc()</h2>
+<a id="ae80d8a8e3e02b2b881b55f2f64b01b51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae80d8a8e3e02b2b881b55f2f64b01b51">&#9670;&nbsp;</a></span>s_extins_lc()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1013,7 +950,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype">ssize_t&#160;</td>
           <td class="paramname"><em>len</em>, </td>
         </tr>
         <tr>
@@ -1465,6 +1402,189 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a9851c2b0e40fe26f510115b65631dcde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9851c2b0e40fe26f510115b65631dcde">&#9670;&nbsp;</a></span>s_fill_l()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_fill_l </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>filler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afb7c2bdc227cbd838980c4bf17bddab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb7c2bdc227cbd838980c4bf17bddab9">&#9670;&nbsp;</a></span>s_fill_lc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_fill_lc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *restrict&#160;</td>
+          <td class="paramname"><em>src</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa078479ccc69bdac2a159f1de76781d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa078479ccc69bdac2a159f1de76781d3">&#9670;&nbsp;</a></span>s_fill_ls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_fill_ls </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>srcstart</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a61a5665aab837f0f132754ad8a535b3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61a5665aab837f0f132754ad8a535b3d">&#9670;&nbsp;</a></span>s_insert_l()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_insert_l </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>dststart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>srcstart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>filler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_a61a5665aab837f0f132754ad8a535b3d_cgraph.png" border="0" usemap="#as__string_8c_a61a5665aab837f0f132754ad8a535b3d_cgraph" alt=""/></div>
+</div>
+
+</div>
+</div>
 <a id="a93a7e966f6a600af0f88b7a92da8d3bd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a93a7e966f6a600af0f88b7a92da8d3bd">&#9670;&nbsp;</a></span>s_isreadonly()</h2>
 
@@ -1520,14 +1640,14 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a14216cf6284ce954c63b3b4739fa1d35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14216cf6284ce954c63b3b4739fa1d35">&#9670;&nbsp;</a></span>s_replace_e()</h2>
+<a id="a3fe1675e4627cfcef8c92ff5babd8012"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fe1675e4627cfcef8c92ff5babd8012">&#9670;&nbsp;</a></span>s_replace_de()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ssize_t s_replace_e </td>
+          <td class="memname">ssize_t s_replace_de </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
           <td class="paramname"><em>dst</em>, </td>
@@ -1570,29 +1690,18 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Replaces a sequence of characters of the <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, located between indexes <em>start</em> and <em>end</em> with characters obtained from the beginning of the <a class="el" href="structs__string.html">s_string</a> <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dst</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will receive the sequence of characters from <em>src</em>. </td></tr>
-    <tr><td class="paramname">start</td><td>The index of the first character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
-    <tr><td class="paramname">end</td><td>The index of the last character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
-    <tr><td class="paramname">src</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will provide the sequence of characters to be copied to <em>dst</em>. </td></tr>
-    <tr><td class="paramname">srcstart</td><td></td></tr>
-    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters starting beyond the current length of the string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The number of characters that were copied to <em>dst</em> or a negative value in case of error. </dd></dl>
+<p>Replaces a sequence of characters of <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, located between indexes <em>start</em> and <em>end</em> with characters obtained from the <a class="el" href="structs__string.html">s_string</a> <em>src</em> starting at index <em>srcstart</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied. Characters beyond the current length of <em>dst</em> can be changed and will make the string to grow, but it will not grow beyond its maximum length. </p>
+<p>s_replace_de tested OK! </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="s__string_8c_a14216cf6284ce954c63b3b4739fa1d35_cgraph.png" border="0" usemap="#as__string_8c_a14216cf6284ce954c63b3b4739fa1d35_cgraph" alt=""/></div>
+<div class="center"><img src="s__string_8c_a3fe1675e4627cfcef8c92ff5babd8012_cgraph.png" border="0" usemap="#as__string_8c_a3fe1675e4627cfcef8c92ff5babd8012_cgraph" alt=""/></div>
 </div>
 
 </div>
 </div>
-<a id="aac804c0790394bc8a2782182cd2f91ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac804c0790394bc8a2782182cd2f91ff">&#9670;&nbsp;</a></span>s_replace_ec()</h2>
+<a id="ab77110c2e86901bb7b8f5650e126e907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab77110c2e86901bb7b8f5650e126e907">&#9670;&nbsp;</a></span>s_replace_ec()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1624,12 +1733,6 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ssize_t&#160;</td>
-          <td class="paramname"><em>srcstart</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>filler</em>&#160;</td>
         </tr>
@@ -1646,18 +1749,18 @@ Here is the call graph for this function:</div>
   <table class="params">
     <tr><td class="paramname">dst</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will receive the sequence of characters from <em>src</em>. </td></tr>
     <tr><td class="paramname">start</td><td>The index of the first character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
-    <tr><td class="paramname">end</td><td>The index of the last character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
     <tr><td class="paramname">src</td><td>Pointer to the C-string that will provide the sequence of characters to be copied to <em>dst</em>. </td></tr>
     <tr><td class="paramname">srcstart</td><td></td></tr>
-    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters starting beyond the current length of the string. </td></tr>
+    <tr><td class="paramname">srcend</td><td>The index of the last character in <em>src</em> that will be copied to <em>dst</em> </td></tr>
+    <tr><td class="paramname">filler</td><td>If <em>filler</em> is '\0', characters that would come from inexistent indexes in <em>src</em> (i.e. before the start or after the end) won't be changed, otherwise those characters will be replaced with <em>filler</em>. Also, if <em>filler</em> is not '\0', <em>start</em> can be beyond the current string length and the gap between <em>the</em> string end and <em>start</em> will be filled with <em>filler</em>, otherwise this type of operation is now allowed and the string won't be changed. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The number of characters that were copied to <em>dst</em> or a negative value in case of error. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of characters of <em>dst</em> that were changed or a negative value in case of error. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="s__string_8c_aac804c0790394bc8a2782182cd2f91ff_cgraph.png" border="0" usemap="#as__string_8c_aac804c0790394bc8a2782182cd2f91ff_cgraph" alt=""/></div>
+<div class="center"><img src="s__string_8c_ab77110c2e86901bb7b8f5650e126e907_cgraph.png" border="0" usemap="#as__string_8c_ab77110c2e86901bb7b8f5650e126e907_cgraph" alt=""/></div>
 </div>
 
 </div>
@@ -1720,11 +1823,11 @@ Here is the call graph for this function:</div>
     <tr><td class="paramname">len</td><td>The length of the character sequence from <em>src</em> that will be copied to <em>dst</em>. </td></tr>
     <tr><td class="paramname">src</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will provide the sequence of characters to be copied to <em>dst</em>. </td></tr>
     <tr><td class="paramname">srcstart</td><td></td></tr>
-    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
+    <tr><td class="paramname">filler</td><td>If <em>filler</em> is '\0', characters that would come from inexistent indexes in <em>src</em> (i.e. before the start or after the end) won't be changed, otherwise those characters will be replaced with <em>filler</em>. Also, if <em>filler</em> is not '\0', <em>start</em> can be beyond the current string length and the gap between <em>the</em> string end and <em>start</em> will be filled with <em>filler</em>, otherwise this type of operation is now allowed and the string won't be changed. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The number of characters that were copied to <em>dst</em> or a negative value in case of error. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of characters of <em>dst</em> that were changed or a negative value in case of error. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1733,8 +1836,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a71156981660804cd3c82c97c1304b395"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71156981660804cd3c82c97c1304b395">&#9670;&nbsp;</a></span>s_replace_lc()</h2>
+<a id="aac1c107987a873af158a59de4c0cbae6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac1c107987a873af158a59de4c0cbae6">&#9670;&nbsp;</a></span>s_replace_lc()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1761,13 +1864,7 @@ Here is the call graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *restrict&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ssize_t&#160;</td>
-          <td class="paramname"><em>srcstart</em>, </td>
+          <td class="paramname"><em>srcs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1787,10 +1884,10 @@ Here is the call graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dst</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will receive the sequence of characters from <em>src</em>. </td></tr>
-    <tr><td class="paramname">src</td><td>Pointer to the C-string that will provide the sequence of characters to be copied to <em>dst</em>. </td></tr>
     <tr><td class="paramname">start</td><td>The index of the first character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
     <tr><td class="paramname">len</td><td>The length of the character sequence from <em>src</em> that will be copied to <em>dst</em>. </td></tr>
-    <tr><td class="paramname">filler</td><td>Character used to fill any extra space created by inserting characters beyond the current length of the string. </td></tr>
+    <tr><td class="paramname">src</td><td>Pointer to the C-string that will provide the sequence of characters to be copied to <em>dst</em>. </td></tr>
+    <tr><td class="paramname">filler</td><td>If <em>filler</em> is '\0', characters that would come from inexistent indexes in <em>src</em> (i.e. before the start or after the end) won't be changed, otherwise those characters will be replaced with <em>filler</em>. Also, if <em>filler</em> is not '\0', <em>start</em> can be beyond the current string length and the gap between <em>the</em> string end and <em>start</em> will be filled with <em>filler</em>, otherwise this type of operation is now allowed and the string won't be changed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1798,7 +1895,78 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="s__string_8c_a71156981660804cd3c82c97c1304b395_cgraph.png" border="0" usemap="#as__string_8c_a71156981660804cd3c82c97c1304b395_cgraph" alt=""/></div>
+<div class="center"><img src="s__string_8c_aac1c107987a873af158a59de4c0cbae6_cgraph.png" border="0" usemap="#as__string_8c_aac1c107987a873af158a59de4c0cbae6_cgraph" alt=""/></div>
+</div>
+
+</div>
+</div>
+<a id="a8268f579d6269e410f86e208728f02b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8268f579d6269e410f86e208728f02b7">&#9670;&nbsp;</a></span>s_replace_se()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t s_replace_se </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="s__string_8c.html#a43f20bc95cdaf8be6e4414d25763819e">s_string_t</a> *restrict&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>srcstart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ssize_t&#160;</td>
+          <td class="paramname"><em>srcend</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>filler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replaces a sequence of characters of <a class="el" href="structs__string.html">s_string</a> <em>dst</em>, starting at index <em>start</em> with characters obtained from s-string <em>src</em>. If there are not enough characters in <em>src</em>, only the characters available will be copied. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>Pointer to the <a class="el" href="structs__string.html">s_string</a> that will receive the sequence of characters from <em>src</em>. </td></tr>
+    <tr><td class="paramname">start</td><td>The index of the first character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
+    <tr><td class="paramname">src</td><td>Pointer to the C-string that will provide the sequence of characters to be copied to <em>dst</em>. </td></tr>
+    <tr><td class="paramname">srcstart</td><td></td></tr>
+    <tr><td class="paramname">srcend</td><td>The index of the last character in <em>dst</em> that will be replaced by the characters from <em>src</em>. </td></tr>
+    <tr><td class="paramname">filler</td><td>If <em>filler</em> is '\0', characters that would come from inexistent indexes in <em>src</em> (i.e. before the start or after the end) won't be changed, otherwise those characters will be replaced with <em>filler</em>. Also, if <em>filler</em> is not '\0', <em>start</em> can be beyond the current string length and the gap between <em>the</em> string end and <em>start</em> will be filled with <em>filler</em>, otherwise this type of operation is now allowed and the string won't be changed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of characters of <em>dst</em> that were changed or a negative value in case of error. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="s__string_8c_a8268f579d6269e410f86e208728f02b7_cgraph.png" border="0" usemap="#as__string_8c_a8268f579d6269e410f86e208728f02b7_cgraph" alt=""/></div>
 </div>
 
 </div>
@@ -2660,8 +2828,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="aec21186055d7f221fcdf49fa427416e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec21186055d7f221fcdf49fa427416e3">&#9670;&nbsp;</a></span>s_strlcat()</h2>
+<a id="a28736fbe1f1b5ccc9415e548577dee24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28736fbe1f1b5ccc9415e548577dee24">&#9670;&nbsp;</a></span>s_strlcat()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2687,7 +2855,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype">ssize_t&#160;</td>
           <td class="paramname"><em>len</em>&#160;</td>
         </tr>
         <tr>
@@ -2711,7 +2879,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="s__string_8c_aec21186055d7f221fcdf49fa427416e3_cgraph.png" border="0" usemap="#as__string_8c_aec21186055d7f221fcdf49fa427416e3_cgraph" alt=""/></div>
+<div class="center"><img src="s__string_8c_a28736fbe1f1b5ccc9415e548577dee24_cgraph.png" border="0" usemap="#as__string_8c_a28736fbe1f1b5ccc9415e548577dee24_cgraph" alt=""/></div>
 </div>
 
 </div>

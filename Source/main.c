@@ -191,6 +191,55 @@ static void Test_s_strtok_mc( void )
 		}
 	}
 /*============================================================================*/
+static void Test_s_replace_de( void )
+	{
+#if 0
+	auto_s_string_c(	Str, 42, "********************************" );
+	auto_s_string_c(	Src,  8, "ABCDEF" );
+	auto_s_string(		Dst, 52 );
+	int					i;
+
+	printf( "Ret ds  de  ss\n--- --- --- ---" );
+	for( i = -51; i < 52; i++ )
+		{
+		s_strcpy( Dst, Str, 0 );
+		ssize_t	n = s_replace_de( Dst, i, i + 39, Src, -7, '-' );
+		printf( "\n%3d %3d %3d %3d \"%s\"", n, i, i + 39, -7, s_constcstr( Dst, 0 ));
+		}
+	for( i = -10; i < 53; i++ )
+		{
+		s_strcpy( Dst, Str, 0 );
+		ssize_t	n = s_replace_de( Dst, i, i + 7, Src, -7, '-' );
+		printf( "\n%3d %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
+		}
+#else
+	auto_s_string_c(	Str, 32, "********************************" );
+	auto_s_string_c(	Src,  6, "ABCDEF" );
+	auto_s_string(		Dst, 32 );
+	int					Filler	= '\0';
+	int					i;
+
+	while( 1 )
+		{
+		for( i = -39; i < -1; i++ )
+			{
+			s_strcpy( Dst, Str, 0 );
+			ssize_t	n = s_replace_de( Dst, i, i + 39, Src, -7, Filler );
+			printf( "\r%3d %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
+			usleep( 100000 );
+			}
+		for( ; i > -39; i-- )
+			{
+			s_strcpy( Dst, Str, 0 );
+			ssize_t	n = s_replace_de( Dst, i, i + 39, Src, -7, Filler );
+			printf( "\r%3d %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
+			usleep( 100000 );
+			}
+		}
+
+#endif
+	}
+/*============================================================================*/
 int main( int ArgC, char *ArgV[] )
 	{
 	auto_s_string(	Argi, 256 );
@@ -212,12 +261,16 @@ int main( int ArgC, char *ArgV[] )
 
 //	Test_s_delete_e();
 
+#if 0
 	Test_s_strtok();
 	Test_s_strtok_c();
 	Test_s_strtok_s();
 	Test_s_strtok_sc();
 	Test_s_strtok_m();
 	Test_s_strtok_mc();
+#endif
+
+	Test_s_replace_de();
 
 	return 0;
 	}
