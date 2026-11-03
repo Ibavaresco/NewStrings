@@ -248,10 +248,7 @@ static char *s_cstr( s_string_t * restrict str )
 	size_t	NumCounters;
 	size_t	Offset;
 
-	if( str == NULL )
-		return NULL;
-
-	if( str->MustBeZero != 0 )
+	if( str == NULL || str->MustBeZero != 0 )
 		return NULL;
 
 	NumCounters	= 1 + str->Sizes;
@@ -365,10 +362,12 @@ ssize_t s_appendchar( s_string_t * restrict dst, int value )
 
 	Ptr[UsedLen]		= (uint8_t)value;
 
-	SetUsedLen( dst, UsedLen + 1 );
-	Ptr[UsedLen + 1]	= '\0';
+	UsedLen++;
 
-	return UsedLen + 1;
+	SetUsedLen( dst, UsedLen );
+	Ptr[UsedLen]	= '\0';
+
+	return UsedLen;
 	}
 /*=========================================================================*//**
 s_delete_e Tested OK!!!
@@ -522,7 +521,7 @@ ssize_t s_truncate( s_string_t * restrict dst, ssize_t len )
 	return len;
 	}
 /*============================================================================*/
-int s_strcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t sstart )
+ssize_t s_strcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t sstart )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -576,7 +575,7 @@ int s_strcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_
 	return DstUsedLen;
 	}
 /*============================================================================*/
-int s_strcat_c( s_string_t * restrict dst, const char * restrict src )
+ssize_t s_strcat_c( s_string_t * restrict dst, const char * restrict src )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -618,7 +617,7 @@ int s_strcat_c( s_string_t * restrict dst, const char * restrict src )
 	return DstUsedLen;
 	}
 /*============================================================================*/
-int s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+ssize_t s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
 	{
 	ssize_t		ResultLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -676,7 +675,7 @@ int s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize
 	return DstUsedLen;
 	}
 /*============================================================================*/
-int s_strlcat_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
+ssize_t s_strlcat_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
 	{
 	ssize_t		ResultLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -730,7 +729,7 @@ int s_strlcat_c( s_string_t * restrict dst, const char * restrict src, ssize_t l
 	return DstUsedLen;
 	}
 /*============================================================================*/
-int s_strncat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+ssize_t s_strncat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -788,7 +787,7 @@ int s_strncat( s_string_t * restrict dst, const s_string_t * restrict src, ssize
 	return DstUsedLen;
 	}
 /*============================================================================*/
-int s_strncat_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
+ssize_t s_strncat_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -835,7 +834,7 @@ int s_strncat_c( s_string_t * restrict dst, const char * restrict src, ssize_t l
 	return DstUsedLen;
 	}
 /*============================================================================*/
-int s_strcpy( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart )
+ssize_t s_strcpy( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart )
 	{
 	ssize_t		DstMaxLen;
 	ssize_t		SrcUsedLen;
@@ -885,7 +884,7 @@ int s_strcpy( s_string_t * restrict dst, const s_string_t * restrict src, ssize_
 	return BytesToCopy;
 	}
 /*============================================================================*/
-int s_strcpy_c( s_string_t * restrict dst, const char * restrict src )
+ssize_t s_strcpy_c( s_string_t * restrict dst, const char * restrict src )
 	{
 	ssize_t		DstMaxLen;
 	ssize_t		SrcUsedLen;
@@ -927,7 +926,7 @@ int s_strcpy_c( s_string_t * restrict dst, const char * restrict src )
 	return BytesToCopy;
 	}
 /*============================================================================*/
-int s_strlcpy( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+ssize_t s_strlcpy( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
 	{
 	ssize_t		DstMaxLen;
 	ssize_t		SrcUsedLen;
@@ -977,7 +976,7 @@ int s_strlcpy( s_string_t * restrict dst, const s_string_t * restrict src, ssize
 	return BytesToCopy;
 	}
 /*============================================================================*/
-int s_strlcpy_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
+ssize_t s_strlcpy_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
 	{
 	ssize_t		DstMaxLen;
 	ssize_t		SrcUsedLen;
@@ -1022,7 +1021,7 @@ int s_strlcpy_c( s_string_t * restrict dst, const char * restrict src, ssize_t l
 /*  Deprecated. In the C library implementation it is less safe than strlcpy. In
 	our implementation both would be equivalent.
 
-int s_strncpy( s_string_t * restrict dst, const s_string_t * restrict src, size_t len )
+ssize_t s_strncpy( s_string_t * restrict dst, const s_string_t * restrict src, size_t len )
 	{
 	return 0;
 	}
@@ -3174,14 +3173,17 @@ ssize_t s_extract_lc( s_string_t * restrict dst, const char * restrict src, ssiz
 /*============================================================================*/
 ssize_t s_fill_l( s_string_t * restrict dst, ssize_t start, ssize_t len, int filler )
 	{
+	return -1;
 	}
 /*============================================================================*/
 ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart )
 	{
+	return -1;
 	}
 /*============================================================================*/
 ssize_t s_fill_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const char		  * restrict src )
 	{
+	return -1;
 	}
 /*=========================================================================*//**
 s_replace_de tested OK!

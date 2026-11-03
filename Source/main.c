@@ -248,7 +248,7 @@ int main( int ArgC, char *ArgV[] )
 	auto_s_string(	Ext, 256 );
 	int				i;
 
-#if 0
+#if 1
 	for( i = 0; i < ArgC; i++ )
 		{
 		s_strcpy_c( Argi, ArgV[i] );
@@ -260,7 +260,6 @@ int main( int ArgC, char *ArgV[] )
 #endif
 
 //	Test_s_delete_e();
-
 #if 0
 	Test_s_strtok();
 	Test_s_strtok_c();
@@ -269,8 +268,7 @@ int main( int ArgC, char *ArgV[] )
 	Test_s_strtok_m();
 	Test_s_strtok_mc();
 #endif
-
-	Test_s_replace_de();
+//	Test_s_replace_de();
 
 	return 0;
 	}

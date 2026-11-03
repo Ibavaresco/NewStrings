@@ -587,7 +587,7 @@ ssize_t      s_truncate     (       s_string_t * restrict dst, ssize_t len );
 \returns		The new length of \a dst after the appending or a negative value
 				if an error occurred.
 *//*==========================================================================*/
-int          s_strcat       (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t		s_strcat       (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
 /*=========================================================================*//**
 \brief  		Appends the contents of the C-string pointed to by \a src to the
 				end of the s_string pointed to by \a dst. In case the resulting
@@ -598,7 +598,7 @@ int          s_strcat       (       s_string_t * restrict dst, const s_string_t 
 \returns		The new length of \a dst after the appending or a negative value
 				if an error occurred.
 *//*==========================================================================*/
-int          s_strcat_c     (       s_string_t * restrict dst, const char       * restrict src );
+ssize_t		s_strcat_c     (       s_string_t * restrict dst, const char       * restrict src );
 /*=========================================================================*//**
 \brief  		Appends characters from the beginning of the s_string pointed to
 				by \a src to the end of the s_string pointed to by \a dst to
@@ -612,7 +612,7 @@ int          s_strcat_c     (       s_string_t * restrict dst, const char       
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strlcat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		s_strlcat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
 \brief  		Appends characters from the beginning of the C-string pointed to
 				by \a src to the end of the s_string pointed to by \a dst to
@@ -626,7 +626,7 @@ int          s_strlcat      (       s_string_t * restrict dst, const s_string_t 
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strlcat_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
+ssize_t		s_strlcat_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
 /*=========================================================================*//**
 \brief  		Appends up to \a len characters from the beginning of the
 				s_string pointed to by \a src to the end of the s_string pointed
@@ -637,7 +637,7 @@ int          s_strlcat_c    (       s_string_t * restrict dst, const char       
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strncat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		s_strncat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
 \brief  		Appends up to \a len characters from the beginning of the
 				C-string pointed to by \a src to the end of the s_string pointed
@@ -648,7 +648,7 @@ int          s_strncat      (       s_string_t * restrict dst, const s_string_t 
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strncat_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
+ssize_t		s_strncat_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
 /*=========================================================================*//**
 \brief  		Copies the contents of the s_string pointed to by \a src into
 				the s_string pointed to by \a dst. The previous content of \a
@@ -658,7 +658,7 @@ int          s_strncat_c    (       s_string_t * restrict dst, const char       
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strcpy       (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t		s_strcpy       (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
 /*=========================================================================*//**
 \brief  		Copies the contents of the C-string pointed to by \a src into
 				the s_string pointed to by \a dst. The previous content of \a
@@ -668,7 +668,7 @@ int          s_strcpy       (       s_string_t * restrict dst, const s_string_t 
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strcpy_c     (       s_string_t * restrict dst, const char       * restrict src );
+ssize_t		s_strcpy_c     (       s_string_t * restrict dst, const char       * restrict src );
 /*=========================================================================*//**
 \brief  		Copies up to \a len characters of the contents of the s_string
 				pointed to by \a src into the s_string pointed to by \a dst. The
@@ -679,7 +679,7 @@ int          s_strcpy_c     (       s_string_t * restrict dst, const char       
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strlcpy      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		s_strlcpy      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
 \brief  		Copies up to \a len characters of the contents of the C-string
 				pointed to by \a src into the s_string pointed to by \a dst. The
@@ -690,7 +690,7 @@ int          s_strlcpy      (       s_string_t * restrict dst, const s_string_t 
 \returns		The number of characters stored in \a dst or a negative number
 				in case of error.
 *//*==========================================================================*/
-int          s_strlcpy_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
+ssize_t		s_strlcpy_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
 /*=========================================================================*//**
 \brief  		Compares two s_strings \a dst and \a src character by character.
 \param	dst		The first s_string to be compared.
