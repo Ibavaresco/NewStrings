@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 /*=============================================================================*/
 #include "s_string.h"
 /*=============================================================================*/
@@ -227,14 +228,14 @@ static void Test_s_replace_de( void )
 			{
 			s_strcpy( Dst, Str, 0 );
 			ssize_t	n = s_replace_de( Dst, i, i + 39, Src, -7, Filler );
-			printf( "\r%3d %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
+			printf( "\r%3Lu %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
 			usleep( 100000 );
 			}
 		for( ; i > -39; i-- )
 			{
 			s_strcpy( Dst, Str, 0 );
 			ssize_t	n = s_replace_de( Dst, i, i + 39, Src, -7, Filler );
-			printf( "\r%3d %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
+			printf( "\r%3Lu %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
 			usleep( 100000 );
 			}
 		}
