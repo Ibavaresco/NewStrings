@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['area_235',['Area',['../structs__string.html#aed14dc971df5e031ffef9195e9bdc03d',1,'s_string']]]
+  ['b_0',['b',['../s__string_8h.html#a6c3a5855ef902cf2f4fdd769cb291f5a',1,'s_string.h']]]
 ];

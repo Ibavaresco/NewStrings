@@ -1,0 +1,14 @@
+<map id="s_strndup" name="s_strndup">
+<area shape="rect" id="Node000001" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..." alt="" coords="5,107,84,134"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#a11dca010d32f6458b0bd2ce8af4f1ab2" title="Copies the contents of the s_string pointed to by src into the s_string pointed to by dst...." alt="" coords="132,56,203,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,104,117,90,122,88,80,109"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#ad8a4667d5b847aae82b80bbe78949c44" title="Returns the number of characters that the s_string str is holding." alt="" coords="388,56,456,83"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="84,112,373,73,373,79,85,118"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#a53fd1fdf21d9bb60101c74e35e77dccc" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str,..." alt="" coords="251,31,340,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="203,60,238,55,233,57,204,65"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="203,67,375,68,370,71,203,72"/>
+<area shape="rect" id="Node000005" href="$s__string_8c.html#a7c00fdfc8f5e5f966ea79f37531f1e27" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="504,19,596,46"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="184,53,213,33,250,16,313,5,377,3,437,8,491,18,486,19,436,13,377,9,313,10,252,21,216,38,186,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="341,51,376,60,370,60,341,56"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="456,57,486,51,491,49,457,62"/>
+</map>

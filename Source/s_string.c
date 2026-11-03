@@ -29,6 +29,8 @@
 
 #include "s_string.h"
 /*============================================================================*/
+#if			!defined DOXYGEN
+/*============================================================================*/
 typedef struct s_string
 	{
 	struct
@@ -41,6 +43,8 @@ typedef struct s_string
 		};
 	uint8_t			PayLoad[];
 	} s_string_t;
+/*============================================================================*/
+#endif	/*	!defined DOXYGEN */
 /*============================================================================*/
 int	s_isreadonly( const s_string_t * restrict str )
 	{
@@ -3737,6 +3741,8 @@ ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_
 /*============================================================================*/
 ssize_t s_extins_lc( s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*============================================================================*/
+#if			!defined DOXYGEN
+/*============================================================================*/
 ssize_t _s_calcsize( ssize_t len )
 	{
 	int Bytes;
@@ -3859,4 +3865,6 @@ __attribute__((constructor)) void __s_string_global_init( void )
 		}
 	printf( "\n" );
 	}
+/*============================================================================*/
+#endif	/*	!defined DOXYGEN */
 /*============================================================================*/

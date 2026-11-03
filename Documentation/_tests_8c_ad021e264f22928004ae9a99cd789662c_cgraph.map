@@ -1,0 +1,18 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,55,83"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#a53fd1fdf21d9bb60101c74e35e77dccc" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str,..." alt="" coords="230,56,319,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,67,215,67,214,72,55,72"/>
+<area shape="rect" id="Node000005" href="$s__string_8c.html#a2e618f54262f2b39de2e9719e07c4708" title="Appends the contents of the portion of s_string pointed to by src starting at srcstart to the end of ..." alt="" coords="108,107,176,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="55,78,99,98,95,101,55,83"/>
+<area shape="rect" id="Node000006" href="$s__string_8c.html#af60b08283114a5bd5558775a780211cd" title="Finds the first occurrence of C&#45;string src in the s_string str starting from the position start towar..." alt="" coords="103,5,182,32"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="54,56,99,37,96,41,57,61"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#ad8a4667d5b847aae82b80bbe78949c44" title="Returns the number of characters that the s_string str is holding." alt="" coords="367,81,435,108"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="320,76,355,85,349,85,320,81"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#a7c00fdfc8f5e5f966ea79f37531f1e27" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="483,132,575,159"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="436,105,482,126,476,125,435,111"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="176,104,221,89,226,88,178,109"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="177,114,354,97,351,101,177,119"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="177,120,468,139,467,144,177,125"/>
+<area shape="poly" id="edge9_Node000006_Node000002" title=" " alt="" coords="179,30,226,49,221,50,179,35"/>
+<area shape="poly" id="edge10_Node000006_Node000003" title=" " alt="" coords="182,17,248,24,285,31,320,42,348,54,373,72,368,72,345,59,318,46,283,36,247,29,183,22"/>
+</map>

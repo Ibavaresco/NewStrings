@@ -289,6 +289,8 @@ static inline ssize_t __attribute__((always_inline)) ssmax( ssize_t a, ssize_t b
     {
     return a > b ? a : b;
     }
+/*============================================================================*/
+#if			!defined DOXYGEN
 /*=========================================================================*//**
 \brief          Calculates the size in bytes required to hold an s_string object
 				capable of storing up to \a len characters. This function is not
@@ -310,6 +312,8 @@ ssize_t      _s_calcsize    ( ssize_t len );
 				automatic variables), 2 = 'heap' (dynamically created object).
 *//*==========================================================================*/
 void         _s_string_init (       s_string_t * restrict str, ssize_t len, int area );
+/*============================================================================*/
+#endif	/*	!defined DOXYGEN */
 /*=========================================================================*//**
 \brief          Returns non-zero if the s_string \a str cannot be changed.
 \param str      Pointer to the s_string.
@@ -847,7 +851,7 @@ ssize_t      s_strcspn_c    ( const s_string_t * restrict str, ssize_t start, co
 
 \param	start	Pointer to an ssize_t variable that contains the index where the
 				search is to start. This variable must be initialized with the
-				index that what the search is to begin before the call to the
+				index that the search is to begin before the first call to the
 				function. This variable will be updated with a value that can
 				be used as the start for the next search, skipping the token
 				just found.

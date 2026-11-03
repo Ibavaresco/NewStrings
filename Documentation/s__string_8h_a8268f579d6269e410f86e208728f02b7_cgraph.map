@@ -1,0 +1,11 @@
+<map id="s_replace_se" name="s_replace_se">
+<area shape="rect" id="Node000001" title="Replaces a sequence of characters of s_string dst, starting at index start with characters obtained f..." alt="" coords="5,56,104,83"/>
+<area shape="rect" id="Node000002" href="$s__string_8c.html#a53fd1fdf21d9bb60101c74e35e77dccc" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str,..." alt="" coords="152,5,241,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,53,145,36,140,39,95,58"/>
+<area shape="rect" id="Node000003" href="$s__string_8c.html#ad8a4667d5b847aae82b80bbe78949c44" title="Returns the number of characters that the s_string str is holding." alt="" coords="289,56,356,83"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="104,67,274,67,273,72,104,72"/>
+<area shape="rect" id="Node000004" href="$s__string_8c.html#a7c00fdfc8f5e5f966ea79f37531f1e27" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="404,81,497,108"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="104,73,190,84,289,92,392,96,386,96,289,97,190,89,104,79"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,30,277,50,272,50,231,35"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="357,73,392,83,386,82,357,79"/>
+</map>
