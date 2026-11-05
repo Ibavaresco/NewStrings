@@ -252,7 +252,7 @@ static char *s_cstr( s_string_t * restrict str )
 	size_t	NumCounters;
 	size_t	Offset;
 
-	if( str == NULL || str->MustBeZero != 0 )
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
 		return NULL;
 
 	NumCounters	= 1 + str->Sizes;
@@ -299,7 +299,7 @@ ssize_t s_setcharat( s_string_t * restrict dst, ssize_t index, int value, int fi
 	ssize_t	UsedLen;
 	char	*Ptr;
 
-	if( dst == NULL || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	/* We can change a character beyond the current used length, as long as it
@@ -352,7 +352,7 @@ ssize_t s_appendchar( s_string_t * restrict dst, int value )
 	ssize_t	UsedLen;
 	char	*Ptr;
 
-	if( dst == NULL || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	UsedLen = s_strlen( dst );
@@ -538,13 +538,13 @@ ssize_t s_strcat( s_string_t * restrict dst, const s_string_t * restrict src, ss
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
 
 	/* The source is a null pointer... */
-	if( src == NULL )
+	if( src == NULL || src->MustBeZero != 0 )
 		/* ...so the destination string will not be modified. */
 		return DstUsedLen;
 
@@ -591,7 +591,7 @@ ssize_t s_strcat_c( s_string_t * restrict dst, const char * restrict src )
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -634,7 +634,7 @@ ssize_t s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, s
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -645,7 +645,7 @@ ssize_t s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, s
 		return DstUsedLen;
 
 	/* The source is a null pointer... */
-	if( src == NULL )
+	if( src == NULL || src->MustBeZero != 0 )
 		/* ...so the destination string will not be modified. */
 		return DstUsedLen;
 
@@ -691,7 +691,7 @@ ssize_t s_strlcat_c( s_string_t * restrict dst, const char * restrict src, ssize
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -746,7 +746,7 @@ ssize_t s_strncat( s_string_t * restrict dst, const s_string_t * restrict src, s
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -757,7 +757,7 @@ ssize_t s_strncat( s_string_t * restrict dst, const s_string_t * restrict src, s
 		return DstUsedLen;
 
 	/* The source is a null pointer or it is an empty string... */
-	if( src == NULL || ( SrcUsedLen	= s_strlen( src )) == 0 )
+	if( src == NULL || src->MustBeZero != 0 || ( SrcUsedLen = s_strlen( src )) == 0 )
 		/* ...so the destination string will not be modified too. */
 		return DstUsedLen;
 
@@ -803,7 +803,7 @@ ssize_t s_strncat_c( s_string_t * restrict dst, const char * restrict src, ssize
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -851,13 +851,13 @@ ssize_t s_strcpy( s_string_t * restrict dst, const s_string_t * restrict src, ss
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
 
 	/* The source is a null pointer or it is an empty string... */
-	if( src == NULL || ( SrcUsedLen	= s_strlen( src )) == 0 || srcstart >= SrcUsedLen )
+	if( src == NULL || src->MustBeZero != 0 || ( SrcUsedLen	= s_strlen( src )) == 0 || srcstart >= SrcUsedLen )
 		/* ...so the destination string will be emptied. */
 		{
 		DstPtr[0]	= '\0';
@@ -900,7 +900,7 @@ ssize_t s_strcpy_c( s_string_t * restrict dst, const char * restrict src )
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
@@ -943,13 +943,13 @@ ssize_t s_strlcpy( s_string_t * restrict dst, const s_string_t * restrict src, s
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
 
 	/* The source is a null pointer or it is an empty string... */
-	if( len <= 0 || src == NULL || ( SrcUsedLen	= s_strlen( src )) == 0 || srcstart >= SrcUsedLen )
+	if( len <= 0 || src == NULL || src->MustBeZero != 0 || ( SrcUsedLen	= s_strlen( src )) == 0 || srcstart >= SrcUsedLen )
 		/* ...so the destination string will be emptied. */
 		{
 		DstPtr[0]	= '\0';
@@ -992,7 +992,7 @@ ssize_t s_strlcpy_c( s_string_t * restrict dst, const char * restrict src, ssize
 		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
 		return 0;
 
-	if( dst->Writable == 0 )
+	if( dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
@@ -1729,7 +1729,7 @@ ssize_t s_strrchr( const s_string_t * restrict str, ssize_t start, int c )
 	ssize_t		Index;
 
 	/* str is a null pointer... */
-	if( str == NULL )
+	if( str == NULL || str->MustBeZero != 0 )
 		/* ...nothing can be found there, let's return a 'not found' result. */
 		return -1;
 
@@ -1758,7 +1758,7 @@ ssize_t s_strichr( const s_string_t * restrict str, ssize_t start, int c )
 	ssize_t		Index;
 
 	/* str is a null pointer... */
-	if( str == NULL )
+	if( str == NULL || str->MustBeZero != 0 )
 		/* ...nothing can be found there, let's return a 'not found' result. */
 		return -1;
 
@@ -1788,7 +1788,7 @@ ssize_t s_strrichr( const s_string_t * restrict str, ssize_t start, int c )
 	ssize_t		Index;
 
 	/* str is a null pointer... */
-	if( str == NULL )
+	if( str == NULL || str->MustBeZero != 0 )
 		/* ...nothing can be found there, let's return a 'not found' result. */
 		return -1;
 
@@ -1818,7 +1818,7 @@ ssize_t s_strstr( const s_string_t * restrict str, ssize_t start, const s_string
 	const char	*StrPtr, *SrcPtr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL )
+	if( str == NULL || str->MustBeZero != 0 || src == NULL || src->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
@@ -1885,7 +1885,7 @@ ssize_t s_strstr_c( const s_string_t * restrict str, ssize_t start, const char *
 	const char	*StrPtr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL )
+	if( str == NULL || str->MustBeZero != 0 || src == NULL )
 		/* ...no search is possible. */
 		return -1;
 
@@ -1937,7 +1937,7 @@ ssize_t c_strstr_s( const char * restrict str, const s_string_t * restrict src, 
 	const char	*SrcPtr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL )
+	if( str == NULL || src == NULL || src->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
@@ -1988,7 +1988,7 @@ ssize_t s_stristr( const s_string_t * restrict str, ssize_t start, const s_strin
 	const char	*StrPtr, *SrcPtr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL )
+	if( str == NULL || str->MustBeZero != 0 || src == NULL || src->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
@@ -2055,7 +2055,7 @@ ssize_t s_stristr_c( const s_string_t *str, ssize_t start, const char *src )
 	const char	*StrPtr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL )
+	if( str == NULL || str->MustBeZero != 0 || src == NULL )
 		/* ...no search is possible. */
 		return -1;
 
@@ -2107,7 +2107,7 @@ ssize_t c_stristr_s( const char *str, const s_string_t *src, ssize_t srcstart )
 	const char	*SrcPtr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL )
+	if( str == NULL || src == NULL || src->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
@@ -2157,7 +2157,7 @@ ssize_t s_strpbrk( const s_string_t * restrict str, ssize_t start, const s_strin
 	ssize_t		Index, j;
 	const char	*StrPtr, *CharSetPtr;
 
-	if( str == NULL || charset == NULL )
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL || charset->MustBeZero != 0 )
 		return -1;
 
 	/* 'charset' is an empty string... */
@@ -2201,7 +2201,7 @@ ssize_t s_strpbrk_c( const s_string_t * restrict str, ssize_t start, const char 
 	ssize_t		Index, j;
 	const char	*StrPtr;
 
-	if( str == NULL || charset == NULL )
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL )
 		return -1;
 
 	/* 'charset' is an empty string... */
@@ -2236,7 +2236,7 @@ s_string_t *s_strdup( const s_string_t * restrict src, ssize_t start )
 	ssize_t		Size;
 	s_string_t	*Str;
 
-	if( src == NULL )
+	if( src == NULL || src->MustBeZero != 0 )
 		return NULL;
 
 	SrcLen	= s_strlen( src );
@@ -2298,7 +2298,7 @@ s_string_t *s_strldup( const s_string_t * restrict src, ssize_t start, ssize_t l
 	ssize_t		Size;
 	s_string_t	*Str;
 
-	if( src == NULL || len <= 0 )
+	if( src == NULL || src->MustBeZero != 0 || len <= 0 )
 		return NULL;
 
 	if(( SrcLen	= s_strlen( src )) == 0 )
@@ -2359,7 +2359,7 @@ s_string_t *s_strndup( const s_string_t * restrict src, ssize_t start, ssize_t l
 	s_string_t	*Dst;
 
 /*
-	if( src == NULL )
+	if( src == NULL || src->MustBeZero != 0 )
 		return NULL;
 */
 
@@ -2428,7 +2428,7 @@ ssize_t s_strtok( const s_string_t * restrict str, ssize_t * restrict start, con
 	ssize_t		Index, j, TokenLength, TokenStart;
 	const char	*StrPtr, *DelimPtr;
 
-	if( str == NULL || delim == NULL || start == NULL )
+	if( str == NULL || str->MustBeZero != 0 || delim == NULL || delim->MustBeZero != 0 || start == NULL )
 		return -1;
 
 	/* 'delim' is an empty string... */
@@ -2503,7 +2503,7 @@ ssize_t s_strtok_c( const s_string_t * restrict str, ssize_t * restrict start, c
 	ssize_t		Index, j, TokenLength, TokenStart;
 	const char	*StrPtr;
 
-	if( str == NULL || delim == NULL || start == NULL )
+	if( str == NULL || str->MustBeZero != 0 || delim == NULL || start == NULL )
 		return -1;
 
 	/* 'delim' is an empty string... */
@@ -2569,7 +2569,7 @@ ssize_t s_strtok_s( s_string_t * restrict dst, const s_string_t * restrict str, 
 	ssize_t		Index, j, TokenLength, TokenStart;
 	const char	*StrPtr, *DelimPtr;
 
-	if( dst == NULL || str == NULL || delim == NULL || start == NULL )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || str == NULL || str->MustBeZero != 0 || delim == NULL || delim->MustBeZero != 0 || start == NULL )
 		return -1;
 
 	/* 'delim' is an empty string... */
@@ -2631,7 +2631,7 @@ ssize_t s_strtok_sc( s_string_t * restrict dst, const s_string_t * restrict str,
 	ssize_t		Index, j, TokenLength, TokenStart;
 	const char	*StrPtr;
 
-	if( dst == NULL || str == NULL || delim == NULL || start == NULL )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || str == NULL || str->MustBeZero != 0 || delim == NULL || start == NULL )
 		return -1;
 
 	/* 'delim' is an empty string... */
@@ -2692,7 +2692,7 @@ s_string_t *s_strtok_m( const s_string_t * restrict str, ssize_t * restrict star
 	ssize_t		Index, j, TokenLength, TokenStart;
 	const char	*StrPtr, *DelimPtr;
 
-	if( str == NULL || delim == NULL || start == NULL )
+	if( str == NULL || str->MustBeZero != 0 || delim == NULL || delim->MustBeZero != 0 || start == NULL )
 		return NULL;
 
 	/* 'delim' is an empty string... */
@@ -2761,7 +2761,7 @@ s_string_t *s_strtok_mc( const s_string_t * restrict str, ssize_t * restrict sta
 	ssize_t		Index, j, TokenLength, TokenStart;
 	const char	*StrPtr;
 
-	if( str == NULL || delim == NULL || start == NULL )
+	if( str == NULL || str->MustBeZero != 0 || delim == NULL || start == NULL )
 		return NULL;
 
 	/* 'delim' is an empty string... */
@@ -2819,7 +2819,7 @@ ssize_t s_strspn( const s_string_t * restrict str, ssize_t start, const s_string
 	ssize_t		Count, j;
 	const char	*StrPtr, *CharSetPtr;
 
-	if( str == NULL || charset == NULL )
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL || charset->MustBeZero != 0 )
 		return -1;
 
 	/* 'charset' is an empty string... */
@@ -2864,7 +2864,7 @@ ssize_t s_strspn_c( const s_string_t * restrict str, ssize_t start, const char *
 	ssize_t		Count, j;
 	const char	*StrPtr;
 
-	if( str == NULL || charset == NULL )
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL )
 		return -1;
 
 	/* 'charset' is an empty string... */
@@ -2900,7 +2900,7 @@ ssize_t s_strcspn( const s_string_t * restrict str, ssize_t start, const s_strin
 	ssize_t		Count, j;
 	const char	*StrPtr, *CharSetPtr;
 
-	if( str == NULL || charset == NULL )
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL || charset->MustBeZero != 0 )
 		return -1;
 
 	/* 'charset' is an empty string... */
@@ -2942,7 +2942,7 @@ ssize_t s_strcspn_c( const s_string_t * restrict str, ssize_t start, const char 
 	ssize_t		Count, j;
 	const char	*StrPtr;
 
-	if( str == NULL || charset == NULL )
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL )
 		return -1;
 
 	/* 'charset' is an empty string... */
@@ -2973,7 +2973,7 @@ s_string_t *s_extract_me( const s_string_t * restrict src, ssize_t start, ssize_
 	{
 	ssize_t	SrcLen;
 
-	if( src == NULL )
+	if( src == NULL || src->MustBeZero != 0 )
 		return NULL;	/* Would it be better returning an empty s_string??? */
 
 	if(( SrcLen = s_strlen( src )) == 0 )
@@ -3035,7 +3035,7 @@ s_string_t *s_extract_ml( const s_string_t * restrict src, ssize_t start, ssize_
 	{
 	ssize_t	SrcLen;
 
-	if( src == NULL || len <= 0 )
+	if( src == NULL || src->MustBeZero != 0 || len <= 0 )
 		return NULL;	/* Would it be better returning an empty s_string??? */
 
 	if(( SrcLen = s_strlen( src )) == 0 )
@@ -3084,7 +3084,7 @@ ssize_t s_extract_e( s_string_t * restrict dst, const s_string_t * restrict src,
 	if( dst == NULL || dst->MustBeZero != 0 || !dst->Writable )
 		return -1;	/* Would it be better returning zero??? */
 
-	if( src == NULL || ( SrcLen = s_strlen( src )) == 0 || start >= SrcLen )
+	if( src == NULL || src->MustBeZero != 0 || ( SrcLen = s_strlen( src )) == 0 || start >= SrcLen )
 		return s_strcpy_c( dst, "" );
 
 	if( start < -SrcLen )
@@ -3140,7 +3140,7 @@ ssize_t s_extract_l( s_string_t * restrict dst, const s_string_t * restrict src,
 	if( dst == NULL || dst->MustBeZero != 0 || !dst->Writable )
 		return -1;
 
-	if( len <= 0 || src == NULL || ( SrcLen = s_strlen( src )) == 0 || start >= SrcLen )
+	if( len <= 0 || src == NULL || src->MustBeZero != 0 || ( SrcLen = s_strlen( src )) == 0 || start >= SrcLen )
 		return s_strcpy_c( dst, "" );	/* Would it be better returning zero??? */
 
 	if( start < -SrcLen )
@@ -3175,19 +3175,161 @@ ssize_t s_extract_lc( s_string_t * restrict dst, const char * restrict src, ssiz
 	return s_strlcpy_c( dst, src, len );
 	}
 /*============================================================================*/
+/*============================================================================*/
+static ssize_t s_fill_l_calculate( const s_string_t * restrict dst, ssize_t *dstlen, ssize_t *start, ssize_t len )
+	{
+	ssize_t	StrMaxLen;
+
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || dstlen == NULL || start == NULL || len == 0 )
+		return -1;
+
+	*dstlen		= s_strlen( dst );
+	StrMaxLen	= s_strmaxlen( dst );
+
+	if( *start >= StrMaxLen )
+		return -1;
+
+	if( *start < 0 )
+		*start += *dstlen;
+
+	if( len < 0 )
+		len	   += StrMaxLen - *start + 1;
+
+	if( *start < 0 )
+		{
+		len	   += *start;
+		if( len <= 0 )
+			return -1;
+		*start	= 0;
+		}
+	else if( *start > *dstlen )
+		{
+		if( len <= 0 )
+			return -1;
+		len	   += *start - *dstlen;
+		*start	= *dstlen;
+		}
+
+	if( len <= 0 )
+		return -1;
+
+	if( *start + len > StrMaxLen )
+		len		= StrMaxLen - *start;
+/*
+	if(( Ptr = s_cstr( dst )) == NULL )
+		return -1;
+
+	memset( &Ptr[*start], filler, len );
+
+
+	if( *start + len > dstlen )
+		{
+		Ptr[*start+len]	= '\0';
+		SetUsedLen( dst, start + len );
+		}
+*/
+	return len;
+	}
+/*=========================================================================*//**
+s_fill_l tested OK!
+*//*==========================================================================*/
 ssize_t s_fill_l( s_string_t * restrict dst, ssize_t start, ssize_t len, int filler )
 	{
-	return -1;
+	char	*DstPtr;
+	ssize_t	DstLen;
+
+	if( filler == '\0' )
+		return -1;
+
+	if(( len = s_fill_l_calculate( dst, &DstLen, &start, len )) <= 0 )
+		return len;
+
+	if(( DstPtr = s_cstr( dst )) == NULL )
+		return -1;
+
+	memset( &DstPtr[start], filler, len );
+
+	if( start + len > DstLen )
+		{
+		DstPtr[start+len]	= '\0';
+		SetUsedLen( dst, start + len );
+		}
+
+	return len;
 	}
 /*============================================================================*/
 ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart )
 	{
-	return -1;
+	char		*DstPtr;
+	const char	*SrcPtr;
+	ssize_t		DstLen, SrcLen, RemainingLen, FragmentLen;
+
+	if( src == NULL || src->MustBeZero != 0 )
+		return -1;
+
+	if(( len = s_fill_l_calculate( dst, &DstLen, &start, len )) <= 0 )
+		return len;
+
+	if(( DstPtr = s_cstr( dst )) == NULL )
+		return -1;
+
+	SrcLen	= s_strlen( src );
+
+	if( SrcLen <= 0 || srcstart < -SrcLen || srcstart >= SrcLen )
+		return -1;
+	if( srcstart < 0 )
+		srcstart   += SrcLen;
+	SrcLen -= srcstart;
+
+	SrcPtr = s_constcstr( src, 0 );
+
+	for( RemainingLen = len; RemainingLen > 0; RemainingLen -= FragmentLen, start += FragmentLen )
+		{
+		FragmentLen	= ssmin( RemainingLen, SrcLen );
+		memcpy( &DstPtr[start], SrcPtr, FragmentLen );
+		}
+
+	if( start >= DstLen )
+		{
+		DstPtr[start]	= '\0';
+		SetUsedLen( dst, start );
+		}
+
+	return len;
 	}
 /*============================================================================*/
 ssize_t s_fill_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const char		  * restrict src )
 	{
-	return -1;
+	char		*DstPtr;
+	ssize_t		DstLen, SrcLen, RemainingLen, FragmentLen;
+
+	if( src == NULL )
+		return -1;
+
+	if(( len = s_fill_l_calculate( dst, &DstLen, &start, len )) <= 0 )
+		return len;
+
+	if(( DstPtr = s_cstr( dst )) == NULL )
+		return -1;
+
+	SrcLen	= strlen( src );
+
+	if( SrcLen <= 0 )
+		return -1;
+
+	for( RemainingLen = len; RemainingLen > 0; RemainingLen -= FragmentLen, start += FragmentLen )
+		{
+		FragmentLen	= ssmin( RemainingLen, SrcLen );
+		memcpy( &DstPtr[start], src, FragmentLen );
+		}
+
+	if( start >= DstLen )
+		{
+		DstPtr[start]	= '\0';
+		SetUsedLen( dst, start );
+		}
+
+	return len;
 	}
 /*=========================================================================*//**
 s_replace_de tested OK!
@@ -3382,7 +3524,7 @@ ssize_t s_replace_se( s_string_t * restrict dst, ssize_t start, const s_string_t
 	ssize_t	SrcLen, DstLen, DstMaxLen, Len, SrcStart;
 	char	*DstPtr;
 
-	if( dst == NULL || src == NULL )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
 		return -1;
 
 	DstMaxLen = s_strmaxlen( dst );
@@ -3442,7 +3584,7 @@ ssize_t s_replace_ec( s_string_t * restrict dst, ssize_t start, ssize_t end, con
 	ssize_t	SrcLen, DstLen, DstMaxLen, Len, SrcStart;
 	char	*DstPtr;
 
-	if( dst == NULL || src == NULL )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable || src == NULL )
 		return -1;
 
 	if( start >= ( DstMaxLen = s_strmaxlen( dst )))
@@ -3499,7 +3641,7 @@ ssize_t s_replace_l( s_string_t * restrict dst, ssize_t start, ssize_t len, cons
 	ssize_t	SrcLen, DstLen, DstMaxLen, SrcStart;
 	char	*DstPtr;
 
-	if( dst == NULL || src == NULL )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
 		return -1;
 
 	if( len < 0 )
@@ -3555,7 +3697,7 @@ ssize_t s_replace_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, con
 	ssize_t	SrcLen, DstLen, DstMaxLen, SrcStart;
 	char	*DstPtr;
 
-	if( dst == NULL || src == NULL )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL )
 		return -1;
 
 	if( len < 0 )
@@ -3659,15 +3801,263 @@ ssize_t s_strupr( s_string_t * restrict str, ssize_t start )
 
 	return Count;
 	}
-/*============================================================================*/
-ssize_t s_ltrim( s_string_t * restrict str, ssize_t start )
+/*=========================================================================*//**
+s_ltrim Tested OK!!!
+*//*==========================================================================*/
+ssize_t s_ltrim( s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart )
 	{
-	return 0;
+	char	*Ptr;
+	ssize_t	Len, Index;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( Len == 0 || start >= Len )
+		return 0;
+
+	if( start < -Len )
+		start	= 0;
+	else if( start < 0 )
+		start  += Len;
+
+	if(( Ptr = s_cstr( str )) == NULL )
+		return -1;
+
+	if( delim == NULL )
+		{
+		for( Index = start; Index < Len && isspace( Ptr[Index] ); Index++ )
+			{}
+		}
+	else
+		{
+		const char	*DelimPtr;
+		ssize_t		DelimLen;
+
+		if( delim->MustBeZero != 0 )
+			return -1;
+
+		if(( DelimLen = s_strlen( delim )) <= 0 )
+			return -1;
+
+		if( delimstart < -DelimLen || delimstart >= DelimLen )
+			return -1;
+
+		if( delimstart < 0 )
+			delimstart += DelimLen;
+
+		DelimLen   -= delimstart;
+
+		if(( DelimPtr = s_constcstr( delim, delimstart )) == NULL )
+			return -1;
+
+		for( Index = start; Index < Len; Index++ )
+			{
+			ssize_t	j;
+
+			for( j = 0; j < DelimLen && Ptr[Index] != DelimPtr[j] ; j++ )
+				{}
+			if( j >= DelimLen )
+				break;
+			}
+		}
+
+	if( Index == start )
+		return 0;
+
+	memmove( &Ptr[start], &Ptr[Index], Len - Index );
+
+	Ptr[start+Len-Index]	= '\0';
+
+	SetUsedLen( str, start+Len-Index );
+
+	return Index - start;
 	}
-/*============================================================================*/
-ssize_t s_rtrim( s_string_t * restrict str, ssize_t start )
+/*=========================================================================*//**
+s_ltrim_c Tested OK!!!
+*//*==========================================================================*/
+ssize_t s_ltrim_c( s_string_t * restrict str, ssize_t start, const char * restrict delim )
 	{
-	return 0;
+	char	*Ptr;
+	ssize_t	Len, Index;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( Len == 0 || start >= Len )
+		return 0;
+
+	if( start < -Len )
+		start	= 0;
+	else if( start < 0 )
+		start  += Len;
+
+	if(( Ptr = s_cstr( str )) == NULL )
+		return -1;
+
+	if( delim == NULL )
+		{
+		for( Index = start; Index < Len && isspace( Ptr[Index] ); Index++ )
+			{}
+		}
+	else
+		{
+		ssize_t		DelimLen;
+
+		if(( DelimLen = strlen( delim )) == 0 )
+			return -1;
+
+		for( Index = start; Index < Len; Index++ )
+			{
+			ssize_t	j;
+
+			for( j = 0; j < DelimLen && Ptr[Index] != delim[j] ; j++ )
+				{}
+			if( j >= DelimLen )
+				break;
+			}
+		}
+
+	if( Index == start )
+		return 0;
+
+	memmove( &Ptr[start], &Ptr[Index], Len - Index );
+
+	Ptr[start+Len-Index]	= '\0';
+
+	SetUsedLen( str, start+Len-Index );
+
+	return Index - start;
+	}
+/*=========================================================================*//**
+s_rtrim Tested OK!!!
+*//*==========================================================================*/
+ssize_t s_rtrim( s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart )
+	{
+	char	*Ptr;
+	ssize_t	Len, Index;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( Len == 0 || start < -Len )
+		return 0;
+
+	if( start >= Len )
+		start	= Len - 1;
+	else if( start < 0 )
+		start  += Len;
+
+	if(( Ptr = s_cstr( str )) == NULL )
+		return -1;
+
+	if( delim == NULL )
+		{
+		for( Index = Len - 1; Index >= start && isspace( Ptr[Index] ); Index-- )
+			{}
+		}
+	else
+		{
+		const char	*DelimPtr;
+		ssize_t		DelimLen;
+
+		if( delim->MustBeZero != 0 )
+			return -1;
+
+		if(( DelimLen = s_strlen( delim )) <= 0 )
+			return -1;
+
+		if( delimstart < -DelimLen || delimstart >= DelimLen )
+			return -1;
+
+		if( delimstart < 0 )
+			delimstart += DelimLen;
+
+		DelimLen   -= delimstart;
+
+		if(( DelimPtr = s_constcstr( delim, delimstart )) == NULL )
+			return -1;
+
+		for( Index = Len - 1; Index >= start; Index-- )
+			{
+			ssize_t	j;
+
+			for( j = 0; j < DelimLen && Ptr[Index] != DelimPtr[j] ; j++ )
+				{}
+			if( j >= DelimLen )
+				break;
+			}
+		}
+
+	if( Index == Len - 1 )
+		return 0;
+
+	Ptr[Index+1]	= '\0';
+
+	SetUsedLen( str, Index + 1 );
+
+	return Len - Index - 1;
+	}
+/*=========================================================================*//**
+s_rtrim_c Tested OK!!!
+*//*==========================================================================*/
+ssize_t s_rtrim_c( s_string_t * restrict str, ssize_t start, const char * restrict delim )
+	{
+	char	*Ptr;
+	ssize_t	Len, Index;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( Len == 0 || start < -Len )
+		return 0;
+
+	if( start >= Len )
+		start	= Len - 1;
+	else if( start < 0 )
+		start  += Len;
+
+	if(( Ptr = s_cstr( str )) == NULL )
+		return -1;
+
+	if( delim == NULL )
+		{
+		for( Index = Len - 1; Index >= start && isspace( Ptr[Index] ); Index-- )
+			{}
+		}
+	else
+		{
+		ssize_t		DelimLen;
+
+		if(( DelimLen = strlen( delim )) <= 0 )
+			return -1;
+
+		for( Index = Len - 1; Index >= start; Index-- )
+			{
+			ssize_t	j;
+
+			for( j = 0; j < DelimLen && Ptr[Index] != delim[j] ; j++ )
+				{}
+			if( j >= DelimLen )
+				break;
+			}
+		}
+
+	if( Index == Len - 1 )
+		return 0;
+
+	Ptr[Index+1]	= '\0';
+
+	SetUsedLen( str, Index + 1 );
+
+	return Len - Index - 1;
 	}
 /*============================================================================*/
 /*TODO*/
@@ -3677,10 +4067,10 @@ ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_
 	ssize_t	Offset;
 	char	*DstPtr;
 
-	if( dst == NULL || src == NULL )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
 		return -1;
 
-	if( len < 0 )
+	if( len <= 0 )
 		return 0;
 
 	if( dststart >= ( DstMaxLen = s_strmaxlen( dst )))
@@ -3783,11 +4173,42 @@ void _s_string_init( s_string_t *str, ssize_t len, int area )
 	SetMaxLen( str, len );
 	SetUsedLen( str, 0 );
 
-	Ptr				= s_cstr( str );
-	if( Ptr == NULL )
-		return;
+	if(( Ptr = s_cstr( str )) != NULL )
+		*Ptr		= '\0';
+	}
+/*============================================================================*/
+void _s_string_array_init( s_string_t * const str[], uint8_t *buffer, ssize_t count, ssize_t len, int area )
+	{
+	int				Log2Bytes;
+	ssize_t			i;
+	const ssize_t	Size	= _s_calcsize( len );
 
-	*Ptr			= '\0';
+	if( len < ( (ssize_t)1 <<  8 ) - 1 )
+		Log2Bytes	= 0;
+	else if( len < ( (ssize_t)1 << 16 ) - 1 )
+		Log2Bytes	= 1;
+	else if( len < ( (ssize_t)1 << 32 ) - 1 )
+		Log2Bytes	= 2;
+	else
+		Log2Bytes	= 3;
+
+	for( i = 0; i < count; i++ )
+		{
+		char	*Ptr;
+
+		*(s_string_t**)( &str[i] )	= (s_string_t*)( buffer + i * Size );
+		str[i]->MustBeZero			= 0;
+		str[i]->Sizes				= 1;			/* We will have two size counters (maximum and used). */
+		str[i]->Bits				= Log2Bytes;
+		str[i]->Area				= area; 		/* The memory area that the string is allocated (0=bss, 1=stack, 2=heap). */
+		str[i]->Writable			= 1;			/* The string is writable (at least for now). */
+
+		SetMaxLen( str[i], len );
+		SetUsedLen( str[i], 0 );
+
+		if(( Ptr = s_cstr( str[i] )) != NULL )
+			*Ptr					= '\0';
+		}
 	}
 /*============================================================================*/
 /* Create a dummy variable in the section "s_string_init". This section holds
@@ -3824,37 +4245,102 @@ __attribute__((constructor)) void __s_string_global_init( void )
 			{
 			default:
 				break;
+
+				if( 0 )
+					{
 			case 0x21:
-				Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+					}
+				if( 0 )
+					{
 			case 0x23:
-				Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+					}
+				if( 0 )
+					{
 			case 0x25:
+					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
+					}
 				{
-				Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
 				s_string_t	*Str	= (s_string_t*)*++p;
 				_s_string_init( Str, Length, 0 );
 				s_strcpy_c( Str, *++p );
 				break;
 				}
+
+				if( 0 )
+					{
 			case 0x22:
-				Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+					}
+				if( 0 )
+					{
 			case 0x24:
-				Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+					}
+				if( 0 )
+					{
 			case 0x26:
+					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
+					}
 				{
-				Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
 				s_string_t	*Str	= (s_string_t*)*++p;
 				_s_string_init( Str, Length, 0 );
 				s_strcpy_c( Str, "" );
 				break;
 				}
-			case 0x31:
-				Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
-			case 0x33:
-				Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
-			case 0x35:
+
+				if( 0 )
+					{
+			case 0x2a:
+					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+					}
+				if( 0 )
+					{
+			case 0x2c:
+					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+					}
+				if( 0 )
+					{
+			case 0x2e:
+					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
+					}
 				{
-				Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
+//				ssize_t		i;
+
+				uint8_t		*Buffer	= (uint8_t*)*++p;
+				s_string_t	**Array	= (s_string_t**)*++p;
+				ssize_t		Count	= (ssize_t)*++p;
+
+				_s_string_array_init( Array, Buffer, Count, Length, 0 );
+/*
+				for( i = 0; i < Count; i++ )
+					{
+					Array[i]	= (s_string_t*)( Buffer + i * Length );
+					_s_string_init( Array[i], Length, 0 );
+					s_strcpy_c( Array[i], "" );
+					}
+*/
+				break;
+				}
+
+
+				if( 0 )
+					{
+			case 0x31:
+					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
+					}
+				if( 0 )
+					{
+			case 0x33:
+					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
+					}
+				if( 0 )
+					{
+			case 0x35:
+					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
+					}
+				{
 				s_string_t	*Str	= (s_string_t*)*++p;
 				_s_string_init( Str, Length, 0 );
 				s_strcpy_c( Str, *++p );
@@ -3863,7 +4349,6 @@ __attribute__((constructor)) void __s_string_global_init( void )
 				}
 			}
 		}
-	printf( "\n" );
 	}
 /*============================================================================*/
 #endif	/*	!defined DOXYGEN */

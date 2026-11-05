@@ -41,8 +41,24 @@ typedef struct s_string s_string_t;
 \param maxsize  Maximum number of characters that the object will be able to
 				hold.
 *//*==========================================================================*/
-#define auto_s_string( name, maxsize )                      uint8_t _##name##_buffer[_s_calcsize(maxsize)]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; _s_string_init(name,maxsize,1)
+#define auto_s_string( name, maxsize )												\
+			const uint8_t _##name##_buffer[_s_calcsize(maxsize)];					\
+            s_string_t * const name = (s_string_t*)_##name##_buffer;				\
+            _s_string_init(name,maxsize,1)
+/*=========================================================================*//**
+\brief          Creates on the stack (auto/local variable) an array of s_string
+				objects capable of holding up to \a count s_string objects of up
+				to \a maxsize characters each. Can only be used inside a function.
+				The resulting s_strings start empty.
+\param name     Name of the variable.
+\param count    Number of elements of the array.
+\param maxsize  Maximum number of characters that the object will be able to
+				hold.
+*//*==========================================================================*/
+#define auto_s_string_array( name, count, maxsize )									\
+			const uint8_t _##name##_buffer[(count)*_s_calcsize(maxsize)];			\
+			s_string_t * const name[(count)];										\
+			_s_string_array_init(name,(uint8_t*)_##name##_buffer,count,maxsize,1)
 /*=========================================================================*//**
 \brief          Creates on the stack (auto/local variable) an s_string object
 				capable of holding up to \a maxsize characters, with initial
@@ -53,9 +69,11 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
-#define auto_s_string_c( name, maxsize, src )               uint8_t _##name##_buffer[_s_calcsize(maxsize)]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; _s_string_init(name,maxsize,1); \
-                                                            s_strcpy_c(name,src)
+#define auto_s_string_c( name, maxsize, src )										\
+			const uint8_t _##name##_buffer[_s_calcsize(maxsize)];					\
+			s_string_t * const name = (s_string_t*)_##name##_buffer;				\
+			_s_string_init(name,maxsize,1);											\
+			s_strcpy_c(name,src)
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -65,9 +83,23 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define static_s_string_tiny( name, maxsize )               static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), _##name##_buffer };
+#define static_s_string_tiny( name, maxsize )										\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+1+1+maxsize+1];						\
+            static s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
+            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a static local or file scope array of s_string objects capable of
+				holding up to \a count elements of up to \a maxsize characters.
+				\a maxsize can be at most 254 characters. The resulting strings
+				start empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define static_s_string_tiny_array( name, count, maxsize )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+1+1+maxsize+1)];				\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name[(count)];								\
+            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2a ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -79,9 +111,10 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
-#define static_s_string_tiny_c( name, maxsize, src )        static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), _##name##_buffer, src };
+#define static_s_string_tiny_c( name, maxsize, src )								\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+1+1+maxsize+1];						\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer; 		\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -93,9 +126,10 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
-#define static_const_s_string_tiny_c( name, maxsize, src )  static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
-                                                            static const s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x31 ), _##name##_buffer, src };
+#define static_const_s_string_tiny_c( name, maxsize, src )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+1+1+maxsize+1];						\
+			static const s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;	\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x31 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -105,9 +139,23 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define static_s_string_small( name, maxsize )              static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
+#define static_s_string_small( name, maxsize )										\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+2+2+maxsize+1];						\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a static local or file scope array of s_string objects capable of
+				holding up to \a count elements of up to \a maxsize characters.
+				\a maxsize can be at most 254 characters. The resulting strings
+				starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define static_s_string_small_array( name, count, maxsize )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+2+2+maxsize+1)];				\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name[(count)];								\
+            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2c ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -119,9 +167,10 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
-#define static_s_string_small_c( name, maxsize, src )       static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
+#define static_s_string_small_c( name, maxsize, src )								\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+2+2+maxsize+1];						\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -133,9 +182,10 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
-#define static_const_s_string_small_c( name, maxsize, src ) static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
-                                                            static const s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x33 ), _##name##_buffer, src };
+#define static_const_s_string_small_c( name, maxsize, src )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+2+2+maxsize+1];						\
+			static const s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;	\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x33 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -145,9 +195,10 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define static_s_string_large( name, maxsize )              static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
+#define static_s_string_large( name, maxsize )										\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+4+4+maxsize+1];						\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -157,9 +208,23 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define static_s_string_large_c( name, maxsize, src )       static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
-                                                            static s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
+#define static_s_string_large_c( name, maxsize, src )								\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+4+4+maxsize+1];						\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
+/*=========================================================================*//**
+\brief          Creates a static local or file scope array of s_string objects capable of
+				holding up to \a count elements of up to \a maxsize characters.
+				\a maxsize can be at most 254 characters. The resulting strings
+				starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define static_s_string_large_array( name, count, maxsize )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+4+4+maxsize+1)];				\
+			static s_string_t * const volatile  __attribute__((section(".data"))) name[(count)];								\
+            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2e ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
 /*=========================================================================*//**
 \brief          Creates a static (static local or file scope variable) s_string
 				object capable of holding up to \a maxsize characters. \a
@@ -169,9 +234,10 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define static_const_s_string_large_c( name, maxsize, src ) static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
-                                                            static const s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x35 ), _##name##_buffer, src };
+#define static_const_s_string_large_c( name, maxsize, src )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+4+4+maxsize+1];						\
+			static const s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;	\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x35 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most 254
@@ -183,9 +249,10 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
-#define global_s_string_tiny_c( name, maxsize, src )        static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), _##name##_buffer, src };
+#define global_s_string_tiny_c( name, maxsize, src )								\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+1+1+maxsize+1];						\
+			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most 254
@@ -194,9 +261,23 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define global_s_string_tiny( name, maxsize )               static uint8_t _##name##_buffer[1+1+1+maxsize+1]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), _##name##_buffer };
+#define global_s_string_tiny( name, maxsize )										\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+1+1+maxsize+1];						\
+			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a global file scope array of s_string objects capable of
+				holding up to \a count elements of up to \a maxsize characters.
+				\a maxsize can be at most 254 characters. The resulting strings
+				starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define global_s_string_tiny_array( name, count, maxsize )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+1+1+maxsize+1)];					\
+			s_string_t * const volatile __attribute__((section(".data"))) name[(count)];										\
+            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2a ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most 65534
@@ -208,9 +289,10 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
-#define global_s_string_small_c( name, maxsize, src )       static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
+#define global_s_string_small_c( name, maxsize, src )								\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+2+2+maxsize+1];						\
+			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
+			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most 65534
@@ -219,9 +301,23 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define global_s_string_small( name, maxsize )              static uint8_t _##name##_buffer[1+2+2+maxsize+1]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
+#define global_s_string_small( name, maxsize )										\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+2+2+maxsize+1];						\
+			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
+			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a global file scope array of s_string objects capable of
+				holding up to \a count elements of up to \a maxsize characters.
+				\a maxsize can be at most 254 characters. The resulting strings
+				starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define global_s_string_small_array( name, count, maxsize )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+2+2+maxsize+1)];					\
+			s_string_t * const volatile __attribute__((section(".data"))) name[(count)];										\
+            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2c ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most
@@ -231,9 +327,10 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define global_s_string_large_c( name, maxsize, src )       static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
+#define global_s_string_large_c( name, maxsize, src )								\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+4+4+maxsize+1];						\
+			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
+			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most
@@ -242,9 +339,23 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
-#define global_s_string_large( name, maxsize )              static uint8_t _##name##_buffer[1+4+4+maxsize+1]; \
-                                                            s_string_t * const name = (s_string_t*)_##name##_buffer; \
-                                                            static void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
+#define global_s_string_large( name, maxsize )										\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+4+4+maxsize+1];						\
+			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
+			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
+/*=========================================================================*//**
+\brief          Creates a global file scope array of s_string objects capable of
+				holding up to \a count elements of up to \a maxsize characters.
+				\a maxsize can be at most 254 characters. The resulting strings
+				starts empty.
+\param	name    The name of the variable.
+\param	maxsize The maximum number of characters that the object will be able to
+				store.
+*//*==========================================================================*/
+#define global_s_string_large_array( name, count, maxsize )							\
+			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+4+4+maxsize+1)];					\
+			s_string_t * const volatile __attribute__((section(".data"))) name[(count)];										\
+            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2e ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
 /*=========================================================================*//**
 \brief          Creates a structure field of type s_string capable of holding
                 up to \a maxsize characters. \a maxsize can be at most 65534
@@ -253,14 +364,14 @@ typedef struct s_string s_string_t;
 \param	maxsize The maximum number of characters that the field will be able to
 				store.
 *//*==========================================================================*/
-#define field_s_string(name,maxsize)        s_string_t  *(name);uint8_t _##name##_buffer[1+2+2+(maxsize)+1]
+#define field_s_string(name,maxsize)        s_string_t  * const (name);const uint8_t _##name##_buffer[1+2+2+(maxsize)+1]
 /*=========================================================================*//**
 \brief          Initialize an s_string field in a structure.
 \param	s       The name of the structure variable. If it is a pointer it must
                 be dereferenced.
 \param	name    The name of the s_string field to be initialized.
 *//*==========================================================================*/
-#define field_s_string_init(s,name)         do{(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);}while(0)
+#define field_s_string_init(s,name)         do{*(s_string_t**)&(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);}while(0)
 /*=========================================================================*//**
 \brief          Initialize an s_string field in a structure with an initial
                 value.
@@ -270,7 +381,7 @@ typedef struct s_string s_string_t;
 \param	src		A C-string (null terminated array of characters) that will be
 				the initial value of the field.
 *//*==========================================================================*/
-#define field_s_string_init_c(s,name,src)   do{(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);s_strcpy_c((s).name,src);}while(0)
+#define field_s_string_init_c(s,name,src)   do{*(s_string_t**)&(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);s_strcpy_c((s).name,src);}while(0)
 /*=========================================================================*//**
 \brief          Returns the smaller of two ssize_t (signed) values.
 \param a		The first value.
@@ -299,7 +410,7 @@ static inline ssize_t __attribute__((always_inline)) ssmax( ssize_t a, ssize_t b
 				store.
 \returns        The number of bytes required to hold the s_string object.
 *//*==========================================================================*/
-ssize_t      _s_calcsize    ( ssize_t len );
+ssize_t      _s_calcsize    		( ssize_t len );
 /*=========================================================================*//**
 \brief          Initializes an s_string object right after creation. This
 				function is not intended to be called directly by the
@@ -311,7 +422,8 @@ ssize_t      _s_calcsize    ( ssize_t len );
 				segment (global or static variables), 1 = 'stack' (local/
 				automatic variables), 2 = 'heap' (dynamically created object).
 *//*==========================================================================*/
-void         _s_string_init (       s_string_t * restrict str, ssize_t len, int area );
+void         _s_string_init 		(       s_string_t * restrict str, ssize_t len, int area );
+void		 _s_string_array_init	( 		s_string_t * const str[], uint8_t *buffer, ssize_t count, ssize_t len, int area );
 /*============================================================================*/
 #endif	/*	!defined DOXYGEN */
 /*=========================================================================*//**
@@ -606,7 +718,7 @@ ssize_t		s_strcat_c     (       s_string_t * restrict dst, const char       * re
 /*=========================================================================*//**
 \brief  		Appends characters from the beginning of the s_string pointed to
 				by \a src to the end of the s_string pointed to by \a dst to
-				make \a dst up to \a len characters long. If \a dst is alredy \a
+				make \a dst up to \a len characters long. If \a dst is already \a
 				len characters long or more, no characters will be copied. If \a
 				src does not contain enough characters then \a dst will not
 				reach length \a len.
@@ -1219,6 +1331,64 @@ ssize_t      s_replace_l     (       s_string_t * restrict dst, ssize_t start, s
 *//*==========================================================================*/
 ssize_t      s_replace_lc    (       s_string_t * restrict dst, ssize_t start, ssize_t len, const char       * restrict srcs, int filler );
 /*=========================================================================*//**
+\brief  		Deletes a contiguous sequence of characters that belong to the set
+				\a delim from s_string \a str starting from index \a start towards
+				the right.
+\param	str		Pointer to the s_string that will be trimmed.
+\param	start	The index in \a src to begin the search for the characters to be
+				deleted.
+\param	delim	s_string with the set of characters that are to be searched and
+				deleted from \a str. If \a delim is NULL, the characters to be
+				deleted are those recognized by the function \a isspace.
+\param	delimstart Index of the first character of \a delim that belongs to the set.
+\returns		The number of characters of \a str that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_ltrim		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
+/*=========================================================================*//**
+\brief  		Deletes a contiguous sequence of characters that belong to the set
+				\a delim from s_string \a str starting from index \a start towards
+				the right.
+\param	str		Pointer to the s_string that will be trimmed.
+\param	start	The index in \a src to begin the search for the characters to be
+				deleted.
+\param	delim	C-string with the set of characters that are to be searched and
+				deleted from \a str. If \a delim is NULL, the characters to be
+				deleted are those recognized by the function \a isspace.
+\returns		The number of characters of \a str that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_ltrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
+/*=========================================================================*//**
+\brief  		Deletes a contiguous sequence of characters that belong to the set
+				\a delim from s_string \a str starting from index \a start towards
+				the left.
+\param	str		Pointer to the s_string that will be trimmed.
+\param	start	The index in \a src to begin the search for the characters to be
+				deleted.
+\param	delim	s_string with the set of characters that are to be searched and
+				deleted from \a str. If \a delim is NULL, the characters to be
+				deleted are those recognized by the function \a isspace.
+\param	delimstart Index of the first character of \a delim that belongs to the set.
+\returns		The number of characters of \a str that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_rtrim		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
+/*=========================================================================*//**
+\brief  		Deletes a contiguous sequence of characters that belong to the set
+				\a delim from s_string \a str starting from index \a start towards
+				the left.
+\param	str		Pointer to the s_string that will be trimmed.
+\param	start	The index in \a src to begin the search for the characters to be
+				deleted.
+\param	delim	C-string with the set of characters that are to be searched and
+				deleted from \a str. If \a delim is NULL, the characters to be
+				deleted are those recognized by the function \a isspace.
+\returns		The number of characters of \a str that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
+/*=========================================================================*//**
 \brief  		Extracts a sequence of characters of length \a len from s_string
 				\a src, starting at index \a srcstart and inserts it into the
 				s_string \a dst, starting at index \a dststart. If there are not
@@ -1246,10 +1416,10 @@ ssize_t      s_replace_lc    (       s_string_t * restrict dst, ssize_t start, s
 \returns		The number of characters of \a dst that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_insert_de	 (       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, ssize_t srcstart, int filler );
-ssize_t      s_insert_se	 (       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
-ssize_t      s_insert_ec	 (       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, int filler );
-ssize_t      s_insert_l		 (       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler );
+ssize_t      s_insert_de	(       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, ssize_t srcstart, int filler );
+ssize_t      s_insert_se	(       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
+ssize_t      s_insert_ec	(       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, int filler );
+ssize_t      s_insert_l		(       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*=========================================================================*//**
 \brief  		Extracts a sequence of characters of length \a len from C-string
 				\a src, starting at index \a srcstart and inserts it into the
@@ -1273,7 +1443,30 @@ ssize_t      s_insert_l		 (       s_string_t * restrict dst, ssize_t dststart, c
 \returns		The number of characters that were copied to \a dst or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_insert_lc	 (       s_string_t * restrict dst, ssize_t dststart, const char       * restrict src, ssize_t srcstart, size_t len, int filler );
+ssize_t      s_insert_lc	(       s_string_t * restrict dst, ssize_t dststart, const char       * restrict src, ssize_t srcstart, size_t len, int filler );
+/*=========================================================================*//**
+\brief  		Fills a portion of s_string \a dst starting at index \a start
+				and with length \a len with the character in \a filler.
+\param	dst		Pointer to the s_string that will be filled with character from
+				\a filler.
+\param	start	The index of the first character in \a dst that will be changed.
+				if \a start is negative, it is counted from the current end of
+				the string towards the beginning. -1 is the last character of the
+				string. If \a start is beyond the current end of the string,
+				additional characters from \a filler will be inserted between
+				the end of the string and \a start to fill the gap.
+\param	len		The length of the sequence of characters that will be changed.
+				If \a len is negative, it is counted back from the maximum length
+				that the string can hold. -1 means that the string will be filled
+				to its maximum allowed length.
+\param	filler	Character used to fill the string.
+\returns		The number of characters that were changed in \a dst or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_fill_l		(		s_string_t * restrict dst, ssize_t start, ssize_t len, int filler );
+/*============================================================================*/
+ssize_t		 s_fill_ls		(		s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t		 s_fill_lc		(		s_string_t * restrict dst, ssize_t start, ssize_t len, const char * restrict src );
 /*=========================================================================*//**
 \brief  		Creates in the heap a dynamically allocated copy of the s_string
 				\a src.
