@@ -4180,7 +4180,7 @@ int s_sprintf( s_string_t * restrict dst, ssize_t dststart, int filler, const s_
 
 	va_end( v );
 
-	if( n > 0 )
+	if( n >= 0 )
 		{
 		if( dststart > UsedLen )
 			memset( &DstPtr[UsedLen], filler, dststart - UsedLen );
@@ -4222,7 +4222,7 @@ int __attribute__((format(printf, 4, 5))) s_sprintf_c( s_string_t * restrict dst
 
 	va_end( v );
 
-	if( n > 0 )
+	if( n >= 0 )
 		{
 		if( dststart > UsedLen )
 			memset( &DstPtr[UsedLen], filler, dststart - UsedLen );
