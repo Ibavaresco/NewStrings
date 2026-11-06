@@ -1542,7 +1542,9 @@ s_string_t  *s_strndup      ( const s_string_t * restrict src, ssize_t start, ss
 *//*==========================================================================*/
 s_string_t  *s_strndup_c    ( const char       * restrict src, ssize_t len );
 /*============================================================================*/
-int         s_sprintf_c     ( s_string_t * restrict dst, ssize_t start, int filler, const char * restrict fmt, ... );
+int			s_sprintf		( s_string_t * restrict dst, ssize_t dststart, int filler, const s_string_t * restrict fmt, ssize_t fmtstart, ... );
+/*============================================================================*/
+int			__attribute__((format(printf, 4, 5))) s_sprintf_c	( s_string_t * restrict dst, ssize_t dststart, int filler, const char * restrict fmt, ... );
 /*============================================================================*/
 #endif  /*  !defined __S_STRING_H__ */
 /*============================================================================*/

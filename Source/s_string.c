@@ -3428,8 +3428,7 @@ ssize_t s_replace_de( s_string_t * restrict dst, ssize_t start, ssize_t end, con
 	if(( DstPtr = s_cstr( dst )) == NULL )
 		return -1;
 
-	if(( SrcPtr = s_constcstr( src, 0 )) == NULL )
-		return -1;
+	SrcPtr = s_constcstr( src, 0 );
 
 	/* There s a gap between the current end of the string and the start position... */
 	if( start > DstLen )
@@ -3507,8 +3506,7 @@ ssize_t s_replace_de( s_string_t * restrict dst, ssize_t start, ssize_t end, con
 	if(( DstPtr = s_cstr( dst )) == NULL )
 		return -1;
 
-	if(( SrcPtr = s_constcstr( src, 0 )) == NULL )
-		return -1;
+	s_constcstr( src, 0 );
 
 	if( start > DstLen )
 		memset( &DstPtr[DstLen], filler, start - DstLen );
@@ -3859,8 +3857,7 @@ ssize_t s_ltrim( s_string_t * restrict str, ssize_t start, const s_string_t * re
 
 		DelimLen   -= delimstart;
 
-		if(( DelimPtr = s_constcstr( delim, delimstart )) == NULL )
-			return -1;
+		DelimPtr	= s_constcstr( delim, delimstart );
 
 		for( Index = start; Index < Len; Index++ )
 			{
@@ -3990,8 +3987,7 @@ ssize_t s_rtrim( s_string_t * restrict str, ssize_t start, const s_string_t * re
 
 		DelimLen   -= delimstart;
 
-		if(( DelimPtr = s_constcstr( delim, delimstart )) == NULL )
-			return -1;
+		DelimPtr = s_constcstr( delim, delimstart );
 
 		for( Index = Len - 1; Index >= start; Index-- )
 			{
@@ -4141,11 +4137,66 @@ ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_
 /*============================================================================*/
 ssize_t s_extins_lc( s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*============================================================================*/
-int __attribute__((format(printf, 4, 5))) s_sprintf_c( s_string_t * restrict dst, ssize_t start, int filler, const char * restrict fmt, ... )
+/* I'm tempted to remove this function, because the format string cannot be checked by the compiler. */
+/*============================================================================*/
+int s_sprintf( s_string_t * restrict dst, ssize_t dststart, int filler, const s_string_t * restrict fmt, ssize_t fmtstart, ... )
+	{
+	va_list		v;
+	int			n;
+	char		*DstPtr;
+	const char	*FmtPtr;
+	ssize_t		MaxLen, UsedLen, FmtLen;
+
+	if( dst == NULL || dst->Writable == 0 || dst->MustBeZero != 0 || fmt == NULL || fmt->MustBeZero != 0 )
+		return -1;
+
+	if(( MaxLen = s_strmaxlen( dst )) <= 0 )
+		return -1;
+
+	UsedLen	= s_strlen( dst );
+
+	if( dststart < -UsedLen || dststart >= MaxLen || ( dststart > UsedLen && filler == 0 ))
+		return -1;
+
+	if( dststart < 0 )
+		dststart   += UsedLen;
+
+	FmtLen	= s_strlen( fmt );
+
+	if( fmtstart < -FmtLen || fmtstart >= FmtLen )
+		return -1;
+
+	if( fmtstart < 0 )
+		fmtstart   += FmtLen;
+
+	if(( DstPtr = s_cstr( dst )) == NULL )
+		return -1;
+
+	FmtPtr = s_constcstr( fmt, fmtstart );
+
+	va_start( v, fmtstart );
+
+	n	= vsnprintf( DstPtr, MaxLen - dststart + 1, FmtPtr, v );
+
+	va_end( v );
+
+	if( n > 0 )
+		{
+		if( dststart > UsedLen )
+			memset( &DstPtr[UsedLen], filler, dststart - UsedLen );
+
+		UsedLen	= ssmin( dststart + n, MaxLen );
+		SetUsedLen( dst, UsedLen );
+		}
+
+	return n;
+	}
+/*============================================================================*/
+int __attribute__((format(printf, 4, 5))) s_sprintf_c( s_string_t * restrict dst, ssize_t dststart, int filler, const char * restrict fmt, ... )
 	{
 	va_list	v;
 	int		n;
-	char	*p;
+	char	*DstPtr;
 	ssize_t	MaxLen, UsedLen;
 
 	if( dst == NULL || dst->Writable == 0 || dst->MustBeZero != 0 || fmt == NULL )
@@ -4156,27 +4207,27 @@ int __attribute__((format(printf, 4, 5))) s_sprintf_c( s_string_t * restrict dst
 
 	UsedLen	= s_strlen( dst );
 
-	if( start < -UsedLen || start >= MaxLen || ( start > UsedLen && filler == 0 ))
+	if( dststart < -UsedLen || dststart >= MaxLen || ( dststart > UsedLen && filler == 0 ))
 		return -1;
 
-	if( start < 0 )
-		start  += UsedLen;
+	if( dststart < 0 )
+		dststart  += UsedLen;
 
-	if(( p = s_cstr( dst )) == NULL )
+	if(( DstPtr = s_cstr( dst )) == NULL )
 		return -1;
 
 	va_start( v, fmt );
 
-	n	= vsnprintf( p, MaxLen - start + 1, fmt, v );
+	n	= vsnprintf( DstPtr, MaxLen - dststart + 1, fmt, v );
 
 	va_end( v );
 
 	if( n > 0 )
 		{
-		if( start > UsedLen )
-			memset( &p[UsedLen], filler, start - UsedLen );
+		if( dststart > UsedLen )
+			memset( &DstPtr[UsedLen], filler, dststart - UsedLen );
 
-		UsedLen	= ssmin( start + n, MaxLen );
+		UsedLen	= ssmin( dststart + n, MaxLen );
 		SetUsedLen( dst, UsedLen );
 		}
 
