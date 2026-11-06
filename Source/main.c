@@ -85,7 +85,7 @@ static void Test_s_delete_l( void )
 			{
 			s_strcpy( s, r, 0 );
 			n	= s_delete_l( s, j, i );
-			printf( "%3Ld %3Ld %3Ld %s\n", j, i, n, s_constcstr( s, 0 ));
+			printf( "%3ld %3ld %3ld %s\n", (long)j, (long)i, (long)n, s_constcstr( s, 0 ));
 			}
 	}
 /*============================================================================*/
@@ -101,7 +101,7 @@ static void Test_s_delete_e( void )
 			{
 			s_strcpy( s, r, 0 );
 			n	= s_delete_e( s, i, j );
-			printf( "%3Ld %3Ld %3Ld %s\n", i, j, n, s_constcstr( s, 0 ));
+			printf( "%3ld %3ld %3ld %s\n", (long)i, (long)j, (long)n, s_constcstr( s, 0 ));
 			}
 	}
 /*============================================================================*/
@@ -229,14 +229,14 @@ static void Test_s_replace_de( void )
 			{
 			s_strcpy( Dst, Str, 0 );
 			ssize_t	n = s_replace_de( Dst, i, i + 43, Src, -9, Filler );
-			printf( "\r%3Ld %3d %3d %3d \"%s\"", n, i, i + 7, -9, s_constcstr( Dst, 0 ));
+			printf( "\r%3ld %3d %3d %3d \"%s\"", (long)n, i, i + 7, -9, s_constcstr( Dst, 0 ));
 			usleep( 100000 );
 			}
 		for( ; i > -43; i-- )
 			{
 			s_strcpy( Dst, Str, 0 );
 			ssize_t	n = s_replace_de( Dst, i, i + 43, Src, -9, Filler );
-			printf( "\r%3Ld %3d %3d %3d \"%s\"", n, i, i + 7, -9, s_constcstr( Dst, 0 ));
+			printf( "\r%3ld %3d %3d %3d \"%s\"", (long)n, i, i + 7, -9, s_constcstr( Dst, 0 ));
 			usleep( 100000 );
 			}
 		}
@@ -249,8 +249,8 @@ static void Test_s_ltrim( void )
 	auto_s_string_c(	Delim, 5, " \r\n\tL" );
 	auto_s_string_c(	Str, 32, "\n  \t\rLTrim Test" );
 
-//	printf( "Removed: %Ld\n", s_ltrim( Str, 0, Delim, 0 ) );
-	printf( "Removed: %Ld\n", s_ltrim_c( Str, 0, " \r\n\tL" ) );
+//	printf( "Removed: %ld\n", (long)s_ltrim( Str, 0, Delim, 0 ) );
+	printf( "Removed: %ld\n", (long)s_ltrim_c( Str, 0, " \r\n\tL" ) );
 	printf( "*%s*", s_constcstr( Str, 0 ));
 	}
 /*============================================================================*/
@@ -259,8 +259,8 @@ static void Test_s_rtrim( void )
 	auto_s_string_c(	Delim, 5, " \r\n\t" );
 	auto_s_string_c(	Str, 32, " \tLTrim Test \r\n\t   " );
 
-//	printf( "Removed: %Ld\n", s_rtrim( Str, 0, Delim, 0 ) );
-	printf( "Removed: %Ld\n", s_rtrim_c( Str, 0, " \r\n\tL" ) );
+//	printf( "Removed: %ld\n", (long)s_rtrim( Str, 0, Delim, 0 ) );
+	printf( "Removed: %ld\n", (long)s_rtrim_c( Str, 0, " \r\n\tL" ) );
 	printf( "*%s*", s_constcstr( Str, 0 ));
 	}
 /*============================================================================*/
@@ -274,7 +274,7 @@ static void Test_s_fill_l( void )
 		for( l = -33; l <= 33; l++ )
 			{
 			s_strcpy( Str, Src, 0 );
-			printf( "%3Ld %3Ld %3Ld", s, l, s_fill_l( Str, s, l, 'X' ));
+			printf( "%3ld %3ld %3ld", (long)s, (long)l, (long)s_fill_l( Str, s, l, 'X' ));
 			printf( " %s\n", s_constcstr( Str, 0 ));
 			}
 	}
@@ -297,7 +297,7 @@ int main( int ArgC, char *ArgV[] )
 	{
 	int	i;
 	auto_s_string_array(	v, 50, 100 );
-	char					Temp[256];
+//	char					Temp[256];
 	s_s_t					ss;
 
 	ss.a	=   35;
@@ -309,8 +309,8 @@ int main( int ArgC, char *ArgV[] )
 
 	for( i = 0; i < sizeof v / sizeof v[0]; i++ )
 		{
-		sprintf( Temp, "Teste de array %d", i );
-		s_strcpy_c( v[i], Temp );
+		s_sprintf_c( v[i], 0, 0, "Teste de array %d", i );
+//		s_strcpy_c( v[i], Temp );
 		s_strcpy( Arr[i], v[i], 0 );
 		if( i > 0 )
 			s_strcat( Arr[i], Arr[i-1], i );

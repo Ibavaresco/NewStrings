@@ -23,9 +23,11 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 /*============================================================================*/
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdarg.h>
 
 #include "s_string.h"
 /*============================================================================*/
@@ -82,11 +84,13 @@ ssize_t s_strmaxlen( const s_string_t * restrict str )
 		case 2:
 			return (( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 					( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 ));
+#if			(size_t)-1ull < 0x100000000ull
 		case 3:
 			return (( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 					( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 ) |
 					( (size_t)str->PayLoad[Offset+4] << 32 ) | ( (size_t)str->PayLoad[Offset+5] << 40 ) |
 					( (size_t)str->PayLoad[Offset+6] << 48 ) | ( (size_t)str->PayLoad[Offset+7] << 56 ));
+#endif	/*	(size_t)-1ull < 0x100000000ull */
 		}
 
 	/* Should never reach here... */
@@ -124,6 +128,7 @@ static int SetMaxLen( s_string_t * restrict str, size_t MaxLength )
 			str->PayLoad[Offset+2]	= (uint8_t)( MaxLength >> 16 );
 			str->PayLoad[Offset+3]	= (uint8_t)( MaxLength >> 24 );
 			return MaxLength;
+#if			(size_t)-1ull < 0x100000000ull
 		case 3:
 			str->PayLoad[Offset+0]	= (uint8_t)( MaxLength >>  0 );
 			str->PayLoad[Offset+1]	= (uint8_t)( MaxLength >>  8 );
@@ -134,6 +139,7 @@ static int SetMaxLen( s_string_t * restrict str, size_t MaxLength )
 			str->PayLoad[Offset+6]	= (uint8_t)( MaxLength >> 48 );
 			str->PayLoad[Offset+7]	= (uint8_t)( MaxLength >> 56 );
 			return MaxLength;
+#endif	/*	(size_t)-1ull < 0x100000000ull */
 		}
 
 	/* Should never reach here... */
@@ -167,11 +173,13 @@ ssize_t s_strlen( const s_string_t * restrict str )
 		case 2:
 			return ( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 				   ( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 );
+#if			(size_t)-1ull < 0x100000000ull
 		case 3:
 			return ( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 				   ( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 ) |
 				   ( (size_t)str->PayLoad[Offset+4] << 32 ) | ( (size_t)str->PayLoad[Offset+5] << 40 ) |
 				   ( (size_t)str->PayLoad[Offset+6] << 48 ) | ( (size_t)str->PayLoad[Offset+7] << 56 );
+#endif	/*	(size_t)-1ull < 0x100000000ull */
 		}
 
 	/* Should never reach here... */
@@ -231,6 +239,7 @@ static int SetUsedLen( s_string_t * restrict str, size_t NewLength )
 			str->PayLoad[Offset+2]	= (uint8_t)( NewLength >> 16 );
 			str->PayLoad[Offset+3]	= (uint8_t)( NewLength >> 24 );
 			return NewLength;
+#if			(size_t)-1ull < 0x100000000ull
 		case 3:
 			str->PayLoad[Offset+0]	= (uint8_t)( NewLength >>  0 );
 			str->PayLoad[Offset+1]	= (uint8_t)( NewLength >>  8 );
@@ -241,6 +250,7 @@ static int SetUsedLen( s_string_t * restrict str, size_t NewLength )
 			str->PayLoad[Offset+6]	= (uint8_t)( NewLength >> 48 );
 			str->PayLoad[Offset+7]	= (uint8_t)( NewLength >> 56 );
 			return NewLength;
+#endif	/*	(size_t)-1ull < 0x100000000ull */
 		}
 
 	/* Should never reach here... */
@@ -4131,17 +4141,59 @@ ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_
 /*============================================================================*/
 ssize_t s_extins_lc( s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*============================================================================*/
+int __attribute__((format(printf, 4, 5))) s_sprintf_c( s_string_t * restrict dst, ssize_t start, int filler, const char * restrict fmt, ... )
+	{
+	va_list	v;
+	int		n;
+	char	*p;
+	ssize_t	MaxLen, UsedLen;
+
+	if( dst == NULL || dst->Writable == 0 || dst->MustBeZero != 0 || fmt == NULL )
+		return -1;
+
+	if(( MaxLen = s_strmaxlen( dst )) <= 0 )
+		return -1;
+
+	UsedLen	= s_strlen( dst );
+
+	if( start < -UsedLen || start >= MaxLen || ( start > UsedLen && filler == 0 ))
+		return -1;
+
+	if( start < 0 )
+		start  += UsedLen;
+
+	if(( p = s_cstr( dst )) == NULL )
+		return -1;
+
+	va_start( v, fmt );
+
+	n	= vsnprintf( p, MaxLen - start + 1, fmt, v );
+
+	va_end( v );
+
+	if( n > 0 )
+		{
+		if( start > UsedLen )
+			memset( &p[UsedLen], filler, start - UsedLen );
+
+		UsedLen	= ssmin( start + n, MaxLen );
+		SetUsedLen( dst, UsedLen );
+		}
+
+	return n;
+	}
+/*============================================================================*/
 #if			!defined DOXYGEN
 /*============================================================================*/
 ssize_t _s_calcsize( ssize_t len )
 	{
 	int Bytes;
 
-	if( len < ( (ssize_t)1 <<  8 ) - 1 )
+	if( len < ( 1ull <<  8 ) - 1 )
 		Bytes	= 1;
-	else if( len < ( (ssize_t)1 << 16 ) - 1 )
+	else if( len < ( 1ull << 16 ) - 1 )
 		Bytes	= 2;
-	else if( len < ( (ssize_t)1 << 32 ) - 1 )
+	else if( len < ( 1ull << 32 ) - 1 )
 		Bytes	= 4;
 	else
 		Bytes	= 8;
@@ -4155,11 +4207,11 @@ void _s_string_init( s_string_t *str, ssize_t len, int area )
 	int		Log2Bytes;
 	char	*Ptr;
 
-	if( len < ( (ssize_t)1 <<  8 ) - 1 )
+	if( len < ( 1ull <<  8 ) - 1 )
 		Log2Bytes	= 0;
-	else if( len < ( (ssize_t)1 << 16 ) - 1 )
+	else if( len < ( 1ull << 16 ) - 1 )
 		Log2Bytes	= 1;
-	else if( len < ( (ssize_t)1 << 32 ) - 1 )
+	else if( len < ( 1ull << 32 ) - 1 )
 		Log2Bytes	= 2;
 	else
 		Log2Bytes	= 3;
@@ -4183,11 +4235,11 @@ void _s_string_array_init( s_string_t * const str[], uint8_t *buffer, ssize_t co
 	ssize_t			i;
 	const ssize_t	Size	= _s_calcsize( len );
 
-	if( len < ( (ssize_t)1 <<  8 ) - 1 )
+	if( len < ( 1ull <<  8 ) - 1 )
 		Log2Bytes	= 0;
-	else if( len < ( (ssize_t)1 << 16 ) - 1 )
+	else if( len < ( 1ull << 16 ) - 1 )
 		Log2Bytes	= 1;
-	else if( len < ( (ssize_t)1 << 32 ) - 1 )
+	else if( len < ( 1ull << 32 ) - 1 )
 		Log2Bytes	= 2;
 	else
 		Log2Bytes	= 3;
@@ -4229,8 +4281,6 @@ extern const void *__stop_s_string_init;
 /*============================================================================*/
 /* This function will be called before function 'main', to initialize all static
 s_string objects. */
-
-#include <stdio.h>
 
 __attribute__((constructor)) void __s_string_global_init( void )
 	{
