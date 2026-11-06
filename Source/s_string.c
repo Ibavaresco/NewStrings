@@ -84,13 +84,13 @@ ssize_t s_strmaxlen( const s_string_t * restrict str )
 		case 2:
 			return (( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 					( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 ));
-#if			(size_t)-1ull < 0x100000000ull
+#if			__SIZEOF_POINTER__ > 4
 		case 3:
 			return (( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 					( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 ) |
 					( (size_t)str->PayLoad[Offset+4] << 32 ) | ( (size_t)str->PayLoad[Offset+5] << 40 ) |
 					( (size_t)str->PayLoad[Offset+6] << 48 ) | ( (size_t)str->PayLoad[Offset+7] << 56 ));
-#endif	/*	(size_t)-1ull < 0x100000000ull */
+#endif	/*	__SIZEOF_POINTER__ > 4 */
 		}
 
 	/* Should never reach here... */
@@ -128,7 +128,7 @@ static int SetMaxLen( s_string_t * restrict str, size_t MaxLength )
 			str->PayLoad[Offset+2]	= (uint8_t)( MaxLength >> 16 );
 			str->PayLoad[Offset+3]	= (uint8_t)( MaxLength >> 24 );
 			return MaxLength;
-#if			(size_t)-1ull < 0x100000000ull
+#if			__SIZEOF_POINTER__ > 4
 		case 3:
 			str->PayLoad[Offset+0]	= (uint8_t)( MaxLength >>  0 );
 			str->PayLoad[Offset+1]	= (uint8_t)( MaxLength >>  8 );
@@ -139,7 +139,7 @@ static int SetMaxLen( s_string_t * restrict str, size_t MaxLength )
 			str->PayLoad[Offset+6]	= (uint8_t)( MaxLength >> 48 );
 			str->PayLoad[Offset+7]	= (uint8_t)( MaxLength >> 56 );
 			return MaxLength;
-#endif	/*	(size_t)-1ull < 0x100000000ull */
+#endif	/*	__SIZEOF_POINTER__ > 4 */
 		}
 
 	/* Should never reach here... */
@@ -173,13 +173,13 @@ ssize_t s_strlen( const s_string_t * restrict str )
 		case 2:
 			return ( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 				   ( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 );
-#if			(size_t)-1ull < 0x100000000ull
+#if			__SIZEOF_POINTER__ > 4
 		case 3:
 			return ( (size_t)str->PayLoad[Offset+0] <<  0 ) | ( (size_t)str->PayLoad[Offset+1] <<  8 ) |
 				   ( (size_t)str->PayLoad[Offset+2] << 16 ) | ( (size_t)str->PayLoad[Offset+3] << 24 ) |
 				   ( (size_t)str->PayLoad[Offset+4] << 32 ) | ( (size_t)str->PayLoad[Offset+5] << 40 ) |
 				   ( (size_t)str->PayLoad[Offset+6] << 48 ) | ( (size_t)str->PayLoad[Offset+7] << 56 );
-#endif	/*	(size_t)-1ull < 0x100000000ull */
+#endif	/*	__SIZEOF_POINTER__ > 4 */
 		}
 
 	/* Should never reach here... */
@@ -239,7 +239,7 @@ static int SetUsedLen( s_string_t * restrict str, size_t NewLength )
 			str->PayLoad[Offset+2]	= (uint8_t)( NewLength >> 16 );
 			str->PayLoad[Offset+3]	= (uint8_t)( NewLength >> 24 );
 			return NewLength;
-#if			(size_t)-1ull < 0x100000000ull
+#if			__SIZEOF_POINTER__ > 4
 		case 3:
 			str->PayLoad[Offset+0]	= (uint8_t)( NewLength >>  0 );
 			str->PayLoad[Offset+1]	= (uint8_t)( NewLength >>  8 );
@@ -250,7 +250,7 @@ static int SetUsedLen( s_string_t * restrict str, size_t NewLength )
 			str->PayLoad[Offset+6]	= (uint8_t)( NewLength >> 48 );
 			str->PayLoad[Offset+7]	= (uint8_t)( NewLength >> 56 );
 			return NewLength;
-#endif	/*	(size_t)-1ull < 0x100000000ull */
+#endif	/*	__SIZEOF_POINTER__ > 4 */
 		}
 
 	/* Should never reach here... */
@@ -4339,8 +4339,13 @@ __attribute__((constructor)) void __s_string_global_init( void )
 
 	for( p = &__start_s_string_init; p < &__stop_s_string_init; p++ )
 		{
+#if			__SIZEOF_POINTER__ > 4
 		uint64_t	Temp	=(uint64_t)*p;
 		uint64_t	Length	= Temp >> 8;
+#else	/*	__SIZEOF_POINTER__ > 4 */
+		uint32_t	Temp	=(uint32_t)*p;
+		uint32_t	Length	= Temp >> 8;
+#endif	/*	__SIZEOF_POINTER__ > 4 */
 
 		switch( (uint8_t)Temp )
 			{
