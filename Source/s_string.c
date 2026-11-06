@@ -4306,21 +4306,11 @@ __attribute__((constructor)) void __s_string_global_init( void )
 					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
 					}
 				{
-//				ssize_t		i;
-
 				uint8_t		*Buffer	= (uint8_t*)*++p;
 				s_string_t	**Array	= (s_string_t**)*++p;
 				ssize_t		Count	= (ssize_t)*++p;
 
 				_s_string_array_init( Array, Buffer, Count, Length, 0 );
-/*
-				for( i = 0; i < Count; i++ )
-					{
-					Array[i]	= (s_string_t*)( Buffer + i * Length );
-					_s_string_init( Array[i], Length, 0 );
-					s_strcpy_c( Array[i], "" );
-					}
-*/
 				break;
 				}
 

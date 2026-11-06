@@ -52,8 +52,8 @@ typedef struct s_string s_string_t;
 				The resulting s_strings start empty.
 \param name     Name of the variable.
 \param count    Number of elements of the array.
-\param maxsize  Maximum number of characters that the object will be able to
-				hold.
+\param maxsize  Maximum number of characters that each element of the array will
+				be able to hold.
 *//*==========================================================================*/
 #define auto_s_string_array( name, count, maxsize )									\
 			const uint8_t _##name##_buffer[(count)*_s_calcsize(maxsize)];			\
@@ -88,13 +88,13 @@ typedef struct s_string s_string_t;
             static s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
             static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), _##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a static local or file scope array of s_string objects capable of
-				holding up to \a count elements of up to \a maxsize characters.
-				\a maxsize can be at most 254 characters. The resulting strings
-				start empty.
+\brief          Creates a static local or file scope array of s_string objects
+				capable of holding up to \a count elements of up to \a maxsize
+				characters. \a maxsize can be at most 254 characters. The resulting
+				strings start empty.
 \param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
-				store.
+\param	maxsize The maximum number of characters that each element of the array
+				will be able to store.
 *//*==========================================================================*/
 #define static_s_string_tiny_array( name, count, maxsize )							\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+1+1+maxsize+1)];				\
@@ -292,7 +292,7 @@ typedef struct s_string s_string_t;
 #define global_s_string_small_c( name, maxsize, src )								\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+2+2+maxsize+1];						\
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
-			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most 65534
@@ -304,7 +304,7 @@ typedef struct s_string s_string_t;
 #define global_s_string_small( name, maxsize )										\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+2+2+maxsize+1];						\
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
-			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), _##name##_buffer };
 /*=========================================================================*//**
 \brief          Creates a global file scope array of s_string objects capable of
 				holding up to \a count elements of up to \a maxsize characters.
@@ -330,7 +330,7 @@ typedef struct s_string s_string_t;
 #define global_s_string_large_c( name, maxsize, src )								\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+4+4+maxsize+1];						\
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
-			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), _##name##_buffer, src };
 /*=========================================================================*//**
 \brief          Creates a global file scope s_string object capable of holding
                 up to \a maxsize characters. \a maxsize can be at most
@@ -342,7 +342,7 @@ typedef struct s_string s_string_t;
 #define global_s_string_large( name, maxsize )										\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+4+4+maxsize+1];						\
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
-			static const void * __attribute__((section("s_string_init"))) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), _##name##_buffer };
 /*=========================================================================*//**
 \brief          Creates a global file scope array of s_string objects capable of
 				holding up to \a count elements of up to \a maxsize characters.
