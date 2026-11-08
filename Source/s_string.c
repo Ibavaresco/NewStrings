@@ -101,6 +101,7 @@ static int SetMaxLen( s_string_t * restrict str, size_t MaxLength )
 	{
 	size_t	Offset;
 
+#if			defined PARANOID_MODE
 	if( str == NULL )
 		/* ...return an error result. */
 		return -1;
@@ -109,6 +110,7 @@ static int SetMaxLen( s_string_t * restrict str, size_t MaxLength )
 	if( str->MustBeZero != 0 )
 		/* ...return an error result. */
 		return -1;
+#endif	/*	defined PARANOID_MODE */
 
 	/* If the 'area' field is 3 (heap with references counter) we have a 'size_t' counter before the 'maximum length'. */
 	Offset	= str->Area == 3 ? sizeof( size_t ) : 0;
@@ -200,17 +202,12 @@ static int SetUsedLen( s_string_t * restrict str, size_t NewLength )
 	{
 	size_t	Offset;
 
-	if( str == NULL )
-		/* ...return an error result. */
+#if			defined PARANOID_MODE
+
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
-	/* The 'must be zero' field in this first implementation MUST BE ZERO... */
-	if( str->MustBeZero != 0 )
-		/* ...return an error result. */
-		return -1;
-
-	if( str->Writable == 0 )
-		return -1;
+#endif	/*	defined PARANOID_MODE */
 
 	/* There is no 'used length', we have only the 'maximum length', which cannot be changed... */
 	if( str->Sizes == 0 )
@@ -543,12 +540,7 @@ ssize_t s_strcat( s_string_t * restrict dst, const s_string_t * restrict src, ss
 	const char	*SrcPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -596,12 +588,7 @@ ssize_t s_strcat_c( s_string_t * restrict dst, const char * restrict src )
 	char		*DstPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -639,12 +626,7 @@ ssize_t s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, s
 	const char	*SrcPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -696,12 +678,7 @@ ssize_t s_strlcat_c( s_string_t * restrict dst, const char * restrict src, ssize
 	char		*DstPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -751,12 +728,7 @@ ssize_t s_strncat( s_string_t * restrict dst, const s_string_t * restrict src, s
 	const char	*SrcPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -808,12 +780,7 @@ ssize_t s_strncat_c( s_string_t * restrict dst, const char * restrict src, ssize
 	char		*DstPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstUsedLen	= s_strlen( dst );
@@ -856,12 +823,7 @@ ssize_t s_strcpy( s_string_t * restrict dst, const s_string_t * restrict src, ss
 	const char	*SrcPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
@@ -905,12 +867,7 @@ ssize_t s_strcpy_c( s_string_t * restrict dst, const char * restrict src )
 	char		*DstPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
@@ -948,12 +905,7 @@ ssize_t s_strlcpy( s_string_t * restrict dst, const s_string_t * restrict src, s
 	const char	*SrcPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
@@ -997,12 +949,7 @@ ssize_t s_strlcpy_c( s_string_t * restrict dst, const char * restrict src, ssize
 	char		*DstPtr;
 	ssize_t		BytesToCopy;
 
-	/* The destination is a null pointer... */
-	if( dst == NULL )
-		/* ...let's return zero, as an inexistent string cannot have a size other than zero. */
-		return 0;
-
-	if( dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
@@ -1041,327 +988,327 @@ ssize_t s_strncpy( s_string_t * restrict dst, const s_string_t * restrict src, s
 	}
 */
 /*============================================================================*/
-int s_strcmp( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart )
+int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
 	{
-	const char	*DstPtr;
-	const char	*SrcPtr;
+	const char	*s1Ptr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		DstLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start		= s1Len;
+	else if( s1start < 0 )
+		s1start    += s1Len;
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start    += s2Len;
 
-	Len			= ssmin( SrcLen - srcstart, DstLen - dststart ) + 1;
+	Len			= ssmin( s2Len - s2start, s1Len - s1start ) + 1;
 
-	SrcPtr		= s_constcstr( src, srcstart );
-	DstPtr		= s_constcstr( dst, dststart );
+	s2Ptr		= s_constcstr( s2, s2start );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( SrcPtr[Index] != DstPtr[Index] )
-			return (int)( SrcPtr[Index] - DstPtr[Index] );
+		if( s2Ptr[Index] != s1Ptr[Index] )
+			return (int)( s2Ptr[Index] - s1Ptr[Index] );
 
 	return 0;
 	}
 /*============================================================================*/
-int s_strcmp_c( const s_string_t * restrict dst, ssize_t dststart, const char * restrict src )
+int s_strcmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 )
 	{
-	const char	*DstPtr;
+	const char	*s1Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start	= s1Len;
+	else if( s1start < 0 )
+		s1start    += s1Len;
 
-	Len			= ssmin( SrcLen, DstLen - dststart ) + 1;
+	Len			= ssmin( s2Len, s1Len - s1start ) + 1;
 
-	DstPtr		= s_constcstr( dst, dststart );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( src[Index] != DstPtr[Index] )
-			return (int)( src[Index] - DstPtr[Index] );
+		if( s2[Index] != s1Ptr[Index] )
+			return (int)( s2[Index] - s1Ptr[Index] );
 
 	return 0;
 	}
 /*============================================================================*/
-int c_strcmp_s( const char * restrict dst, const s_string_t * restrict src, ssize_t srcstart )
+int c_strcmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start )
 	{
-	const char	*SrcPtr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start    += s2Len;
 
-	Len			= ssmin( SrcLen - srcstart, DstLen ) + 1;
+	Len			= ssmin( s2Len - s2start, s1Len ) + 1;
 
-	SrcPtr		= s_constcstr( src, srcstart );
+	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( SrcPtr[Index] != dst[Index] )
-			return (int)( SrcPtr[Index] - dst[Index] );
+		if( s2Ptr[Index] != s1[Index] )
+			return (int)( s2Ptr[Index] - s1[Index] );
 
 	return 0;
 	}
 /*============================================================================*/
-int s_stricmp( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart )
+int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
 	{
-	const char	*DstPtr;
-	const char	*SrcPtr;
+	const char	*s1Ptr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		DstLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start	= s1Len;
+	else if( s1start < 0 )
+		s1start   += s1Len;
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start   += s2Len;
 
-	Len			= ssmin( SrcLen - srcstart, DstLen - dststart ) + 1;
+	Len			= ssmin( s2Len - s2start, s1Len - s1start ) + 1;
 
-	SrcPtr		= s_constcstr( src, srcstart );
-	DstPtr		= s_constcstr( dst, dststart );
+	s2Ptr		= s_constcstr( s2, s2start );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( SrcPtr[Index] ) != toupper( DstPtr[Index] ))
-			return (int)( toupper( SrcPtr[Index] ) - toupper( DstPtr[Index] ));
+		if( toupper( s2Ptr[Index] ) != toupper( s1Ptr[Index] ))
+			return (int)( toupper( s2Ptr[Index] ) - toupper( s1Ptr[Index] ));
 
 	return 0;
 	}
 /*============================================================================*/
-int s_stricmp_c( const s_string_t * restrict dst, ssize_t dststart, const char * restrict src )
+int s_stricmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 )
 	{
-	const char	*DstPtr;
+	const char	*s1Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start		= s1Len;
+	else if( s1start < 0 )
+		s1start    += s1Len;
 
-	Len			= ssmin( SrcLen, DstLen - dststart ) + 1;
+	Len			= ssmin( s2Len, s1Len - s1start ) + 1;
 
-	DstPtr		= s_constcstr( dst, dststart );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( src[Index] ) != toupper( DstPtr[Index] ))
-			return (int)( toupper( src[Index] ) - toupper( DstPtr[Index] ));
+		if( toupper( s2[Index] ) != toupper( s1Ptr[Index] ))
+			return (int)( toupper( s2[Index] ) - toupper( s1Ptr[Index] ));
 
 	return 0;
 	}
 /*============================================================================*/
-int c_stricmp_s( const char * restrict dst, const s_string_t * restrict src, ssize_t srcstart )
+int c_stricmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start )
 	{
-	const char	*SrcPtr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start    += s2Len;
 
-	Len			= ssmin( SrcLen - srcstart, DstLen ) + 1;
+	Len			= ssmin( s2Len - s2start, s1Len ) + 1;
 
-	SrcPtr		= s_constcstr( src, srcstart );
+	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( SrcPtr[Index] ) != toupper( dst[Index] ))
-			return (int)( toupper( SrcPtr[Index] ) - toupper( dst[Index] ));
+		if( toupper( s2Ptr[Index] ) != toupper( s1[Index] ))
+			return (int)( toupper( s2Ptr[Index] ) - toupper( s1[Index] ));
 
 	return 0;
 	}
 /*============================================================================*/
-int s_strncmp( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
 	{
-	const char	*DstPtr;
-	const char	*SrcPtr;
+	const char	*s1Ptr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		DstLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
 	if( len <= 0 )
@@ -1369,60 +1316,60 @@ int s_strncmp( const s_string_t * restrict dst, ssize_t dststart, const s_string
 		return 0;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start		= s1Len;
+	else if( s1start < 0 )
+		s1start    += s1Len;
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start    += s2Len;
 
-	Len			= ssmin( len, ssmin( SrcLen - srcstart, DstLen - dststart ) + 1 );
+	Len			= ssmin( len, ssmin( s2Len - s2start, s1Len - s1start ) + 1 );
 
-	SrcPtr		= s_constcstr( src, srcstart );
-	DstPtr		= s_constcstr( dst, dststart );
+	s2Ptr		= s_constcstr( s2, s2start );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( SrcPtr[Index] != DstPtr[Index] )
-			return (int)( SrcPtr[Index] - DstPtr[Index] );
+		if( s2Ptr[Index] != s1Ptr[Index] )
+			return (int)( s2Ptr[Index] - s1Ptr[Index] );
 
 	return 0;
 	}
 /*============================================================================*/
-int s_strncmp_c( const s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t len )
+int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2, ssize_t len )
 	{
-	const char	*DstPtr;
+	const char	*s1Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
 	if( len <= 0 )
@@ -1430,54 +1377,54 @@ int s_strncmp_c( const s_string_t * restrict dst, ssize_t dststart, const char *
 		return 0;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start		= s1Len;
+	else if( s1start < 0 )
+		s1start   += s1Len;
 
-	Len			= ssmin( len, ssmin( SrcLen, DstLen - dststart ) + 1 );
+	Len			= ssmin( len, ssmin( s2Len, s1Len - s1start ) + 1 );
 
-	DstPtr		= s_constcstr( dst, dststart );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( src[Index] != DstPtr[Index] )
-			return (int)( src[Index] - DstPtr[Index] );
+		if( s2[Index] != s1Ptr[Index] )
+			return (int)( s2[Index] - s1Ptr[Index] );
 
 	return 0;
 	}
 /*============================================================================*/
-int c_strncmp_s( const char * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
 	{
-	const char	*SrcPtr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
 	if( len <= 0 )
@@ -1485,55 +1432,55 @@ int c_strncmp_s( const char * restrict dst, const s_string_t * restrict src, ssi
 		return 0;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start    += s2Len;
 
-	Len			= ssmin( len, ssmin( SrcLen - srcstart, DstLen ) + 1 );
+	Len			= ssmin( len, ssmin( s2Len - s2start, s1Len ) + 1 );
 
-	SrcPtr		= s_constcstr( src, srcstart );
+	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( SrcPtr[Index] != dst[Index] )
-			return (int)( SrcPtr[Index] - dst[Index] );
+		if( s2Ptr[Index] != s1[Index] )
+			return (int)( s2Ptr[Index] - s1[Index] );
 
 	return 0;
 	}
 /*============================================================================*/
-int s_strnicmp( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
 	{
-	const char	*DstPtr;
-	const char	*SrcPtr;
+	const char	*s1Ptr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		DstLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
 	if( len <= 0 )
@@ -1541,60 +1488,60 @@ int s_strnicmp( const s_string_t * restrict dst, ssize_t dststart, const s_strin
 		return 0;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start		= s1Len;
+	else if( s1start < 0 )
+		s1start   += s1Len;
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start    += s2Len;
 
-	Len			= ssmin( len, ssmin( SrcLen - srcstart, DstLen - dststart ) + 1 );
+	Len			= ssmin( len, ssmin( s2Len - s2start, s1Len - s1start ) + 1 );
 
-	SrcPtr		= s_constcstr( src, srcstart );
-	DstPtr		= s_constcstr( dst, dststart );
+	s2Ptr		= s_constcstr( s2, s2start );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( SrcPtr[Index] ) != toupper( DstPtr[Index] ))
-			return (int)( toupper( SrcPtr[Index] ) - toupper( DstPtr[Index] ));
+		if( toupper( s2Ptr[Index] ) != toupper( s1Ptr[Index] ))
+			return (int)( toupper( s2Ptr[Index] ) - toupper( s1Ptr[Index] ));
 
 	return 0;
 	}
 /*============================================================================*/
-int s_strnicmp_c( const s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t len )
+int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2, ssize_t len )
 	{
-	const char	*DstPtr;
+	const char	*s1Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
 	if( len <= 0 )
@@ -1602,54 +1549,54 @@ int s_strnicmp_c( const s_string_t * restrict dst, ssize_t dststart, const char 
 		return 0;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= s_strlen( dst );
-	SrcLen		= strlen( src );
+	s1Len		= s_strlen( s1 );
+	s2Len		= strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( dststart < -DstLen || dststart >= DstLen )
-		dststart	= DstLen;
-	else if( dststart < 0 )
-		dststart   += DstLen;
+	if( s1start < -s1Len || s1start >= s1Len )
+		s1start		= s1Len;
+	else if( s1start < 0 )
+		s1start   += s1Len;
 
-	Len			= ssmin( len, ssmin( SrcLen, DstLen - dststart ) + 1 );
+	Len			= ssmin( len, ssmin( s2Len, s1Len - s1start ) + 1 );
 
-	DstPtr		= s_constcstr( dst, dststart );
+	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( src[Index] ) != toupper( DstPtr[Index] ))
-			return (int)( toupper( src[Index] ) - toupper( DstPtr[Index] ));
+		if( toupper( s2[Index] ) != toupper( s1Ptr[Index] ))
+			return (int)( toupper( s2[Index] ) - toupper( s1Ptr[Index] ));
 
 	return 0;
 	}
 /*============================================================================*/
-int c_strnicmp_s( const char * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+int c_strnicmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
 	{
-	const char	*SrcPtr;
+	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		SrcLen, DstLen;
+	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
 	if( len <= 0 )
@@ -1657,44 +1604,44 @@ int c_strnicmp_s( const char * restrict dst, const s_string_t * restrict src, ss
 		return 0;
 
 #if 0
-	/* Both dst and src are null pointers... */
-	if( dst == NULL && src == NULL )
+	/* Both s1 and s2 are null pointers... */
+	if( s1 == NULL && s2 == NULL )
 		/* ...so both are equal. */
 		return 0;
-	/* dst is a null pointer...*/
-	if( dst == NULL )
-		/* ...so it is smaller than src. */
+	/* s1 is a null pointer...*/
+	if( s1 == NULL )
+		/* ...so it is smaller than s2. */
 		return -1;
-	/* src is a null pointer...*/
-	if( src == NULL )
-		/* ...so dst is bigger than src. */
+	/* s2 is a null pointer...*/
+	if( s2 == NULL )
+		/* ...so s1 is bigger than s2. */
 		return +1;
 #else
-	DstLen		= strlen( dst );
-	SrcLen		= s_strlen( src );
+	s1Len		= strlen( s1 );
+	s2Len		= s_strlen( s2 );
 
-	/* Both 'src' and 'dst' are either NULL pointers or empty strings... */
-	if( DstLen == 0 && SrcLen == 0 )
+	/* Both 's2' and 's1' are either NULL pointers or empty strings... */
+	if( s1Len == 0 && s2Len == 0 )
 		/* ...so they are equal. */
 		return 0;
-	if( DstLen == 0 )
+	if( s1Len == 0 )
 		return -1;
-	if( SrcLen == 0 )
+	if( s2Len == 0 )
 		return +1;
 #endif
 
-	if( srcstart < -SrcLen || srcstart >= SrcLen )
-		srcstart	= SrcLen;
-	else if( srcstart < 0 )
-		srcstart   += SrcLen;
+	if( s2start < -s2Len || s2start >= s2Len )
+		s2start		= s2Len;
+	else if( s2start < 0 )
+		s2start    += s2Len;
 
-	Len			= ssmin( len, ssmin( SrcLen - srcstart, DstLen ) + 1 );
+	Len			= ssmin( len, ssmin( s2Len - s2start, s1Len ) + 1 );
 
-	SrcPtr		= s_constcstr( src, srcstart );
+	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( SrcPtr[Index] ) != toupper( dst[Index] ))
-			return (int)( toupper( SrcPtr[Index] ) - toupper( dst[Index] ));
+		if( toupper( s2Ptr[Index] ) != toupper( s1[Index] ))
+			return (int)( toupper( s2Ptr[Index] ) - toupper( s1[Index] ));
 
 	return 0;
 	}
@@ -1821,340 +1768,340 @@ ssize_t s_strrichr( const s_string_t * restrict str, ssize_t start, int c )
 	return ( Index >= 0 && Index < StrLen ) ? Index : -1;
 	}
 /*============================================================================*/
-ssize_t s_strstr( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict src, ssize_t srcstart )
+ssize_t s_strstr( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
 	{
-	ssize_t		StrLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
-	const char	*StrPtr, *SrcPtr;
+	const char	*s1Ptr, *s2Ptr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || str->MustBeZero != 0 || src == NULL || src->MustBeZero != 0 )
+	if( s1 == NULL || s1->MustBeZero != 0 || s2 == NULL || s2->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
 	/* 'src' is an empty string... */
-	if(( SrcLen = s_strlen( src )) == 0 )
+	if(( s2Len = s_strlen( s2 )) == 0 )
 		/* ...it will never be found inside 'str'. */
 		return -1;
 
-	/* 'srcstart' points outside of the string 'source'... */
-	if( srcstart < -SrcLen || srcstart > SrcLen )
+	/* 's2start' points outside of the string 'source'... */
+	if( s2start < -s2Len || s2start > s2Len )
 		/* ...nothing to be searched. */
 		return -1;
 
-	/* 'srcstart' is negative... */
-	if( srcstart < 0 )
+	/* 's2start' is negative... */
+	if( s2start < 0 )
 		/* ...let's normalize it counting from the end. */
-		srcstart+= SrcLen;
+		s2start+= s2Len;
 
 	/* Calculate the effective length of the string to be searched. */
-	SrcLen -= srcstart;
+	s2Len -= s2start;
 
 	/* 'str' is an empty string... */
-	if(( StrLen = s_strlen( str )) == 0 )
+	if(( s1Len = s_strlen( s1 )) == 0 )
 		/* ...nothing can be found inside it. */
 		return -1;
 
-	/* 'start' points outside of the string 'str'... */
-	if( start < -StrLen || start > StrLen )
+	/* 's1start' points outside of the string 'str'... */
+	if( s1start < -s1Len || s1start > s1Len )
 		/* ...there's nothing to search in. */
 		return -1;
 
-	/* 'start' is negative... */
-	if( start < 0 )
+	/* 's1start' is negative... */
+	if( s1start < 0 )
 		/* ...let's normalize it counting from the end. */
-		start+= StrLen;
+		s1start+= s1Len;
 
 	/* Calculate the effective length of the string to be searched in. */
-	StrLen -= start;
+	s1Len -= s1start;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  SrcLen > StrLen )
+	if(  s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
-	StrPtr	= s_constcstr( str, start );
-	SrcPtr	= s_constcstr( src, srcstart );
+	s1Ptr	= s_constcstr( s1, s1start );
+	s2Ptr	= s_constcstr( s2, s2start );
 
-	for( Index = 0; Index <= StrLen - SrcLen ; Index++ )
+	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
-		for( j = 0; j < SrcLen && StrPtr[Index+j] == SrcPtr[j] ; j++ )
+		for( j = 0; j < s2Len && s1Ptr[Index+j] == s2Ptr[j] ; j++ )
 			{}
-		if( j == SrcLen )
-			return Index + start;
+		if( j == s2Len )
+			return Index + s1start;
 		}
 
 	return -1;
 	}
 /*============================================================================*/
-ssize_t s_strstr_c( const s_string_t * restrict str, ssize_t start, const char * restrict src )
+ssize_t s_strstr_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 )
 	{
-	ssize_t		StrLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
-	const char	*StrPtr;
+	const char	*s1Ptr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || str->MustBeZero != 0 || src == NULL )
+	if( s1 == NULL || s1->MustBeZero != 0 || s2 == NULL )
 		/* ...no search is possible. */
 		return -1;
 
-	/* If 'src' is an empty string it will not be found inside 'str'... */
-	if(( SrcLen = strlen( src )) == 0 )
+	/* If 's2' is an empty string it will not be found inside 's1'... */
+	if(( s2Len = strlen( s2 )) == 0 )
 		return -1;
 
-	/* 'str' is an empty string... */
-	if(( StrLen = s_strlen( str )) == 0 )
+	/* 's1' is an empty string... */
+	if(( s1Len = s_strlen( s1 )) == 0 )
 		/* ...nothing can be found inside it. */
 		return -1;
 
-	/* 'start' points outside of the string 'str'... */
-	if( start < -StrLen || start > StrLen )
+	/* 's1start' points outside of the string 's1'... */
+	if( s1start < -s1Len || s1start > s1Len )
 		/* ...there's nothing to search in. */
 		return -1;
 
-	/* 'start' is negative... */
-	if( start < 0 )
+	/* 's1start' is negative... */
+	if( s1start < 0 )
 		/* ...let's normalize it counting from the end. */
-		start+= StrLen;
+		s1start+= s1Len;
 
 	/* Calculate the effective length of the string to be searched in. */
-	StrLen -= start;
+	s1Len -= s1start;
 
 	/* The string to be searched is longer than the string to search in... */
-	if( SrcLen > StrLen )
+	if( s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
-	StrPtr	= s_constcstr( str, start );
+	s1Ptr	= s_constcstr( s1, s1start );
 
-	for( Index = 0; Index <= StrLen - SrcLen ; Index++ )
+	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
-		for( j = 0; j < SrcLen && StrPtr[Index+j] == src[j] ; j++ )
+		for( j = 0; j < s2Len && s1Ptr[Index+j] == s2[j] ; j++ )
 			{}
-		if( j == SrcLen )
-			return Index + start;
+		if( j == s2Len )
+			return Index + s1start;
 		}
 
 	return -1;
 	}
 /*============================================================================*/
-ssize_t c_strstr_s( const char * restrict str, const s_string_t * restrict src, ssize_t srcstart )
+ssize_t c_strstr_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start )
 	{
-	ssize_t		StrLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
-	const char	*SrcPtr;
+	const char	*s2Ptr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL || src->MustBeZero != 0 )
+	if( s1 == NULL || s2 == NULL || s2->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
-	/* 'src' is an empty string... */
-	if(( SrcLen = s_strlen( src )) == 0 )
-		/* ...it will never be found inside 'str'. */
+	/* 's2' is an empty string... */
+	if(( s2Len = s_strlen( s2 )) == 0 )
+		/* ...it will never be found inside 's1'. */
 		return -1;
 
-	/* 'srcstart' points outside of the string 'source'... */
-	if( srcstart < -SrcLen || srcstart > SrcLen )
+	/* 's2start' points outside of the string 'source'... */
+	if( s2start < -s2Len || s2start > s2Len )
 		/* ...nothing to be searched. */
 		return -1;
 
-	/* 'srcstart' is negative... */
-	if( srcstart < 0 )
+	/* 's2start' is negative... */
+	if( s2start < 0 )
 		/* ...let's normalize it counting from the end. */
-		srcstart+= SrcLen;
+		s2start+= s2Len;
 
 	/* Calculate the effective length of the string to be searched. */
-	SrcLen -= srcstart;
+	s2Len -= s2start;
 
-	if(( StrLen = strlen( str )) == 0 )
+	if(( s1Len = strlen( s1 )) == 0 )
 		return -1;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  SrcLen > StrLen )
+	if(  s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
-	SrcPtr	= s_constcstr( src, srcstart );
+	s2Ptr	= s_constcstr( s2, s2start );
 
-	for( Index = 0; Index <= StrLen - SrcLen ; Index++ )
+	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
-		for( j = 0; j < SrcLen && str[Index+j] == SrcPtr[j] ; j++ )
+		for( j = 0; j < s2Len && s1[Index+j] == s2Ptr[j] ; j++ )
 			{}
-		if( j == SrcLen )
+		if( j == s2Len )
 			return Index;
 		}
 
 	return -1;
 	}
 /*============================================================================*/
-ssize_t s_stristr( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict src, ssize_t srcstart )
+ssize_t s_stristr( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
 	{
-	ssize_t		StrLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
-	const char	*StrPtr, *SrcPtr;
+	const char	*s1Ptr, *s2Ptr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || str->MustBeZero != 0 || src == NULL || src->MustBeZero != 0 )
+	if( s1 == NULL || s1->MustBeZero != 0 || s2 == NULL || s2->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
-	/* 'src' is an empty string... */
-	if(( SrcLen = s_strlen( src )) == 0 )
-		/* ...it will never be found inside 'str'. */
+	/* 's2' is an empty string... */
+	if(( s2Len = s_strlen( s2 )) == 0 )
+		/* ...it will never be found inside 's1'. */
 		return -1;
 
-	/* 'srcstart' points outside of the string 'source'... */
-	if( srcstart < -SrcLen || srcstart > SrcLen )
+	/* 's2start' points outside of the string 'source'... */
+	if( s2start < -s2Len || s2start > s2Len )
 		/* ...nothing to be searched. */
 		return -1;
 
-	/* 'srcstart' is negative... */
-	if( srcstart < 0 )
+	/* 's2start' is negative... */
+	if( s2start < 0 )
 		/* ...let's normalize it counting from the end. */
-		srcstart+= SrcLen;
+		s2start+= s2Len;
 
 	/* Calculate the effective length of the string to be searched. */
-	SrcLen -= srcstart;
+	s2Len -= s2start;
 
-	/* 'str' is an empty string... */
-	if(( StrLen = s_strlen( str )) == 0 )
+	/* 's1' is an empty string... */
+	if(( s1Len = s_strlen( s1 )) == 0 )
 		/* ...nothing can be found inside it. */
 		return -1;
 
-	/* 'start' points outside of the string 'str'... */
-	if( start < -StrLen || start > StrLen )
+	/* 's1start' points outside of the string 's1'... */
+	if( s1start < -s1Len || s1start > s1Len )
 		/* ...there's nothing to search in. */
 		return -1;
 
-	/* 'start' is negative... */
-	if( start < 0 )
+	/* 's1start' is negative... */
+	if( s1start < 0 )
 		/* ...let's normalize it counting from the end. */
-		start+= StrLen;
+		s1start+= s1Len;
 
 	/* Calculate the effective length of the string to be searched in. */
-	StrLen -= start;
+	s1Len -= s1start;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  SrcLen > StrLen )
+	if(  s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
-	StrPtr	= s_constcstr( str, start );
-	SrcPtr	= s_constcstr( src, srcstart );
+	s1Ptr	= s_constcstr( s1, s1start );
+	s2Ptr	= s_constcstr( s2, s2start );
 
-	for( Index = 0; Index <= StrLen - SrcLen ; Index++ )
+	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
-		for( j = 0; j < SrcLen && toupper( StrPtr[Index+j] ) == toupper( SrcPtr[j] ); j++ )
+		for( j = 0; j < s2Len && toupper( s1Ptr[Index+j] ) == toupper( s2Ptr[j] ); j++ )
 			{}
-		if( j == SrcLen )
-			return Index + start;
+		if( j == s2Len )
+			return Index + s1start;
 		}
 
 	return -1;
 	}
 /*============================================================================*/
-ssize_t s_stristr_c( const s_string_t *str, ssize_t start, const char *src )
+ssize_t s_stristr_c( const s_string_t *s1, ssize_t s1start, const char *s2 )
 	{
-	ssize_t		StrLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
-	const char	*StrPtr;
+	const char	*s1Ptr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || str->MustBeZero != 0 || src == NULL )
+	if( s1 == NULL || s1->MustBeZero != 0 || s2 == NULL )
 		/* ...no search is possible. */
 		return -1;
 
-	/* If 'src' is an empty string it will not be found inside 'str'... */
-	if(( SrcLen = strlen( src )) == 0 )
+	/* If 's2' is an empty string it will not be found inside 's1'... */
+	if(( s2Len = strlen( s2 )) == 0 )
 		return -1;
 
-	/* 'str' is an empty string... */
-	if(( StrLen = s_strlen( str )) == 0 )
+	/* 's1' is an empty string... */
+	if(( s1Len = s_strlen( s1 )) == 0 )
 		/* ...nothing can be found inside it. */
 		return -1;
 
-	/* 'start' points outside of the string 'str'... */
-	if( start < -StrLen || start > StrLen )
+	/* 's1start' points outside of the string 's1'... */
+	if( s1start < -s1Len || s1start > s1Len )
 		/* ...there's nothing to search in. */
 		return -1;
 
-	/* 'start' is negative... */
-	if( start < 0 )
+	/* 's1start' is negative... */
+	if( s1start < 0 )
 		/* ...let's normalize it counting from the end. */
-		start+= StrLen;
+		s1start+= s1Len;
 
 	/* Calculate the effective length of the string to be searched in. */
-	StrLen -= start;
+	s1Len -= s1start;
 
 	/* The string to be searched is longer than the string to search in... */
-	if( SrcLen > StrLen )
+	if( s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
-	StrPtr	= s_constcstr( str, start );
+	s1Ptr	= s_constcstr( s1, s1start );
 
-	for( Index = 0; Index <= StrLen - SrcLen ; Index++ )
+	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
-		for( j = 0; j < SrcLen && toupper( StrPtr[Index+j] ) == toupper( src[j] ); j++ )
+		for( j = 0; j < s2Len && toupper( s1Ptr[Index+j] ) == toupper( s2[j] ); j++ )
 			{}
-		if( j == SrcLen )
-			return Index + start;
+		if( j == s2Len )
+			return Index + s1start;
 		}
 
 	return -1;
 	}
 /*============================================================================*/
-ssize_t c_stristr_s( const char *str, const s_string_t *src, ssize_t srcstart )
+ssize_t c_stristr_s( const char *s1, const s_string_t *s2, ssize_t s2start )
 	{
-	ssize_t		StrLen, SrcLen;
+	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
-	const char	*SrcPtr;
+	const char	*s2Ptr;
 
 	/* At least one of the strings is a NULL pointer... */
-	if( str == NULL || src == NULL || src->MustBeZero != 0 )
+	if( s1 == NULL || s2 == NULL || s2->MustBeZero != 0 )
 		/* ...no search is possible. */
 		return -1;
 
-	/* 'src' is an empty string... */
-	if(( SrcLen = s_strlen( src )) == 0 )
-		/* ...it will never be found inside 'str'. */
+	/* 's2' is an empty string... */
+	if(( s2Len = s_strlen( s2 )) == 0 )
+		/* ...it will never be found inside 's1'. */
 		return -1;
 
-	/* 'srcstart' points outside of the string 'source'... */
-	if( srcstart < -SrcLen || srcstart > SrcLen )
+	/* 's2start' points outside of the string 'source'... */
+	if( s2start < -s2Len || s2start > s2Len )
 		/* ...nothing to be searched. */
 		return -1;
 
-	/* 'srcstart' is negative... */
-	if( srcstart < 0 )
+	/* 's2start' is negative... */
+	if( s2start < 0 )
 		/* ...let's normalize it counting from the end. */
-		srcstart+= SrcLen;
+		s2start+= s2Len;
 
 	/* Calculate the effective length of the string to be searched. */
-	SrcLen -= srcstart;
+	s2Len -= s2start;
 
-	if(( StrLen = strlen( str )) == 0 )
+	if(( s1Len = strlen( s1 )) == 0 )
 		return -1;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  SrcLen > StrLen )
+	if(  s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
-	SrcPtr	= s_constcstr( src, srcstart );
+	s2Ptr	= s_constcstr( s2, s2start );
 
-	for( Index = 0; Index <= StrLen - SrcLen ; Index++ )
+	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
-		for( j = 0; j < SrcLen && toupper( str[Index+j] ) == toupper( SrcPtr[j] ); j++ )
+		for( j = 0; j < s2Len && toupper( s1[Index+j] ) == toupper( s2Ptr[j] ); j++ )
 			{}
-		if( j == SrcLen )
+		if( j == s2Len )
 			return Index;
 		}
 
@@ -2180,8 +2127,6 @@ ssize_t s_strpbrk( const s_string_t * restrict str, ssize_t start, const s_strin
 	if( start < 0 )
 		charsetstart  += CharSetLen;
 
-	CharSetLen -= charsetstart;
-
 	/* 'str' is an empty string... */
 	if(( StrLen = s_strlen( str )) == 0 )
 		return -1;
@@ -2192,15 +2137,13 @@ ssize_t s_strpbrk( const s_string_t * restrict str, ssize_t start, const s_strin
 	if( start < 0 )
 		start  += StrLen;
 
-	StrLen -= start;
+	StrPtr		= s_constcstr( str, 0 );
+	CharSetPtr	= s_constcstr( charset, 0 );
 
-	StrPtr		= s_constcstr( str, start );
-	CharSetPtr	= s_constcstr( charset, charsetstart );
-
-	for( Index = 0; Index < StrLen; Index++ )
-		for( j = 0; j < CharSetLen; j++ )
+	for( Index = start; Index < StrLen; Index++ )
+		for( j = charsetstart; j < CharSetLen; j++ )
 			if( StrPtr[Index] == CharSetPtr[j] )
-				return Index + start;
+				return Index;
 
 	return -1;
 	}
@@ -2228,14 +2171,91 @@ ssize_t s_strpbrk_c( const s_string_t * restrict str, ssize_t start, const char 
 	if( start < 0 )
 		start  += StrLen;
 
-	StrLen -= start;
+	StrPtr		= s_constcstr( str, 0 );
 
-	StrPtr		= s_constcstr( str, start );
-
-	for( Index = 0; Index < StrLen; Index++ )
+	for( Index = start; Index < StrLen; Index++ )
 		for( j = 0; j < CharSetLen; j++ )
 			if( StrPtr[Index] == charset[j] )
-				return Index + start;
+				return Index;
+
+	return -1;
+	}
+/*============================================================================*/
+ssize_t s_strcpbrk( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict charset, ssize_t charsetstart )
+	{
+	ssize_t		StrLen, CharSetLen;
+	ssize_t		Index, j;
+	const char	*StrPtr, *CharSetPtr;
+
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL || charset->MustBeZero != 0 )
+		return -1;
+
+	/* 'charset' is an empty string... */
+	if(( CharSetLen = s_strlen( charset )) == 0 )
+		return -1;
+
+	if( charsetstart < -CharSetLen || start >= CharSetLen )
+		return -1;
+
+	if( start < 0 )
+		charsetstart  += CharSetLen;
+
+	/* 'str' is an empty string... */
+	if(( StrLen = s_strlen( str )) == 0 )
+		return -1;
+
+	if( start < -StrLen || start >= StrLen )
+		return -1;
+
+	if( start < 0 )
+		start  += StrLen;
+
+	StrPtr		= s_constcstr( str, 0 );
+	CharSetPtr	= s_constcstr( charset, 0 );
+
+	for( Index = start; Index < StrLen; Index++ )
+		{
+		for( j = charsetstart; j < CharSetLen && StrPtr[Index] != CharSetPtr[j]; j++ )
+			{}
+		if( j >= CharSetLen )
+			return Index;
+		}
+
+	return -1;
+	}
+/*============================================================================*/
+ssize_t s_strcpbrk_c( const s_string_t * restrict str, ssize_t start, const char * restrict charset )
+	{
+	ssize_t		StrLen, CharSetLen;
+	ssize_t		Index, j;
+	const char	*StrPtr;
+
+	if( str == NULL || str->MustBeZero != 0 || charset == NULL )
+		return -1;
+
+	/* 'charset' is an empty string... */
+	if(( CharSetLen = strlen( charset )) == 0 )
+		return -1;
+
+	/* 'str' is an empty string... */
+	if(( StrLen = s_strlen( str )) == 0 )
+		return -1;
+
+	if( start < -StrLen || start >= StrLen )
+		return -1;
+
+	if( start < 0 )
+		start  += StrLen;
+
+	StrPtr		= s_constcstr( str, 0 );
+
+	for( Index = start; Index < StrLen; Index++ )
+		{
+		for( j = 0; j < CharSetLen && StrPtr[Index] != charset[j]; j++ )
+			{}
+		if( j >= CharSetLen )
+			return Index;
+		}
 
 	return -1;
 	}
@@ -3756,7 +3776,7 @@ ssize_t s_replace_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, con
 	return len;
 	}
 /*============================================================================*/
-ssize_t s_strlwr( s_string_t * restrict str, ssize_t start )
+ssize_t s_strlwr_e( s_string_t * restrict str, ssize_t start, ssize_t end )
 	{
 	char	*Ptr;
 	ssize_t	UsedLen;
@@ -3770,10 +3790,25 @@ ssize_t s_strlwr( s_string_t * restrict str, ssize_t start )
 	if( UsedLen == 0 )
 		return 0;
 
+	if( start < -UsedLen || start >= UsedLen )
+		return -1;
+
+	if( start < 0 )
+		start  += UsedLen;
+
+	if( end < -UsedLen || end >= UsedLen )
+		return -1;
+
+	if( end < 0 )
+		end  += UsedLen;
+
+	if( end < start )
+		return -1;
+
 	if(( Ptr = s_cstr( str )) == NULL )
 		return -1;
 
-	for( Count = 0, Index = 0; Index < UsedLen; Index++ )
+	for( Count = 0, Index = start; Index <= end; Index++ )
 		if( isupper( Ptr[Index] ))
 			{
 			Count++;
@@ -3783,7 +3818,50 @@ ssize_t s_strlwr( s_string_t * restrict str, ssize_t start )
 	return Count;
 	}
 /*============================================================================*/
-ssize_t s_strupr( s_string_t * restrict str, ssize_t start )
+ssize_t s_strlwr_l( s_string_t * restrict str, ssize_t start, ssize_t len )
+	{
+	char	*Ptr;
+	ssize_t	UsedLen;
+	ssize_t	Index, Count;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	UsedLen	= s_strlen( str );
+
+	if( UsedLen == 0 || len == 0 )
+		return 0;
+
+	if( start >= UsedLen || len < 0 )
+		return -1;
+
+	if( start < 0 )
+		start  += UsedLen;
+
+	if( start < 0 )
+		{
+		if(( len += start ) <= 0 )
+			return 0;
+		start	= 0;
+		}
+
+	if( start + len > UsedLen )
+		len		= UsedLen - start;
+
+	if(( Ptr = s_cstr( str )) == NULL )
+		return -1;
+
+	for( Count = 0, Index = start; Index < start + len; Index++ )
+		if( isupper( Ptr[Index] ))
+			{
+			Count++;
+			Ptr[Index]	= tolower( Ptr[Index] );
+			}
+
+	return Count;
+	}
+/*============================================================================*/
+ssize_t s_strupr_e( s_string_t * restrict str, ssize_t start, ssize_t end )
 	{
 	char	*Ptr;
 	ssize_t	UsedLen;
@@ -3797,10 +3875,68 @@ ssize_t s_strupr( s_string_t * restrict str, ssize_t start )
 	if( UsedLen == 0 )
 		return 0;
 
+	if( start < -UsedLen || start >= UsedLen )
+		return -1;
+
+	if( start < 0 )
+		start  += UsedLen;
+
+	if( end < -UsedLen || end >= UsedLen )
+		return -1;
+
+	if( end < 0 )
+		end  += UsedLen;
+
+	if( end < start )
+		return -1;
+
 	if(( Ptr = s_cstr( str )) == NULL )
 		return -1;
 
-	for( Count = 0, Index = 0; Index < UsedLen; Index++ )
+	for( Count = 0, Index = start; Index <= end; Index++ )
+		if( islower( Ptr[Index] ))
+			{
+			Count++;
+			Ptr[Index]	= toupper( Ptr[Index] );
+			}
+
+	return Count;
+	}
+/*============================================================================*/
+ssize_t s_strupr_l( s_string_t * restrict str, ssize_t start, ssize_t len )
+	{
+	char	*Ptr;
+	ssize_t	UsedLen;
+	ssize_t	Index, Count;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	UsedLen	= s_strlen( str );
+
+	if( UsedLen == 0 || len == 0 )
+		return 0;
+
+	if( start >= UsedLen || len < 0 )
+		return -1;
+
+	if( start < 0 )
+		start  += UsedLen;
+
+	if( start < 0 )
+		{
+		if(( len += start ) <= 0 )
+			return 0;
+		start	= 0;
+		}
+
+	if( start + len > UsedLen )
+		len		= UsedLen - start;
+
+	if(( Ptr = s_cstr( str )) == NULL )
+		return -1;
+
+	for( Count = 0, Index = start; Index < start + len; Index++ )
 		if( islower( Ptr[Index] ))
 			{
 			Count++;
@@ -3812,7 +3948,7 @@ ssize_t s_strupr( s_string_t * restrict str, ssize_t start )
 /*=========================================================================*//**
 s_ltrim Tested OK!!!
 *//*==========================================================================*/
-ssize_t s_ltrim( s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart )
+ssize_t s_ltrim_s( s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart )
 	{
 	char	*Ptr;
 	ssize_t	Len, Index;
@@ -3942,7 +4078,7 @@ ssize_t s_ltrim_c( s_string_t * restrict str, ssize_t start, const char * restri
 /*=========================================================================*//**
 s_rtrim Tested OK!!!
 *//*==========================================================================*/
-ssize_t s_rtrim( s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart )
+ssize_t s_rtrim_s( s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart )
 	{
 	char	*Ptr;
 	ssize_t	Len, Index;
@@ -4064,6 +4200,114 @@ ssize_t s_rtrim_c( s_string_t * restrict str, ssize_t start, const char * restri
 	SetUsedLen( str, Index + 1 );
 
 	return Len - Index - 1;
+	}
+/*============================================================================*/
+ssize_t s_alltrim_se( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int filler )
+	{
+	char	*Ptr;
+	ssize_t	Len, Index, IndexPut;
+	int		PreviousWasSpace	= -1;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( start >= Len || end < -Len )
+		return -1;
+
+	if( start < 0 && ( start += Len ) < 0 )
+		start	= 0;
+
+	if( end < 0 )
+		end    += Len;
+	else if( end > Len )
+		end		= Len;
+
+	if( end < start )
+		return -1;
+
+	Ptr	= s_cstr( str );
+
+	if( delim == NULL )
+		{
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			if( isspace( Ptr[Index] ))
+				{
+				if( !PreviousWasSpace )
+					{
+					Ptr[IndexPut++]		= filler != '\0' ? filler : Ptr[Index];
+					PreviousWasSpace	= 1;
+					}
+				Index++;
+				}
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				PreviousWasSpace	= 0;
+				}
+			}
+		}
+	else
+		{
+		const char	*DelimPtr;
+		ssize_t		DelimLen;
+
+		if( delim->MustBeZero != 0 )
+			return -1;
+
+		if(( DelimLen = s_strlen( delim )) <= 0 )
+			return -1;
+
+		if( delimstart < -DelimLen || delimstart >= DelimLen )
+			return -1;
+
+		if( delimstart < 0 )
+			delimstart += DelimLen;
+
+		DelimPtr = s_constcstr( delim, 0 );
+
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			ssize_t	j;
+
+			for( j = delimstart; j < DelimLen && Ptr[Index] != DelimPtr[j] ; j++ )
+				{}
+			if( j < DelimLen )
+				{
+				if( !PreviousWasSpace )
+					{
+					Ptr[IndexPut++]		= filler != '\0' ? filler : Ptr[Index];
+					PreviousWasSpace	= 1;
+					}
+				Index++;
+				}
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				PreviousWasSpace	= 0;
+				}
+			}
+		}
+
+	if( IndexPut > 0 && PreviousWasSpace > 0 )
+		IndexPut--;
+
+	while( Index < Len )
+		Ptr[IndexPut++]	= Ptr[Index++];
+
+	if( IndexPut != Len )
+		{
+		Ptr[IndexPut]	= '\0';
+		SetUsedLen( str, IndexPut );
+		}
 	}
 /*============================================================================*/
 /*TODO*/
@@ -4340,10 +4584,10 @@ __attribute__((constructor)) void __s_string_global_init( void )
 	for( p = &__start_s_string_init; p < &__stop_s_string_init; p++ )
 		{
 #if			__SIZEOF_POINTER__ > 4
-		uint64_t	Temp	=(uint64_t)*p;
+		uint64_t	Temp	= (uint64_t)*p;
 		uint64_t	Length	= Temp >> 8;
 #else	/*	__SIZEOF_POINTER__ > 4 */
-		uint32_t	Temp	=(uint32_t)*p;
+		uint32_t	Temp	= (uint32_t)*p;
 		uint32_t	Length	= Temp >> 8;
 #endif	/*	__SIZEOF_POINTER__ > 4 */
 
@@ -4357,12 +4601,12 @@ __attribute__((constructor)) void __s_string_global_init( void )
 			case 0x21:
 					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x23:
 					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x25:
 					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
@@ -4379,12 +4623,12 @@ __attribute__((constructor)) void __s_string_global_init( void )
 			case 0x22:
 					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x24:
 					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x26:
 					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
@@ -4401,12 +4645,12 @@ __attribute__((constructor)) void __s_string_global_init( void )
 			case 0x2a:
 					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x2c:
 					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x2e:
 					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;
@@ -4426,12 +4670,12 @@ __attribute__((constructor)) void __s_string_global_init( void )
 			case 0x31:
 					Length	= Length > ( 1uLL <<  8 ) - 2 ? ( 1uLL <<  8 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x33:
 					Length	= Length > ( 1uLL << 16 ) - 2 ? ( 1uLL << 16 ) - 2 : Length;
 					}
-				if( 0 )
+				else if( 0 )
 					{
 			case 0x35:
 					Length	= Length > ( 1uLL << 32 ) - 2 ? ( 1uLL << 32 ) - 2 : Length;

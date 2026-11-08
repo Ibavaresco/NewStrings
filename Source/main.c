@@ -295,8 +295,17 @@ typedef struct
 /*============================================================================*/
 int main( int ArgC, char *ArgV[] )
 	{
-	int	i;
-	auto_s_string_array(	v, 50, 100 );
+	auto_s_string_c(	s, 100, "  ,. Isaac  Marino -   \tBavaresco   \r\n   " );
+	auto_s_string_c(	d, 100, " \t\r\n,.-" );
+
+
+	s_alltrim_se( s, 1, -2, d, 0, '#' );
+
+	printf( "\n*%s*\n", s_constcstr( s, 0 ));
+
+
+#if 0
+
 //	char					Temp[256];
 	s_s_t					ss;
 
@@ -353,6 +362,7 @@ int main( int ArgC, char *ArgV[] )
 //	Test_s_replace_de();
 
 //	Test_s_fill_l();
+#endif
 
 	return 0;
 	}

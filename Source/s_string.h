@@ -512,104 +512,129 @@ ssize_t      s_strichr      ( const s_string_t * restrict str, ssize_t start, in
 *//*==========================================================================*/
 ssize_t      s_strrichr     ( const s_string_t * restrict str, ssize_t start, int c );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of the portion of s_string \a src
-				starting at index \a srcstart in the s_string \a str starting
-				search from the position \a start towards the end of \a str
+\brief          Finds the first occurrence of the portion of s_string \a s2
+				starting at index \a s2start in the s_string \a s1 starting
+				search from the position \a start towards the end of \a s1
 				 (forward search).
-\param str      Pointer to the s_string that will be scanned to find \a src.
-\param start	The index at which the search is to begin in \a str.
-\param src      Pointer to the s_string that will be looked for.
-\param srcstart	The index of the beginning of the portion of \a src that will
+\param s1      Pointer to the s_string that will be scanned to find \a s2.
+\param s1start	The index at which the search is to begin in \a s1.
+\param s2      Pointer to the s_string that will be looked for.
+\param s2start	The index of the beginning of the portion of \a s2 that will
 				be looked for.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\returns        The index of the start of first occurrence of \a s2 if found,
+				or -1 if \a s2 is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strstr       ( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t      s_strstr       ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of C-string \a src in the s_string
-				\a str starting from the position \a start towards the end of
-				\a str (forward search).
-\param str      Pointer to the s_string that will be scanned to find \a src.
-\param start	The index at which the search is to begin in \a str.
-\param src      Pointer to the s_string that will be looked for.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\brief          Finds the first occurrence of C-string \a s2 in the s_string
+				\a s1 starting from the position \a s1start towards the end of
+				\a s1 (forward search).
+\param s1      Pointer to the s_string that will be scanned to find \a s2.
+\param s1start	The index at which the search is to begin in \a s1.
+\param s2      Pointer to the s_string that will be looked for.
+\returns        The index of the s1start of first occurrence of \a s2 if found,
+				or -1 if \a s2 is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strstr_c     ( const s_string_t * restrict str, ssize_t start, const char	   * restrict src );
+ssize_t      s_strstr_c     ( const s_string_t * restrict s1, ssize_t s1start, const char	   * restrict s2 );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a src (s_string) in
-				the s_string \a str starting from the position \a start towards
-				the end of \a str (forward search), ignoring the case of the
+\brief          Finds the first occurrence of sub-string \a s2 (s_string) in
+				the s_string \a s1 starting from the position \a s1start towards
+				the end of \a s1 (forward search), ignoring the case of the
 				characters.
-\param str      Pointer to the s_string that will be scanned to find \a src.
-\param src      Pointer to the s_string that will be looked for.
-\param start	The index at which the search is to begin.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\param s1      Pointer to the s_string that will be scanned to find \a s2.
+\param s2      Pointer to the s_string that will be looked for.
+\param s2start	The index at which the search is to begin.
+\returns        The index of the s1start of first occurrence of \a s2 if found,
+				or -1 if \a s2 is not present in the string.
 *//*==========================================================================*/
-ssize_t		 c_strstr_s		( const char	   * restrict str,				  const s_string_t * restrict src, ssize_t start );
+ssize_t		 c_strstr_s		( const char	   * restrict s1,				  const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a src (s_string) in
-				the s_string \a str starting from the position \a start towards
-				the end of \a str (forward search), ignoring the case of the
+\brief          Finds the first occurrence of sub-string \a s2 (s_string) in
+				the s_string \a s1 starting from the position \a start towards
+				the end of \a s1 (forward search), ignoring the case of the
 				characters.
-\param str      Pointer to the s_string that will be scanned to find \a src.
-\param start	The index at which the search is to begin.
-\param src      Pointer to the s_string that will be looked for.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\param s1      Pointer to the s_string that will be scanned to find \a s2.
+\param s1start	The index at which the search is to begin.
+\param s2      Pointer to the s_string that will be looked for.
+\param s2start	The index at which the search is to begin.
+\returns        The index of the start of first occurrence of \a s2 if found,
+				or -1 if \a s2 is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_stristr      ( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t      s_stristr      ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a src (C-string) in
-				the s_string \a str starting from the position \a start towards
-				the end of \a str (forward search), ignoring the case of the
+\brief          Finds the first occurrence of sub-string \a s2 (C-string) in
+				the s_string \a s1 starting from the position \a s1start towards
+				the end of \a s1 (forward search), ignoring the case of the
 				characters.
-\param str      Pointer to the s_string that will be scanned to find \a src.
-\param start	The index at which the search is to begin.
-\param src      Pointer to the s_string that will be looked for.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\param s1      Pointer to the s_string that will be scanned to find \a s2.
+\param s1start	The index at which the search is to begin.
+\param s2      Pointer to the s_string that will be looked for.
+\returns        The index of the s1start of first occurrence of \a s2 if found,
+				or -1 if \a s2 is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_stristr_c    ( const s_string_t * restrict str, ssize_t start, const char * restrict src );
+ssize_t      s_stristr_c    ( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a src (s_string) in
-				the C-string \a str starting from the position \a start towards
-				the end of \a str (forward search), ignoring the case of the
+\brief          Finds the first occurrence of sub-string \a s2 (s_string) in
+				the C-string \a s1 starting from the position \a s1start towards
+				the end of \a s1 (forward search), ignoring the case of the
 				characters.
-\param str      Pointer to the C-string that will be scanned to find \a src.
-\param start	The index at which the search is to begin.
-\param src      Pointer to the s_string that will be looked for.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\param s1      Pointer to the C-string that will be scanned to find \a s2.
+\param s2      Pointer to the s_string that will be looked for.
+\param s2start	The index at which the search is to begin.
+\returns        The index of the s1start of first occurrence of \a s2 if found,
+				or -1 if \a s2 is not present in the string.
 *//*==========================================================================*/
-ssize_t      c_stristr_s    ( const char * restrict str, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t      c_stristr_s    ( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief			Returns the position of the first occurrence of any character
-				from the s_string \a charset in the s_string \a str, or -1 if
-				the two strings have no characters in common.
+\brief			Finds the position of the first character of the s_string \a
+                str that belongs to the s_string \a charset.
 \param str      Pointer to the s_string that will be scanned to find any
 				characters from \a charset.
 \param start	The index at which the search is to begin.
 \param charset  Pointer to the s_string that contains the set of characters to
 				be found in \a str.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\returns        The index of the first character of \a str that does not belong
+				to \a charset, or -1 the two strings have no characters in common.
 *//*==========================================================================*/
 ssize_t		 s_strpbrk		( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict charset, ssize_t charsetstart );
 /*=========================================================================*//**
-\brief			Returns the position of the first occurrence of any character
-				from the C-string \a charset in the s_string \a str, or -1 if
-				the two strings have no characters in common.
+\brief			Finds the position of the first character of the s_string \a
+                str that belongs to the C-string \a charset.
 \param str      Pointer to the s_string that will be scanned to find any
 				characters from \a charset.
 \param start	The index at which the search is to begin.
 \param charset  Pointer to the C-string that contains the set of characters to
 				be found in \a str.
-\returns        The index of the start of first occurrence of \a src if found,
-				or -1 if \a src is not present in the string.
+\returns        The index of the first character of \a str that does not belong
+				to \a charset, or -1 the two strings have no characters in common.
 *//*==========================================================================*/
 ssize_t      s_strpbrk_c    ( const s_string_t * restrict str, ssize_t start, const char * restrict charset );
+/*=========================================================================*//**
+\brief			Finds the position of the first character of the s_string \a
+                str that does not belong to the s_string \a charset.
+\param str      Pointer to the s_string that will be scanned to find any
+				characters from \a charset.
+\param start	The index at which the search is to begin.
+\param charset  Pointer to the s_string that contains the set of characters to
+				be found in \a str.
+\returns        The index of first character of \a str that doesn't belong to \a
+				charset, or -1 if all characters of \a str are present in \a
+                charset.
+*//*==========================================================================*/
+ssize_t		 s_strcpbrk		( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict charset, ssize_t charsetstart );
+/*=========================================================================*//**
+\brief			Finds the position of the first character of the s_string \a
+                str that does not belong to the C-string \a charset.
+\param str      Pointer to the s_string that will be scanned to find any
+				characters from \a charset.
+\param start	The index at which the search is to begin.
+\param charset  Pointer to the C-string that contains the set of characters to
+				be found in \a str.
+\returns        The index of first character of \a str that doesn't belong to \a
+				charset, or -1 if all characters of \a str are present in \a
+                charset.
+*//*==========================================================================*/
+ssize_t      s_strcpbrk_c   ( const s_string_t * restrict str, ssize_t start, const char * restrict charset );
 /*=========================================================================*//**
 \brief          Returns the value of the character at position \a index of
 				s_string \a str.
@@ -809,92 +834,130 @@ ssize_t		s_strlcpy      (       s_string_t * restrict dst, const s_string_t * re
 *//*==========================================================================*/
 ssize_t		s_strlcpy_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares two s_strings \a dst and \a src character by character.
-\param	dst		The first s_string to be compared.
-\param	src		The second s_string to be compared.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal and positive if \a dst is
-				lexicographically after \a src.
+\brief  		Compares two s_strings \a s1 and \a s2 character by character.
+\param	s1		The first s_string to be compared.
+\param	s2		The second s_string to be compared.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_strcmp       ( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart );
+int          s_strcmp       ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief  		Compares the s_string \a dst with the C-string \a src character
+\brief  		Compares the s_string \a s1 and the C-string \a s2 character
 				by character.
-\param	dst		The first string to be compared.
-\param	src		The second string to be compared.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal and positive if \a dst is
-				lexicographically after \a src.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_strcmp_c     ( const s_string_t * restrict dst, ssize_t dststart, const char       * restrict src 				   );
-int			 c_strcmp_s		( const char	   * restrict dst,					 const s_string_t * restrict src, ssize_t srcstart );
+int          s_strcmp_c     ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2 				   );
 /*=========================================================================*//**
-\brief  		Compares two s_strings \a dst and \a src character by character
+\brief  		Compares the C-string \a s1 and the s_string \a s2 character
+				by character.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
+*//*==========================================================================*/
+int			 c_strcmp_s		( const char	   * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start );
+/*=========================================================================*//**
+\brief  		Compares two s_strings \a s1 and \a s2 character by character
 				ignoring the case.
-\param	dst		The first s_string to be compared.
-\param	src		The second s_string to be compared.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal and positive if \a dst is
-				lexicographically after \a src.
+\param	s1		The first s_string to be compared.
+\param	s2		The second s_string to be compared.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_stricmp      ( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart );
+int          s_stricmp      ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief  		Compares the s_string \a dst with the C-string \a src character
+\brief  		Compares the s_string \a s1 and the C-string \a s2 character
 				by character ignoring the case.
-\param	dst		The first string to be compared.
-\param	src		The second string to be compared.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal and positive if \a dst is
-				lexicographically after \a src.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_stricmp_c    ( const s_string_t * restrict dst, ssize_t dststart, const char       * restrict src				   );
-int			 c_stricmp_s	( const char       * restrict dst,					 const s_string_t * restrict src, ssize_t srcstart );
+int          s_stricmp_c    ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2				   );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of two s_strings \a dst and \a
-				src character by character.
-\param	dst		The first s_string to be compared.
-\param	src		The second s_string to be compared.
-\param	len		The maximum number of characters to compare.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal and positive if \a dst is
-				lexicographically after \a src.
+\brief  		Compares the C-string \a s1 and the s_string \a s2 character
+				by character ignoring the case.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_strncmp      ( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+int			 c_stricmp_s	( const char       * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of an s_string \a dst and a
-				C-string \a src character by character.
-\param	dst		The first string to be compared.
-\param	src		The second string to be compared.
+\brief  		Compares up to \a len characters of two s_strings \a s1 and \a
+				s2 character by character.
+\param	s1		The first s_string to be compared.
+\param	s2		The second s_string to be compared.
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal, and positive if \a dst is
-				lexicographically after \a src.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_strncmp_c    ( const s_string_t * restrict dst, ssize_t dststart, const char       * restrict src,					ssize_t len );
-int			 c_strncmp_s	( const char	   * restrict dst,					 const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+int          s_strncmp      ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of two s_strings \a dst and \a
-				src character by character ignoring the case.
-\param	dst		The first s_string to be compared.
-\param	src		The second s_string to be compared.
+\brief  		Compares up to \a len characters of an s_string \a s1 and a
+				C-string \a s2 character by character.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal and positive if \a dst is
-				lexicographically after \a src.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal, and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_strnicmp     ( const s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+int          s_strncmp_c    ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2,					ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of an s_string \a dst and a
-				C-string \a src character by character ignoring the case.
-\param	dst		The first string to be compared.
-\param	src		The second string to be compared.
+\brief  		Compares up to \a len characters of a C-_string \a s1 and an
+				s_string \a s2 character by character.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a dst is lexicographically before \a src,
-				zero if both are equal, and positive if \a dst is
-				lexicographically after \a src.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal, and positive if \a s1 is
+				lexicographically after \a s2.
 *//*==========================================================================*/
-int          s_strnicmp_c   ( const s_string_t * restrict dst, ssize_t dststart, const char       * restrict src,					ssize_t len );
-int			 c_strnicmp_s	( const char	   * restrict dst,					 const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+int			 c_strncmp_s	( const char	   * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+/*=========================================================================*//**
+\brief  		Compares up to \a len characters of two s_strings \a s1 and \a
+				s2 character by character ignoring the case.
+\param	s1		The first s_string to be compared.
+\param	s2		The second s_string to be compared.
+\param	len		The maximum number of characters to compare.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal and positive if \a s1 is
+				lexicographically after \a s2.
+*//*==========================================================================*/
+int          s_strnicmp     ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+/*=========================================================================*//**
+\brief  		Compares up to \a len characters of an s_string \a s1 and a
+				C-string \a s2 character by character ignoring the case.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
+\param	len		The maximum number of characters to compare.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal, and positive if \a s1 is
+				lexicographically after \a s2.
+*//*==========================================================================*/
+int          s_strnicmp_c   ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2,					ssize_t len );
+/*=========================================================================*//**
+\brief  		Compares up to \a len characters of a C-string \a s1 and an
+				s_string \a s2 character by character ignoring the case.
+\param	s1		The first string to be compared.
+\param	s2		The second string to be compared.
+\param	len		The maximum number of characters to compare.
+\returns		A negative value if \a s1 is lexicographically before \a s2,
+				zero if both are equal, and positive if \a s1 is
+				lexicographically after \a s2.
+*//*==========================================================================*/
+int			 c_strnicmp_s	( const char	   * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
 \brief  		Returns the length of the portion of s_string \a str beginning
 				at index \a start that is comprised only of characters belonging
@@ -973,7 +1036,8 @@ ssize_t      s_strcspn_c    ( const s_string_t * restrict str, ssize_t start, co
 				be used as delimiters. The set of delimiters can vary from one
 				call to another.
 
-\param	delimstart
+\param	delimstart	Index of the first character in \a charset that belongs to the
+                delimiters set.
 
 \param	length	Pointer to an ssize_t variable to receive the length of the
 				token just found. It can be NULL, in which case the length will
@@ -988,16 +1052,18 @@ ssize_t		 s_strtok		( const s_string_t * restrict str, ssize_t * restrict start,
 				characters from the C-string \a delim, starting the search from
 				the position \a start.
 \param	str		Pointer to the s_string that will be scanned to find the token.
-\param	delim	Pointer to the C-string that contains the set of characters to
-				be used as delimiters. The set of delimiters can vary from one
-				call to another.
-\param	length	Pointer to an ssize_t variable to receive the length of the
-				token just found. It can be NULL, in which case the length will
-				not be provided.
 \param	start	Pointer to an ssize_t variable that contains the index where the
 				search is to start. This variable will be updated with a value
 				that can be used as the start for the next search, skipping the
 				token just found.
+\param	delim	Pointer to the C-string that contains the set of characters to
+				be used as delimiters. The set of delimiters can vary from one
+				call to another.
+\param	delimstart	Index of the first character in \a charset that belongs to the
+                delimiters set.
+\param	length	Pointer to an ssize_t variable to receive the length of the
+				token just found. It can be NULL, in which case the length will
+				not be provided.
 \returns		The index of the character in \a str where the token begins, or
 				-1 if no token was found.
 *//*==========================================================================*/
@@ -1330,7 +1396,14 @@ ssize_t      s_replace_l     (       s_string_t * restrict dst, ssize_t start, s
 \returns		The number of characters that were copied to \a dst or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_lc    (       s_string_t * restrict dst, ssize_t start, ssize_t len, const char       * restrict srcs, int filler );
+ssize_t      s_replace_lc   (       s_string_t * restrict dst, ssize_t start, ssize_t len, const char       * restrict srcs, int filler );
+
+ssize_t      s_strlwr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
+ssize_t      s_strlwr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
+#define s_strlwr(s) s_strlwr_e( (s), 0, -1 )
+ssize_t      s_strupr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
+ssize_t      s_strupr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
+#define s_strupr(s) s_strupr_e( (s), 0, -1 )
 /*=========================================================================*//**
 \brief  		Deletes a contiguous sequence of characters that belong to the set
 				\a delim from s_string \a str starting from index \a start towards
@@ -1345,7 +1418,7 @@ ssize_t      s_replace_lc    (       s_string_t * restrict dst, ssize_t start, s
 \returns		The number of characters of \a str that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_ltrim		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
+ssize_t		 s_ltrim_s		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
 \brief  		Deletes a contiguous sequence of characters that belong to the set
 				\a delim from s_string \a str starting from index \a start towards
@@ -1360,6 +1433,7 @@ ssize_t		 s_ltrim		(		s_string_t * restrict str, ssize_t start, const s_string_t
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_ltrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
+#define s_ltrim(s,d) s_ltrim_c( (s), 0, NULL )
 /*=========================================================================*//**
 \brief  		Deletes a contiguous sequence of characters that belong to the set
 				\a delim from s_string \a str starting from index \a start towards
@@ -1374,7 +1448,7 @@ ssize_t		 s_ltrim_c		(		s_string_t * restrict str, ssize_t start, const char	   
 \returns		The number of characters of \a str that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_rtrim		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
+ssize_t		 s_rtrim_s		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
 \brief  		Deletes a contiguous sequence of characters that belong to the set
 				\a delim from s_string \a str starting from index \a start towards
@@ -1389,6 +1463,14 @@ ssize_t		 s_rtrim		(		s_string_t * restrict str, ssize_t start, const s_string_t
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
+#define s_rtrim(s,d) s_rtrim_c( (s), 0, NULL )
+
+ssize_t      s_alltrim_se   ( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int filler );
+ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int filler );
+
+#define s_alltrim(s)        s_alltrim_ce( (s), 0, -1, NULL, ' ' );
+#define s_alltrim_s(s,d)    s_alltrim_se( (s), 0, -1, (d), 0, ' ' );
+#define s_alltrim_c(s,d)    s_alltrim_se( (s), 0, -1, (d), ' ' );
 /*=========================================================================*//**
 \brief  		Extracts a sequence of characters of length \a len from s_string
 				\a src, starting at index \a srcstart and inserts it into the
