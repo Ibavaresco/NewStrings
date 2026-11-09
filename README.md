@@ -16,13 +16,13 @@ Other than that, things are pretty much the same as with the standard library...
 
 ...more or less.
 
-First, we cannot use pointers to characters inside the strings, we must use indexes. So every function that walks a pointer through a string, will take a pointer the the s_string object and an index to the character being accessed. Also, every function that traditionally returns a pointer to a character inside a string (e.g. strchr) will return the index of the character inside the string.
+First, we cannot use pointers to characters inside the strings, we must use indexes. So every function that walks a pointer through a string, will take a pointer to the s_string object and an index to the character being accessed. Also, every function that traditionally returns a pointer to a character inside a string (e.g. strchr) will return the index of the character inside the string.
 
 Example:
 <pre>
 // Create a local s_string variable named 'path' capable of holding up to 255 characters, initialized
 // with the string "C:\\Program Files\Notepad++\\notepad++.exe"
-auto_s_string_i( path, 255, "C:\\Program Files\\Notepad++\\notepad++.exe" );
+auto_s_string_c( path, 255, "C:\\Program Files\\Notepad++\\notepad++.exe" );
 
 // Find the last backslash in 'path' (strrchr searchs backwards). If not found, returns -1.
 ssize_t slash = s_strrchr( path, '\\', -1 ); // The -1 here means we are starting the search from the last character.
