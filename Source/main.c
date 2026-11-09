@@ -299,7 +299,9 @@ int main( int ArgC, char *ArgV[] )
 	auto_s_string_c(	d, 100, " \t\r\n,.-" );
 
 
-	s_alltrim_se( s, 1, -2, d, 0, '#' );
+	printf( "\n*%s*\n", s_constcstr( s, 0 ));
+
+	printf( "\nCharacters removed: %ld\n", (long)s_alltrim_se( s, 1, -2, d, 0, '\0' ));
 
 	printf( "\n*%s*\n", s_constcstr( s, 0 ));
 

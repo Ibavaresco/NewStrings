@@ -4202,7 +4202,7 @@ ssize_t s_rtrim_c( s_string_t * restrict str, ssize_t start, const char * restri
 	return Len - Index - 1;
 	}
 /*============================================================================*/
-ssize_t s_alltrim_se( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int filler )
+ssize_t s_alltrim_se( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement )
 	{
 	char	*Ptr;
 	ssize_t	Len, Index, IndexPut;
@@ -4237,7 +4237,7 @@ ssize_t s_alltrim_se( s_string_t * restrict str, ssize_t start, ssize_t end, con
 				{
 				if( !PreviousWasSpace )
 					{
-					Ptr[IndexPut++]		= filler != '\0' ? filler : Ptr[Index];
+					Ptr[IndexPut++]		= replacement != '\0' ? replacement : Ptr[Index];
 					PreviousWasSpace	= 1;
 					}
 				Index++;
@@ -4273,15 +4273,11 @@ ssize_t s_alltrim_se( s_string_t * restrict str, ssize_t start, ssize_t end, con
 
 		for( IndexPut = Index = start; Index <= end; )
 			{
-			ssize_t	j;
-
-			for( j = delimstart; j < DelimLen && Ptr[Index] != DelimPtr[j] ; j++ )
-				{}
-			if( j < DelimLen )
+			if( strchr( &DelimPtr[delimstart], Ptr[Index] ) != NULL )
 				{
 				if( !PreviousWasSpace )
 					{
-					Ptr[IndexPut++]		= filler != '\0' ? filler : Ptr[Index];
+					Ptr[IndexPut++]		= replacement != '\0' ? replacement : Ptr[Index];
 					PreviousWasSpace	= 1;
 					}
 				Index++;
@@ -4308,6 +4304,102 @@ ssize_t s_alltrim_se( s_string_t * restrict str, ssize_t start, ssize_t end, con
 		Ptr[IndexPut]	= '\0';
 		SetUsedLen( str, IndexPut );
 		}
+
+	return Len - IndexPut;
+	}
+/*============================================================================*/
+ssize_t s_alltrim_ce( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int replacement )
+	{
+	char	*Ptr;
+	ssize_t	Len, Index, IndexPut;
+	int		PreviousWasSpace	= -1;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( start >= Len || end < -Len )
+		return -1;
+
+	if( start < 0 && ( start += Len ) < 0 )
+		start	= 0;
+
+	if( end < 0 )
+		end    += Len;
+	else if( end > Len )
+		end		= Len;
+
+	if( end < start )
+		return -1;
+
+	Ptr	= s_cstr( str );
+
+	if( delim == NULL )
+		{
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			if( isspace( Ptr[Index] ))
+				{
+				if( !PreviousWasSpace )
+					{
+					Ptr[IndexPut++]		= replacement != '\0' ? replacement : Ptr[Index];
+					PreviousWasSpace	= 1;
+					}
+				Index++;
+				}
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				PreviousWasSpace	= 0;
+				}
+			}
+		}
+	else
+		{
+		ssize_t		DelimLen;
+
+		if(( DelimLen = strlen( delim )) <= 0 )
+			return -1;
+
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			if( strchr( delim, Ptr[Index] ) != NULL )
+				{
+				if( !PreviousWasSpace )
+					{
+					Ptr[IndexPut++]		= replacement != '\0' ? replacement : Ptr[Index];
+					PreviousWasSpace	= 1;
+					}
+				Index++;
+				}
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				PreviousWasSpace	= 0;
+				}
+			}
+		}
+
+	if( IndexPut > 0 && PreviousWasSpace > 0 )
+		IndexPut--;
+
+	while( Index < Len )
+		Ptr[IndexPut++]	= Ptr[Index++];
+
+	if( IndexPut != Len )
+		{
+		Ptr[IndexPut]	= '\0';
+		SetUsedLen( str, IndexPut );
+		}
+
+	return Len - IndexPut;
 	}
 /*============================================================================*/
 /*TODO*/

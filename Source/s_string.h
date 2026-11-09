@@ -1465,8 +1465,8 @@ ssize_t		 s_rtrim_s		(		s_string_t * restrict str, ssize_t start, const s_string
 ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
 #define s_rtrim(s,d) s_rtrim_c( (s), 0, NULL )
 
-ssize_t      s_alltrim_se   ( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int filler );
-ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int filler );
+ssize_t      s_alltrim_se   ( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement );
+ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int replacement );
 
 #define s_alltrim(s)        s_alltrim_ce( (s), 0, -1, NULL, ' ' );
 #define s_alltrim_s(s,d)    s_alltrim_se( (s), 0, -1, (d), 0, ' ' );
