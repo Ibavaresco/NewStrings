@@ -1279,17 +1279,17 @@ ssize_t      s_extract_lc   (       s_string_t * restrict dst, const char       
 \param	dst		Pointer to the s_string that will receive the sequence of
 				characters from \a src.
 \param	start	The index of the first character in \a dst that will be replaced
-				by the characters from \a src. If \s start is negative it is
+				by the characters from \a src. If \a start is negative it is
 				counted from the end towards the beginning. -1 is the last position
 				of the string.
 \param	end		The index of the last character in \a dst that will be replaced
-				by the characters from \a src. If \s end is negative it is
+				by the characters from \a src. If \a end is negative it is
 				counted from the end towards the beginning. -1 is the last position
 				of the string.
 \param	src		Pointer to the s_string that will provide the sequence of
 				characters to be copied to \a dst.
 \param srcstart	The index of the first character of \a src that will be copied
-				to \a dst. If \s srcstart is negative it is counted from the end
+				to \a dst. If \a srcstart is negative it is counted from the end
 				towards the beginning. -1 is the last position of the string.
 \param filler   Character used to fill any extra space created by inserting
 				characters starting beyond the current length of the string.
@@ -1397,80 +1397,281 @@ ssize_t      s_replace_l     (       s_string_t * restrict dst, ssize_t start, s
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t      s_replace_lc   (       s_string_t * restrict dst, ssize_t start, ssize_t len, const char       * restrict srcs, int filler );
-
-ssize_t      s_strlwr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
-ssize_t      s_strlwr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
-#define s_strlwr(s) s_strlwr_e( (s), 0, -1 )
-ssize_t      s_strupr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
-ssize_t      s_strupr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
-#define s_strupr(s) s_strupr_e( (s), 0, -1 )
 /*=========================================================================*//**
-\brief  		Deletes a contiguous sequence of characters that belong to the set
-				\a delim from s_string \a str starting from index \a start towards
-				the right.
+\brief  		Converts uppercase letters from a portion of an s_string to
+				lowercase.
+
+				Converts uppercase letters from s_string \a 'str' between indexes
+				\a 'start' and \a 'end' inclusive, to lowercase.
+
+\param	str		Pointer to the s_string that will have its letters converted to
+				lowercase.
+\param	start	The index of the first character of the sequence in \a 'str' that
+				will be converted.
+\param	end		The index of the last character of the sequence in \a 'str' that
+				will be converted.
+\returns		The number of characters that were converted or a negative value
+				in case of error.
+*//*==========================================================================*/
+ssize_t      s_strlwr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
+/*=========================================================================*//**
+\brief  		Converts uppercase letters from a portion of an s_string to
+				lowercase.
+
+				Converts
+
+\param	str		Pointer to the s_string that will have its letters converted to
+				lowercase.
+\param	start	The index of the first character of the sequence in \a 'str' that
+				will be converted.
+\param	len		The length of the sequence in \a 'str' that will be converted.
+\returns		The number of characters that were converted or a negative value
+				in case of error.
+*//*==========================================================================*/
+ssize_t      s_strlwr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
+/*=========================================================================*//**
+\brief  		Converts all uppercase letters from an s_string to lowercase.
+
+\param	str		Pointer to the s_string that will have its letters converted to
+				lowercase.
+\returns		The number of characters that were converted or a negative value
+				in case of error.
+*//*==========================================================================*/
+#define s_strlwr(s) s_strlwr_e( (s), 0, -1 )
+/*=========================================================================*//**
+\brief  		Converts lowercase letters from a portion of an s_string to
+				uppercase.
+
+				Converts
+
+\param	str		Pointer to the s_string that will have its letters converted to
+				uppercase.
+\param	start	The index of the first character of the sequence in \a 'str' that
+				will be converted.
+\param	end		The index of the last character of the sequence in \a 'str' that
+				will be converted.
+\returns		The number of characters that were converted or a negative value
+				in case of error.
+*//*==========================================================================*/
+ssize_t      s_strupr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
+/*=========================================================================*//**
+\brief  		Converts lowercase letters from a portion of an s_string to
+				uppercase.
+
+				Converts
+
+\param	str		Pointer to the s_string that will have its letters converted to
+				uppercase.
+\param	start	The index of the first character of the sequence in \a 'str' that
+				will be converted.
+\param	len		The length of the sequence in \a 'str' that will be converted.
+\returns		The number of characters that were converted or a negative value
+				in case of error.
+*//*==========================================================================*/
+ssize_t      s_strupr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
+/*=========================================================================*//**
+\brief  		Converts all lowercase letters from an s_string to uppercase.
+
+\param	str		Pointer to the s_string that will have its letters converted to
+				uppercase.
+\returns		The number of characters that were converted or a negative value
+				in case of error.
+*//*==========================================================================*/
+#define s_strupr(str) s_strupr_e( (s), 0, -1 )
+/*=========================================================================*//**
+\brief  		Trims characters from left to right.
+
+				Deletes a contiguous sequence of characters from the s_string
+				'str', starting at index 'start' towards the right, that belong
+				to the set defined by the s_string 'delim'. It stops at the first
+				character that does not belong to 'delim'.
+
 \param	str		Pointer to the s_string that will be trimmed.
-\param	start	The index in \a src to begin the search for the characters to be
-				deleted.
+\param	start	The index in \a 'str' to start the deletion.
 \param	delim	s_string with the set of characters that are to be searched and
-				deleted from \a str. If \a delim is NULL, the characters to be
-				deleted are those recognized by the function \a isspace.
-\param	delimstart Index of the first character of \a delim that belongs to the set.
-\returns		The number of characters of \a str that were deleted or a
+				deleted from \a 'str'. If \a 'delim' is NULL, the characters to be
+				deleted are those recognized by the function \a 'isspace'.
+\param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+\returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_ltrim_s		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
-\brief  		Deletes a contiguous sequence of characters that belong to the set
-				\a delim from s_string \a str starting from index \a start towards
-				the right.
+\brief  		Trims characters from left to right.
+
+				Deletes a contiguous sequence of characters from the s_string
+				'str', starting at index 'start' towards the right, that belong
+				to the set defined by the C-string 'delim'. It stops at the first
+				character that does not belong to 'delim'.
+
 \param	str		Pointer to the s_string that will be trimmed.
-\param	start	The index in \a src to begin the search for the characters to be
-				deleted.
+\param	start	The index in \a 'str' to start the deletion.
 \param	delim	C-string with the set of characters that are to be searched and
-				deleted from \a str. If \a delim is NULL, the characters to be
-				deleted are those recognized by the function \a isspace.
-\returns		The number of characters of \a str that were deleted or a
+				deleted from \a 'str'. If \a 'delim' is NULL, the characters to be
+				deleted are those recognized by the function \a 'isspace'.
+\returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_ltrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
-#define s_ltrim(s,d) s_ltrim_c( (s), 0, NULL )
 /*=========================================================================*//**
-\brief  		Deletes a contiguous sequence of characters that belong to the set
-				\a delim from s_string \a str starting from index \a start towards
-				the left.
+\brief  		Trims spaces from the beginning of an s_string.
+
+				Deletes a contiguous sequence of characters from the left of
+				s_string 'str' that belong to the set defined by the function
+				'isspace'.
+
 \param	str		Pointer to the s_string that will be trimmed.
-\param	start	The index in \a src to begin the search for the characters to be
-				deleted.
-\param	delim	s_string with the set of characters that are to be searched and
-				deleted from \a str. If \a delim is NULL, the characters to be
-				deleted are those recognized by the function \a isspace.
-\param	delimstart Index of the first character of \a delim that belongs to the set.
-\returns		The number of characters of \a str that were deleted or a
+\returns		The number of characters of \a 'str' that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+#define s_ltrim(str) s_ltrim_c( (str), 0, NULL )
+/*=========================================================================*//**
+\brief  		Trims characters from right to left.
+
+				Deletes a contiguous sequence of characters from the s_string
+				'str', starting at index 'start' towards the left, that belong
+				to the set defined by the s_string 'delim'. It stops at the first
+				character that does not belong to 'delim'.
+
+\param	str		Pointer to the s_string that will be trimmed.
+\param	start	The index in \a 'str' to start the deletion.
+\param	delim	s_string with the set of characters that are to be deleted from
+				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
+				those recognized by the function \a 'isspace'.
+\param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+\returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_rtrim_s		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
-\brief  		Deletes a contiguous sequence of characters that belong to the set
-				\a delim from s_string \a str starting from index \a start towards
-				the left.
+\brief  		Trims characters from right to left.
+
+				Deletes a contiguous sequence of characters from the s_string
+				'str', starting at index 'start' towards the left, that belong
+				to the set defined by the C-string 'delim'. It stops at the first
+				character that does not belong to 'delim'.
+
 \param	str		Pointer to the s_string that will be trimmed.
-\param	start	The index in \a src to begin the search for the characters to be
-				deleted.
-\param	delim	C-string with the set of characters that are to be searched and
-				deleted from \a str. If \a delim is NULL, the characters to be
-				deleted are those recognized by the function \a isspace.
-\returns		The number of characters of \a str that were deleted or a
+\param	start	The index in \a 'str' to start the deletion.
+\param	delim	C-string with the set of characters that are to be deleted from
+				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
+				those recognized by the function \a 'isspace'.
+\returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
-#define s_rtrim(s,d) s_rtrim_c( (s), 0, NULL )
+/*=========================================================================*//**
+\brief  		Trims spaces from the end of an s_string.
 
+				Deletes a contiguous sequence of characters from the right of
+				s_string 'str' that belong to the set defined by the function
+				'isspace'.
+
+\param	str		Pointer to the s_string that will be trimmed.
+\returns		The number of characters of \a 'str' that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+#define s_rtrim(str) s_rtrim_c( (str), -1, NULL )
+/*=========================================================================*//**
+\brief  		Trims characters from the left and the right, and removes
+				duplicated characters from the middle of an s_string.
+
+				Deletes contiguous sequences of characters from the s_string \a
+				'str' that belong to the set defined by s_string \a 'delim',
+				starting at index 'start' towards the right and starting
+				at index 'end' towards the left, and also replaces sequences of
+				multiple characters in the middle with one single character. If
+				\a 'replacement' is '\0', the character to be used in the replacement
+				is the leftmost character of the sequence, otherwise \a 'replacement'
+				will be used.
+
+\param	str		Pointer to the s_string that will be trimmed.
+\param	start	The index in \a 'str' to start the deletion at the left.
+\param	end		The index in \a 'str' to start the deletion at the right.
+\param	delim	s_string with the set of characters that are to be deleted from
+				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
+				those recognized by the function \a 'isspace'.
+\param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+\returns		The number of characters of \a 'str' that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
 ssize_t      s_alltrim_se   ( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement );
-ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int replacement );
+/*=========================================================================*//**
+\brief  		Trims characters from the left and the right, and removes
+				duplicated characters from the middle of an s_string.
 
+				Deletes contiguous sequences of characters from the s_string \a
+				'str' that belong to the set defined by C-string \a 'delim',
+				starting at index 'start' towards the right and starting
+				at index 'end' towards the left, and also replaces sequences of
+				multiple characters in the middle with one single character. If
+				\a 'replacement' is '\0', the character to be used in the replacement
+				is the leftmost character of the sequence, otherwise \a 'replacement'
+				will be used.
+
+\param	str		Pointer to the s_string that will be trimmed.
+\param	start	The index in \a 'str' to start the deletion at the left.
+\param	end		The index in \a 'str' to start the deletion at the right.
+\param	delim	C-string with the set of characters that are to be deleted from
+				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
+				those recognized by the function \a 'isspace'.
+\returns		The number of characters of \a 'str' that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int replacement );
+/*=========================================================================*//**
+\brief  		Removes all spaces from the left and the right, and duplicated
+				spaces from the middle of an s_string.
+
+				Removes all spaces from the left and the right, and duplicated
+				spaces from the middle of s_string \a 'str'. The characters to
+				be deleted are those recognized by the function \a 'isspace'.
+
+\param	str		Pointer to the s_string that will be trimmed.
+\returns		The number of characters of \a 'str' that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
 #define s_alltrim(s)        s_alltrim_ce( (s), 0, -1, NULL, ' ' );
-#define s_alltrim_s(s,d)    s_alltrim_se( (s), 0, -1, (d), 0, ' ' );
-#define s_alltrim_c(s,d)    s_alltrim_se( (s), 0, -1, (d), ' ' );
+/*=========================================================================*//**
+\brief  		Trims characters from the left and the right, and removes
+				duplicated characters from the middle of an s_string.
+
+				Deletes contiguous sequences of characters from the s_string \a
+				'str' that belong to the set defined by s_string \a 'delim',
+				starting from the beginning towards the right and starting from
+				the end towards the left, and also replaces sequences of multiple
+				characters in the middle with one single character. The character
+				to be used in the replacement is the leftmost character of the
+				sequence.
+
+\param	str		Pointer to the s_string that will be trimmed.
+\param	delim	s_string with the set of characters that are to be deleted from
+				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
+				those recognized by the function \a 'isspace'.
+\returns		The number of characters of \a 'str' that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+#define s_alltrim_s(s,d)    s_alltrim_se( (s), 0, -1, (d), 0, '\0' );
+/*=========================================================================*//**
+\brief  		Trims characters from the left and the right, and removes
+				duplicated characters from the middle of an s_string.
+
+				Deletes contiguous sequences of characters from the s_string \a
+				'str' that belong to the set defined by C-string \a 'delim',
+				starting from the beginning towards the right and starting from
+				the end towards the left, and also replaces sequences of multiple
+				characters in the middle with one single character. The character
+				to be used in the replacement is the leftmost character of the
+				sequence.
+
+\param	str		Pointer to the s_string that will be trimmed.
+\param	delim	C-string with the set of characters that are to be deleted from
+				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
+				those recognized by the function \a 'isspace'.
+\returns		The number of characters of \a 'str' that were deleted or a
+				negative value in case of error.
+*//*==========================================================================*/
+#define s_alltrim_c(s,d)    s_alltrim_se( (s), 0, -1, (d), '\0' );
 /*=========================================================================*//**
 \brief  		Extracts a sequence of characters of length \a len from s_string
 				\a src, starting at index \a srcstart and inserts it into the
