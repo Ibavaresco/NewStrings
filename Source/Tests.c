@@ -35,33 +35,44 @@ typedef struct
     int     Field2;
     } my_struct_t;
 /*============================================================================*/
-static_s_string_tiny_i( SX, 128, "SX Initial value" );
-static_s_string_small_i( SY, 512, "SY Initial value" );
-static_s_string_large_i( SZ, 100000, "SZ Initial value" );
+static_s_string_tiny_c( SX, 128, "SX Initial value" );
+static_s_string_small_c( SY, 512, "SY Initial value" );
+static_s_string_large_c( SZ, 100000, "SZ Initial value" );
 
 int main( int ArgC, char *ArgV[] )
     {
     my_struct_t MyVar;
-    my_struct_t *p  = &MyVar;
+    my_struct_t MyVar2;
+    my_struct_t *p  = &MyVar2;
 
-    MyVar.Field1    = 1;
+    MyVar2.Field1   =    1;
     /* We need to initialize each s_string field in every variable of type "my_struct_t". */
     field_s_string_init( *p, Name );
-    field_s_string_init_i( MyVar, Name, "Someone's name " );
-    MyVar.Field1    = -1;
+    p->Field2       =    2;
+
+
+    MyVar.Field1    = 1234;;
+    field_s_string_init_c( MyVar, Name, "Someone's name " );
+    MyVar.Field2    = 4321;
 
     /* From now on, things look much more normal... */
 
-    s_strcat( MyVar.Name, SX );
-    s_strcat( MyVar.Name, SY );
-    s_strcat( MyVar.Name, SZ );
+    s_strcat( MyVar.Name, SX, 0 );
+    s_strcat( MyVar2.Name, SY, 0 );
+    s_strcpy( p->Name, SZ, 0 );
 
-    printf( "\n%s", s_constcstr( SX ));
-    printf( "\n%s", s_constcstr( SY ));
-    printf( "\n%s", s_constcstr( SZ ));
-    s_strcat( SX, SY );
-    printf( "\n%s", s_constcstr( SX ));
-    printf( "\nPosition of \"value\" inside SX: %lld\n", s_strstr_c( SX, "value", 0 ));
-    printf( "\n%s\n", s_constcstr( MyVar.Name ));
+    printf( "\nSX = \"%s\"", s_constcstr( SX, 0 ));
+    printf( "\nSY = \"%s\"", s_constcstr( SY, 0 ));
+    printf( "\nSZ = \"%s\"", s_constcstr( SZ, 0 ));
+
+    s_strcat( SX, SY, 0 );
+
+    printf( "\n\nSX = \"%s\"", s_constcstr( SX, 0 ));
+
+    printf( "\nPosition of \"value\" inside SX: %lld\n", s_strstr_c( SX, 0, "value" ));
+
+    printf( "\nMyVar = %d, \"%s\", %d\n", MyVar.Field1, s_constcstr( MyVar.Name, 0 ), MyVar.Field2 );
+
+    printf( "\nMyVar2 = %d, \"%s\", %d\n", p->Field1, s_constcstr( p->Name, 0 ), MyVar2.Field2 );
     }
 /*============================================================================*/
