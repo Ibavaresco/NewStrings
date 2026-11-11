@@ -4528,7 +4528,11 @@ int s_sprintf( s_string_t * restrict dst, ssize_t dststart, int filler, const s_
 	return n;
 	}
 /*============================================================================*/
-int __attribute__((format(printf, 4, 5))) s_sprintf_c( s_string_t * restrict dst, ssize_t dststart, int filler, const char * restrict fmt, ... )
+int
+#if			!defined DOXYGEN
+__attribute__((format(printf, 4, 5)))
+#endif	/*	!defined DOXYGEN */
+s_sprintf_c( s_string_t * restrict dst, ssize_t dststart, int filler, const char * restrict fmt, ... )
 	{
 	va_list	v;
 	int		n;

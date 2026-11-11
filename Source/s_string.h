@@ -23,37 +23,42 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 /*============================================================================*/
-#if         !defined __S_STRING_H__
+#if			!defined __S_STRING_H__
 #define __S_STRING_H__
 /*============================================================================*/
 #include <sys/types.h>
 #include <stdint.h>
 /*=========================================================================*//**
-\brief          A data type to represent the s_string objects. It is an opaque
+\brief			A data type to represent the s_string objects. It is an opaque
 				data type, so the user's code cannot access its internals
 				directly, only through the functions of the library.
 *//*==========================================================================*/
 typedef struct s_string s_string_t;
 /*=========================================================================*//**
-\brief          Creates on the stack (auto/local variable) an s_string object
-				capable of holding up to \a maxsize characters. Can only be used
-				inside a function. The resulting s_string starts empty.
-\param name     Name of the variable.
-\param maxsize  Maximum number of characters that the object will be able to
+\brief			Creates on the stack an s_string automatic local variable capable
+				of holding up to \a 'maxsize' characters. Can only be used inside
+				a function. The resulting s_string starts empty.
+
+\param	name	Name of the variable.
+
+\param	maxsize Maximum number of characters that the object will be able to
 				hold.
 *//*==========================================================================*/
 #define auto_s_string( name, maxsize )												\
 			const uint8_t _##name##_buffer[_s_calcsize(maxsize)];					\
-            s_string_t * const name = (s_string_t*)_##name##_buffer;				\
-            _s_string_init(name,maxsize,1)
+			s_string_t * const name = (s_string_t*)_##name##_buffer;				\
+			_s_string_init(name,maxsize,1)
 /*=========================================================================*//**
-\brief          Creates on the stack (auto/local variable) an array of s_string
-				objects capable of holding up to \a count s_string objects of up
-				to \a maxsize characters each. Can only be used inside a function.
-				The resulting s_strings start empty.
-\param name     Name of the variable.
-\param count    Number of elements of the array.
-\param maxsize  Maximum number of characters that each element of the array will
+\brief			Creates on the stack an automatic local array of s_string objects,
+				capable of storing up to \a 'count' such objects, each with a
+				capacity for up to \a 'maxsize' characters. It can only be used
+				within a function. The resulting s_string objects start empty.
+
+\param	name	Name of the variable.
+
+\param	count	Number of elements of the array.
+
+\param	maxsize Maximum number of characters that each element of the array will
 				be able to hold.
 *//*==========================================================================*/
 #define auto_s_string_array( name, count, maxsize )									\
@@ -61,13 +66,16 @@ typedef struct s_string s_string_t;
 			s_string_t * const name[(count)];										\
 			_s_string_array_init(name,(uint8_t*)_##name##_buffer,count,maxsize,1)
 /*=========================================================================*//**
-\brief          Creates on the stack (auto/local variable) an s_string object
-				capable of holding up to \a maxsize characters, with initial
-				value \a src. Can only be used inside a function.
-\param	name    Name of the variable.
-\param	maxsize Maximum number of characters that the object will be able to
+\brief			Creates on the stack an s_string automatic local variable capable
+				of holding up to \a 'maxsize' characters, with initial value \a
+				'src'. Can only be used inside a function.
+
+\param	name	Name of the variable.
+
+\param	maxsize	Maximum number of characters that the object will be able to
 				store.
-\param	src		A C-string (null terminated array of characters) that will be
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
 #define auto_s_string_c( name, maxsize, src )										\
@@ -76,40 +84,47 @@ typedef struct s_string s_string_t;
 			_s_string_init(name,maxsize,1);											\
 			s_strcpy_c(name,src)
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 254 characters. The resulting string
+\brief			Creates a static local or file scope s_string variable object
+				capable of holding up to \a 'maxsize' characters. \a 'maxsize'
+				can be at most 254 characters. The resulting string
 				starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define static_s_string_tiny( name, maxsize )										\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[1+1+1+maxsize+1];						\
-            static s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
-            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), (void*)_##name##_buffer };
+			static s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), (void*)_##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a static local or file scope array of s_string objects
-				capable of holding up to \a count elements of up to \a maxsize
-				characters. \a maxsize can be at most 254 characters. The resulting
+\brief			Creates a static local or file scope array of s_string objects
+				capable of holding up to \a 'count' elements of up to \a 'maxsize'
+				characters. \a 'maxsize' can be at most 254 characters. The resulting
 				strings start empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that each element of the array
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that each element of the array
 				will be able to store.
 *//*==========================================================================*/
 #define static_s_string_tiny_array( name, count, maxsize )							\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+1+1+maxsize+1)];				\
 			static s_string_t * const volatile  __attribute__((section(".data"))) name[(count)];								\
-            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2a ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2a ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 254 characters. The resulting string is
-				initialized with constant \a src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be
+				at most 254 characters. The resulting string is initialized with
+				constant \a 'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
-\param	src		A C-string (null terminated array of characters) that will be
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
 #define static_s_string_tiny_c( name, maxsize, src )								\
@@ -117,14 +132,17 @@ typedef struct s_string s_string_t;
 			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer; 		\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 254 characters. The resulting string is
-				initialized with constant \a src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be
+				at most 254 characters. The resulting string is initialized with
+				constant \a 'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
-\param	src		A C-string (null terminated array of characters) that will be
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
 #define static_const_s_string_tiny_c( name, maxsize, src )							\
@@ -132,12 +150,13 @@ typedef struct s_string s_string_t;
 			static const s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;	\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x31 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 65534 characters. The resulting string
-				starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be at
+				most 65534 characters. The resulting string starts empty.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define static_s_string_small( name, maxsize )										\
@@ -145,27 +164,32 @@ typedef struct s_string s_string_t;
 			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), (void*)_##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a static local or file scope array of s_string objects capable of
-				holding up to \a count elements of up to \a maxsize characters.
-				\a maxsize can be at most 254 characters. The resulting strings
+\brief			Creates a static local or file scope array of s_string objects capable of
+				holding up to \a 'count' elements of up to \a 'maxsize' characters.
+				\a 'maxsize' can be at most 254 characters. The resulting strings
 				starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define static_s_string_small_array( name, count, maxsize )							\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+2+2+maxsize+1)];				\
 			static s_string_t * const volatile  __attribute__((section(".data"))) name[(count)];								\
-            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2c ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2c ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 65534 characters. The resulting string is
-				initialized with constant \a src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be at
+				most 65534 characters. The resulting string is initialized with
+				constant \a 'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
-\param	src		A C-string (null terminated array of characters) that will be
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
 #define static_s_string_small_c( name, maxsize, src )								\
@@ -173,14 +197,17 @@ typedef struct s_string s_string_t;
 			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 65534 characters. The resulting string is
-				initialized with constant \a src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be at
+				most 65534 characters. The resulting string is initialized with
+				constant \a 'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
-\param	src		A C-string (null terminated array of characters) that will be
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
 #define static_const_s_string_small_c( name, maxsize, src )							\
@@ -188,12 +215,13 @@ typedef struct s_string s_string_t;
 			static const s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;	\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x33 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 2147483648 characters. The resulting
-				string starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be at
+				most 2147483648 characters. The resulting string starts empty.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define static_s_string_large( name, maxsize )										\
@@ -201,12 +229,14 @@ typedef struct s_string s_string_t;
 			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), (void*)_##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 2147483648 characters. The resulting
-				string is initialized with constant \a src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be at
+				most 2147483648 characters. The resulting string is initialized
+				with constant \a 'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define static_s_string_large_c( name, maxsize, src )								\
@@ -214,25 +244,29 @@ typedef struct s_string s_string_t;
 			static s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;			\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a static local or file scope array of s_string objects capable of
-				holding up to \a count elements of up to \a maxsize characters.
-				\a maxsize can be at most 254 characters. The resulting strings
-				starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope array of s_string objects
+				capable of holding up to \a 'count' elements of up to \a 'maxsize'
+				characters. \a 'maxsize' can be at most 254 characters. The
+				resulting strings starts empty.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define static_s_string_large_array( name, count, maxsize )							\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+4+4+maxsize+1)];				\
 			static s_string_t * const volatile  __attribute__((section(".data"))) name[(count)];								\
-            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2e ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2e ), (void*)_##name##_buffer, (s_string_t*)name, (void*)(count) };
 /*=========================================================================*//**
-\brief          Creates a static (static local or file scope variable) s_string
-				object capable of holding up to \a maxsize characters. \a
-				maxsize can be at most 2147483648 characters. The resulting
-				string is initialized with constant \a src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a static local or file scope s_string variable capable
+				of holding up to \a 'maxsize' characters. \a 'maxsize' can be at
+				most 2147483648 characters. The resulting string is initialized
+				with constant \a 'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define static_const_s_string_large_c( name, maxsize, src )							\
@@ -240,14 +274,17 @@ typedef struct s_string s_string_t;
 			static const s_string_t * const volatile  __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;	\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x35 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a global file scope s_string object capable of holding
-                up to \a maxsize characters. \a maxsize can be at most 254
-                characters. The resulting string is initialized with constant \a
-                src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a global file scope s_string variable capable of holding
+				up to \a 'maxsize' characters. \a 'maxsize' can be at most 254
+				characters. The resulting string is initialized with constant \a
+				'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
-\param	src		A C-string (null terminated array of characters) that will be
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
 #define global_s_string_tiny_c( name, maxsize, src )								\
@@ -255,11 +292,13 @@ typedef struct s_string s_string_t;
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x21 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a global file scope s_string object capable of holding
-                up to \a maxsize characters. \a maxsize can be at most 254
-                characters. The resulting string starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a global file scope s_string variable capable of holding
+				up to \a 'maxsize' characters. \a 'maxsize' can be at most 254
+				characters. The resulting string starts empty.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define global_s_string_tiny( name, maxsize )										\
@@ -267,27 +306,32 @@ typedef struct s_string s_string_t;
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x22 ), (void*)_##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a global file scope array of s_string objects capable of
-				holding up to \a count elements of up to \a maxsize characters.
-				\a maxsize can be at most 254 characters. The resulting strings
+\brief			Creates a global file scope array of s_string objects capable of
+				holding up to \a 'count' elements of up to \a 'maxsize' characters.
+				\a 'maxsize' can be at most 254 characters. The resulting strings
 				starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define global_s_string_tiny_array( name, count, maxsize )							\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+1+1+maxsize+1)];					\
 			s_string_t * const volatile __attribute__((section(".data"))) name[(count)];										\
-            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2a ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2a ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
 /*=========================================================================*//**
-\brief          Creates a global file scope s_string object capable of holding
-                up to \a maxsize characters. \a maxsize can be at most 65534
-                characters. The resulting string is initialized with constant \a
-                src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a global file scope s_string variable capable of holding
+				up to \a 'maxsize' characters. \a 'maxsize' can be at most 65534
+				characters. The resulting string is initialized with constant \a
+				'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
-\param	src		A C-string (null terminated array of characters) that will be
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the s_string.
 *//*==========================================================================*/
 #define global_s_string_small_c( name, maxsize, src )								\
@@ -295,11 +339,13 @@ typedef struct s_string s_string_t;
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x23 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a global file scope s_string object capable of holding
-                up to \a maxsize characters. \a maxsize can be at most 65534
-                characters. The resulting string starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a global file scope s_string variable capable of holding
+				up to \a 'maxsize' characters. \a 'maxsize' can be at most 65534
+				characters. The resulting string starts empty.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define global_s_string_small( name, maxsize )										\
@@ -307,25 +353,29 @@ typedef struct s_string s_string_t;
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x24 ), (void*)_##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a global file scope array of s_string objects capable of
-				holding up to \a count elements of up to \a maxsize characters.
-				\a maxsize can be at most 254 characters. The resulting strings
+\brief			Creates a global file scope array of s_string objects capable of
+				holding up to \a 'count' elements of up to \a 'maxsize' characters.
+				\a 'maxsize' can be at most 254 characters. The resulting strings
 				starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define global_s_string_small_array( name, count, maxsize )							\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+2+2+maxsize+1)];					\
 			s_string_t * const volatile __attribute__((section(".data"))) name[(count)];										\
-            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2c ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2c ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
 /*=========================================================================*//**
-\brief          Creates a global file scope s_string object capable of holding
-                up to \a maxsize characters. \a maxsize can be at most
-                4294967284 characters. The resulting string is initialized with
-                constant \a src.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a global file scope s_string variable capable of holding
+				up to \a 'maxsize' characters. \a 'maxsize' can be at most
+				4294967284 characters. The resulting string is initialized with
+				constant \a 'src'.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define global_s_string_large_c( name, maxsize, src )								\
@@ -333,11 +383,13 @@ typedef struct s_string s_string_t;
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x25 ), (void*)_##name##_buffer, src };
 /*=========================================================================*//**
-\brief          Creates a global file scope s_string object capable of holding
-                up to \a maxsize characters. \a maxsize can be at most
-                4294967284 characters. The resulting string starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+\brief			Creates a global file scope s_string variable capable of holding
+				up to \a 'maxsize' characters. \a 'maxsize' can be at most
+				4294967284 characters. The resulting string starts empty.
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define global_s_string_large( name, maxsize )										\
@@ -345,683 +397,893 @@ typedef struct s_string s_string_t;
 			s_string_t * const volatile __attribute__((section(".data"))) name = (s_string_t*)_##name##_buffer;				\
 			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x26 ), (void*)_##name##_buffer };
 /*=========================================================================*//**
-\brief          Creates a global file scope array of s_string objects capable of
-				holding up to \a count elements of up to \a maxsize characters.
-				\a maxsize can be at most 254 characters. The resulting strings
+\brief			Creates a global file scope array of s_string objects capable of
+				holding up to \a 'count' elements of up to \a 'maxsize' characters.
+				\a 'maxsize' can be at most 254 characters. The resulting strings
 				starts empty.
-\param	name    The name of the variable.
-\param	maxsize The maximum number of characters that the object will be able to
+
+\param	name	The name of the variable.
+
+\param	maxsize	The maximum number of characters that the object will be able to
 				store.
 *//*==========================================================================*/
 #define global_s_string_large_array( name, count, maxsize )							\
 			static const volatile uint8_t __attribute__((section(".data"))) _##name##_buffer[(count)*(1+4+4+maxsize+1)];					\
 			s_string_t * const volatile __attribute__((section(".data"))) name[(count)];										\
-            static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2e ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
+			static const void * __attribute__((section("s_string_init"),used)) _##name##_init[]   = { (void*)(( maxsize << 8 ) | 0x2e ), (void*)_##name##_buffer, (s_string_t**)name, (void*)(count) };
 /*=========================================================================*//**
-\brief          Creates a structure field of type s_string capable of holding
-                up to \a maxsize characters. \a maxsize can be at most 65534
-                characters.
-\param	name    The name of the field.
-\param	maxsize The maximum number of characters that the field will be able to
+\brief			Creates a structure field of type s_string capable of holding
+				up to \a 'maxsize' characters. \a 'maxsize' can be at most 65534
+				characters.
+
+\param	name	The name of the field.
+
+\param	maxsize	The maximum number of characters that the field will be able to
 				store.
 *//*==========================================================================*/
-#define field_s_string(name,maxsize)        s_string_t  * const (name);const uint8_t _##name##_buffer[1+2+2+(maxsize)+1]
+#define field_s_string(name,maxsize)		s_string_t  * const (name);const uint8_t _##name##_buffer[1+2+2+(maxsize)+1]
 /*=========================================================================*//**
-\brief          Initialize an s_string field in a structure.
-\param	s       The name of the structure variable. If it is a pointer it must
-                be dereferenced.
-\param	name    The name of the s_string field to be initialized.
+\brief			Initialize an s_string field in a structure.
+
+\param	s		The name of the structure variable. If it is a pointer it must
+				be dereferenced.
+
+\param	name	The name of the s_string field to be initialized.
 *//*==========================================================================*/
-#define field_s_string_init(s,name)         do{*(s_string_t**)&(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);}while(0)
+#define field_s_string_init(s,name)		 do{*(s_string_t**)&(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);}while(0)
 /*=========================================================================*//**
-\brief          Initialize an s_string field in a structure with an initial
-                value.
-\param	s       The name of the structure variable. If it is a pointer it must
-                be dereferenced.
-\param	name    The name of the s_string field to be initialized.
-\param	src		A C-string (null terminated array of characters) that will be
+\brief			Initialize an s_string field in a structure with an initial
+				value.
+
+\param	s		The name of the structure variable. If it is a pointer it must
+				be dereferenced.
+
+\param	name	The name of the s_string field to be initialized.
+
+\param	src		A C-string (null-terminated array of characters) that will be
 				the initial value of the field.
 *//*==========================================================================*/
 #define field_s_string_init_c(s,name,src)   do{*(s_string_t**)&(s).name = (s_string_t*)(s)._##name##_buffer;_s_string_init((s).name,sizeof((s)._##name##_buffer)-1-2-2-1,1);s_strcpy_c((s).name,src);}while(0)
 /*=========================================================================*//**
-\brief          Returns the smaller of two ssize_t (signed) values.
-\param a		The first value.
-\param b		The second value.
+\brief			Returns the smaller of two ssize_t (signed) values.
+
+\param	a		The first value.
+
+\param	b		The second value.
 *//*==========================================================================*/
 static inline ssize_t __attribute__((always_inline)) ssmin( ssize_t a, ssize_t b )
-    {
-    return a < b ? a : b;
-    }
+	{
+	return a < b ? a : b;
+	}
 /*=========================================================================*//**
-\brief          Returns the greater of two ssize_t (signed) values.
-\param a		The first value.
-\param b		The second value.
+\brief			Returns the greater of two ssize_t (signed) values.
+
+\param	a		The first value.
+
+\param	b		The second value.
 *//*==========================================================================*/
 static inline ssize_t __attribute__((always_inline)) ssmax( ssize_t a, ssize_t b )
-    {
-    return a > b ? a : b;
-    }
+	{
+	return a > b ? a : b;
+	}
 /*============================================================================*/
 #if			!defined DOXYGEN
 /*=========================================================================*//**
-\brief          Calculates the size in bytes required to hold an s_string object
-				capable of storing up to \a len characters. This function is not
+\brief			Calculates the size in bytes required to hold an s_string object
+				capable of storing up to \a 'len' characters. This function is not
 				intended to be called directly by the programmer's code.
-\param len      The maximum number of characters that the object will be able to
+
+\param	len		The maximum number of characters that the object will be able to
 				store.
-\returns        The number of bytes required to hold the s_string object.
+
+\returns		The number of bytes required to hold the s_string object.
 *//*==========================================================================*/
-ssize_t      _s_calcsize    		( ssize_t len );
+ssize_t		 _s_calcsize			( ssize_t len );
 /*=========================================================================*//**
-\brief          Initializes an s_string object right after creation. This
+\brief			Initializes an s_string object right after creation. This
 				function is not intended to be called directly by the
 				programmer's code.
-\param str      Pointer to the s_string to be initialized.
-\param len      The maximum number of characters that the object will be able to
+
+\param	str		Pointer to the s_string to be initialized.
+
+\param	len		The maximum number of characters that the object will be able to
 				store.
-\param area     The memory area in what the string will be created. 0 = 'data'
+
+\param	area	The memory area in what the string will be created. 0 = 'data'
 				segment (global or static variables), 1 = 'stack' (local/
 				automatic variables), 2 = 'heap' (dynamically created object).
 *//*==========================================================================*/
-void         _s_string_init 		(       s_string_t * restrict str, ssize_t len, int area );
-void		 _s_string_array_init	( 		s_string_t * const str[], uint8_t *buffer, ssize_t count, ssize_t len, int area );
+void		 _s_string_init			(		s_string_t * restrict str, ssize_t len, int area );
+void		 _s_string_array_init	(		s_string_t * const str[], uint8_t *buffer, ssize_t count, ssize_t len, int area );
 /*============================================================================*/
 #endif	/*	!defined DOXYGEN */
 /*=========================================================================*//**
-\brief          Returns non-zero if the s_string \a str cannot be changed.
-\param str      Pointer to the s_string.
-\returns        Zero if the s_string can be changed, a positive value if it
+\brief			Returns non-zero if the s_string \a 'str' cannot be changed.
+
+\param	str		Pointer to the s_string.
+
+\returns		Zero if the s_string can be changed, a positive value if it
 				cannot be changed and a negative value if there is an error (it
 				is a NULL pointer, for instance).
 *//*==========================================================================*/
-int          s_isreadonly   ( const s_string_t * restrict str );
+int			 s_isreadonly	( const s_string_t * restrict str );
 /*=========================================================================*//**
-\brief          Returns the maximum number of characters that the s_string \a
-				str can hold.
-\param str      Pointer to the s_string.
-\returns        The maximum length of s_string \a str.
+\brief			Returns the maximum number of characters that the s_string \a
+				'str' can hold.
+
+\param	str		Pointer to the s_string.
+
+\returns		The maximum length of s_string \a 'str'.
 *//*==========================================================================*/
-ssize_t      s_strmaxlen    ( const s_string_t * restrict str );
+ssize_t		 s_strmaxlen	( const s_string_t * restrict str );
 /*=========================================================================*//**
-\brief          Returns the number of characters that the s_string \a str is
+\brief			Returns the number of characters that the s_string \a 'str' is
 				holding.
-\param str      Pointer to the s_string.
-\returns        The length of the s_string \a str.
+
+\param	str		Pointer to the s_string.
+
+\returns		The length of the s_string \a 'str'.
 *//*==========================================================================*/
-ssize_t      s_strlen       ( const s_string_t * restrict str );
+ssize_t		 s_strlen		( const s_string_t * restrict str );
 /*=========================================================================*//**
-\brief          Returns the lesser between \a len and the number of characters
-				that the s_string \a str is holding.
-\param str      Pointer to the s_string.
-\param len      The maximum value that the function must return, in case the
-				length of \a str is longer.
-\returns        The lesser of \a len and the length of s_string \a str.
+\brief			Returns the lesser between \a 'max' and the number of characters
+				that the s_string \a 'str' is holding.
+
+\param	str		Pointer to the s_string.
+
+\param	max		The maximum value that the function must return, in case the
+				length of \a 'str' is longer.
+
+\returns		The lesser of \a 'max' and the length of s_string \a 'str'.
 *//*==========================================================================*/
-ssize_t      s_strllen      ( const s_string_t * restrict str, ssize_t len );
+ssize_t		 s_strllen		( const s_string_t * restrict str, ssize_t max );
 /*=========================================================================*//**
-\brief          Returns the greater between \a len and the number of characters
-				that the s_string \a str is holding.
-\param str      Pointer to the s_string.
-\param len      The minimum value that the function must return, in case the
-				length of \a str is shorter.
-\returns        The greater of \a len and the length of s_string \a str.
+\brief			Returns the greater between \a 'min' and the number of characters
+				that the s_string \a 'str' is holding.
+
+\param	str		Pointer to the s_string.
+
+\param	min		The minimum value that the function must return, in case the
+				length of \a 'str' is shorter.
+
+\returns		The greater of \a 'min' and the length of s_string \a 'str'.
 *//*==========================================================================*/
-ssize_t      s_strnlen      ( const s_string_t * restrict str, ssize_t len );
+ssize_t		 s_strnlen		( const s_string_t * restrict str, ssize_t min );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of character \a c in the s_string \a
-				str starting from the position \a start towards the end of the
+\brief			Finds the first occurrence of character \a 'c' in the s_string \a
+				'str' starting from the position \a 'start' towards the end of the
 				string (forward search).
-\param str      Pointer to the s_string.
-\param start	The index at which the search is to begin.
-\param c		The value of the character to be searched.
-\returns        The index of the first occurrence of character \a c if found, or
+
+\param	str		Pointer to the s_string.
+
+\param	start	The index at which the search is to begin.
+
+\param	c		The value of the character to be searched.
+
+\returns		The index of the first occurrence of character \a 'c' if found, or
 				-1 if the character is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strchr       ( const s_string_t * restrict str, ssize_t start, int c );
+ssize_t		 s_strchr		( const s_string_t * restrict str, ssize_t start, int c );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of character \a c in the s_string \a
-				str starting from the position \a start towards the beginning of
+\brief			Finds the first occurrence of character \a 'c' in the s_string \a
+				'str' starting from the position \a 'start' towards the beginning of
 				the string (backwards search).
-\param str      Pointer to the s_string.
-\param start	The index at which the search is to begin.
-\param c		The value of the character to be searched.
-\returns        The index of the first occurrence of character \a c if found, or
+
+\param	str		Pointer to the s_string.
+
+\param	start	The index at which the search is to begin.
+
+\param	c		The value of the character to be searched.
+
+\returns		The index of the first occurrence of character \a 'c' if found, or
 				-1 if the character is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strrchr      ( const s_string_t * restrict str, ssize_t start, int c );
+ssize_t		 s_strrchr		( const s_string_t * restrict str, ssize_t start, int c );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of character \a c in the s_string \a
-				str starting from the position \a start towards the end of the
+\brief			Finds the first occurrence of character \a 'c' in the s_string \a
+				'str' starting from the position \a 'start' towards the end of the
 				string (forward search), ignoring the case.
-\param str      Pointer to the s_string.
-\param start	The index at which the search is to begin.
-\param c		The value of the character to be searched.
-\returns        The index of the first occurrence of character \a c if found, or
+
+\param	str		Pointer to the s_string.
+
+\param	start	The index at which the search is to begin.
+
+\param	c		The value of the character to be searched.
+
+\returns		The index of the first occurrence of character \a 'c' if found, or
 				-1 if the character is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strichr      ( const s_string_t * restrict str, ssize_t start, int c );
+ssize_t		 s_strichr		( const s_string_t * restrict str, ssize_t start, int c );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of character \a c in the s_string \a
-				str starting from the position \a start towards the beginning of
+\brief			Finds the first occurrence of character \a 'c' in the s_string \a
+				'str' starting from the position \a 'start' towards the beginning of
 				the string (backwards search), ignoring the case.
-\param str      Pointer to the s_string.
-\param start	The index at which the search is to begin.
-\param c		The value of the character to be searched.
-\returns        The index of the first occurrence of character \a c if found, or
+
+\param	str		Pointer to the s_string.
+
+\param	start	The index at which the search is to begin.
+
+\param	c		The value of the character to be searched.
+
+\returns		The index of the first occurrence of character \a 'c' if found, or
 				-1 if the character is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strrichr     ( const s_string_t * restrict str, ssize_t start, int c );
+ssize_t		 s_strrichr		( const s_string_t * restrict str, ssize_t start, int c );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of the portion of s_string \a s2
-				starting at index \a s2start in the s_string \a s1 starting
-				search from the position \a start towards the end of \a s1
+\brief			Finds the first occurrence of the portion of s_string \a 's2'
+				starting at index \a 's2start' in the s_string \a 's1' starting
+				search from the position \a 'start' towards the end of \a 's1'
 				 (forward search).
-\param s1      Pointer to the s_string that will be scanned to find \a s2.
-\param s1start	The index at which the search is to begin in \a s1.
-\param s2      Pointer to the s_string that will be looked for.
-\param s2start	The index of the beginning of the portion of \a s2 that will
+
+\param	s1		Pointer to the s_string that will be scanned to find \a 's2'.
+
+\param	s1start	The index at which the search is to begin in \a 's1'.
+
+\param	s2		Pointer to the s_string that will be looked for.
+
+\param	s2start	The index of the beginning of the portion of \a 's2' that will
 				be looked for.
-\returns        The index of the start of first occurrence of \a s2 if found,
-				or -1 if \a s2 is not present in the string.
+
+\returns		The index of the start of first occurrence of \a 's2' if found,
+				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strstr       ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 s_strstr		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of C-string \a s2 in the s_string
-				\a s1 starting from the position \a s1start towards the end of
-				\a s1 (forward search).
-\param s1      Pointer to the s_string that will be scanned to find \a s2.
-\param s1start	The index at which the search is to begin in \a s1.
-\param s2      Pointer to the s_string that will be looked for.
-\returns        The index of the s1start of first occurrence of \a s2 if found,
-				or -1 if \a s2 is not present in the string.
+\brief			Finds the first occurrence of C-string \a 's2' in the s_string
+				\a 's1' starting from the position \a 's1start' towards the end of
+				\a 's1' (forward search).
+
+\param	s1		Pointer to the s_string that will be scanned to find \a 's2'.
+
+\param	s1start	The index at which the search is to begin in \a 's1'.
+
+\param	s2		Pointer to the s_string that will be looked for.
+
+\returns		The index of the s1start of first occurrence of \a 's2' if found,
+				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_strstr_c     ( const s_string_t * restrict s1, ssize_t s1start, const char	   * restrict s2 );
+ssize_t		 s_strstr_c		( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2 );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a s2 (s_string) in
-				the s_string \a s1 starting from the position \a s1start towards
-				the end of \a s1 (forward search), ignoring the case of the
+\brief			Finds the first occurrence of sub-string \a 's2' (s_string) in
+				the s_string \a 's1' starting from the position \a 's1start' towards
+				the end of \a 's1' (forward search), ignoring the case of the
 				characters.
-\param s1      Pointer to the s_string that will be scanned to find \a s2.
-\param s2      Pointer to the s_string that will be looked for.
-\param s2start	The index at which the search is to begin.
-\returns        The index of the s1start of first occurrence of \a s2 if found,
-				or -1 if \a s2 is not present in the string.
+
+\param	s1		Pointer to the s_string that will be scanned to find \a 's2'.
+
+\param	s2		Pointer to the s_string that will be looked for.
+
+\param	s2start	The index at which the search is to begin.
+
+\returns		The index of the s1start of first occurrence of \a 's2' if found,
+				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t		 c_strstr_s		( const char	   * restrict s1,				  const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 c_strstr_s		( const char	   * restrict s1,  const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a s2 (s_string) in
-				the s_string \a s1 starting from the position \a start towards
-				the end of \a s1 (forward search), ignoring the case of the
+\brief			Finds the first occurrence of sub-string \a 's2' (s_string) in
+				the s_string \a 's1' starting from the position \a 'start' towards
+				the end of \a 's1' (forward search), ignoring the case of the
 				characters.
-\param s1      Pointer to the s_string that will be scanned to find \a s2.
-\param s1start	The index at which the search is to begin.
-\param s2      Pointer to the s_string that will be looked for.
-\param s2start	The index at which the search is to begin.
-\returns        The index of the start of first occurrence of \a s2 if found,
-				or -1 if \a s2 is not present in the string.
+
+\param	s1		Pointer to the s_string that will be scanned to find \a 's2'.
+
+\param	s1start	The index at which the search is to begin.
+
+\param	s2		Pointer to the s_string that will be looked for.
+
+\param	s2start	The index at which the search is to begin.
+
+\returns		The index of the start of first occurrence of \a 's2' if found,
+				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_stristr      ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 s_stristr		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a s2 (C-string) in
-				the s_string \a s1 starting from the position \a s1start towards
-				the end of \a s1 (forward search), ignoring the case of the
+\brief			Finds the first occurrence of sub-string \a 's2' (C-string) in
+				the s_string \a 's1' starting from the position \a 's1start' towards
+				the end of \a 's1' (forward search), ignoring the case of the
 				characters.
-\param s1      Pointer to the s_string that will be scanned to find \a s2.
-\param s1start	The index at which the search is to begin.
-\param s2      Pointer to the s_string that will be looked for.
-\returns        The index of the s1start of first occurrence of \a s2 if found,
-				or -1 if \a s2 is not present in the string.
+
+\param	s1		Pointer to the s_string that will be scanned to find \a 's2'.
+
+\param	s1start	The index at which the search is to begin.
+
+\param	s2		Pointer to the s_string that will be looked for.
+
+\returns		The index of the s1start of first occurrence of \a 's2' if found,
+				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t      s_stristr_c    ( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 );
+ssize_t		 s_stristr_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2 );
 /*=========================================================================*//**
-\brief          Finds the first occurrence of sub-string \a s2 (s_string) in
-				the C-string \a s1 starting from the position \a s1start towards
-				the end of \a s1 (forward search), ignoring the case of the
+\brief			Finds the first occurrence of sub-string \a 's2' (s_string) in
+				the C-string \a 's1' starting from the position \a 's1start' towards
+				the end of \a 's1' (forward search), ignoring the case of the
 				characters.
-\param s1      Pointer to the C-string that will be scanned to find \a s2.
-\param s2      Pointer to the s_string that will be looked for.
-\param s2start	The index at which the search is to begin.
-\returns        The index of the s1start of first occurrence of \a s2 if found,
-				or -1 if \a s2 is not present in the string.
+
+\param	s1		Pointer to the C-string that will be scanned to find \a 's2'.
+
+\param	s2		Pointer to the s_string that will be looked for.
+
+\param	s2start	The index at which the search is to begin.
+
+\returns		The index of the s1start of first occurrence of \a 's2' if found,
+				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t      c_stristr_s    ( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 c_stristr_s	( const char	   * restrict s1,  const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Finds the position of the first character of the s_string \a
-                str that belongs to the s_string \a charset.
-\param str      Pointer to the s_string that will be scanned to find any
-				characters from \a charset.
-\param start	The index at which the search is to begin.
-\param charset  Pointer to the s_string that contains the set of characters to
-				be found in \a str.
-\returns        The index of the first character of \a str that does not belong
-				to \a charset, or -1 the two strings have no characters in common.
+				'str' that belongs to the s_string \a 'charset'.
+
+\param	str		Pointer to the s_string that will be scanned to find any
+				characters from \a 'charset'.
+
+\param	start	The index at which the search is to begin.
+
+\param	charset  Pointer to the s_string that contains the set of characters to
+				be found in \a 'str'.
+
+\returns		The index of the first character of \a 'str' that does not belong
+				to \a 'charset', or -1 the two strings have no characters in common.
 *//*==========================================================================*/
 ssize_t		 s_strpbrk		( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict charset, ssize_t charsetstart );
 /*=========================================================================*//**
 \brief			Finds the position of the first character of the s_string \a
-                str that belongs to the C-string \a charset.
-\param str      Pointer to the s_string that will be scanned to find any
-				characters from \a charset.
-\param start	The index at which the search is to begin.
-\param charset  Pointer to the C-string that contains the set of characters to
-				be found in \a str.
-\returns        The index of the first character of \a str that does not belong
-				to \a charset, or -1 the two strings have no characters in common.
+				'str' that belongs to the C-string \a 'charset'.
+
+\param	str		Pointer to the s_string that will be scanned to find any
+				characters from \a 'charset'.
+
+\param	start	The index at which the search is to begin.
+
+\param	charset  Pointer to the C-string that contains the set of characters to
+				be found in \a 'str'.
+
+\returns		The index of the first character of \a 'str' that does not belong
+				to \a 'charset', or -1 the two strings have no characters in common.
 *//*==========================================================================*/
-ssize_t      s_strpbrk_c    ( const s_string_t * restrict str, ssize_t start, const char * restrict charset );
+ssize_t		 s_strpbrk_c	( const s_string_t * restrict str, ssize_t start, const char	   * restrict charset );
 /*=========================================================================*//**
 \brief			Finds the position of the first character of the s_string \a
-                str that does not belong to the s_string \a charset.
-\param str      Pointer to the s_string that will be scanned to find any
-				characters from \a charset.
-\param start	The index at which the search is to begin.
-\param charset  Pointer to the s_string that contains the set of characters to
-				be found in \a str.
-\returns        The index of first character of \a str that doesn't belong to \a
-				charset, or -1 if all characters of \a str are present in \a
-                charset.
+				'str' that does not belong to the s_string \a 'charset'.
+
+\param	str		Pointer to the s_string that will be scanned to find any
+				characters from \a 'charset'.
+
+\param	start	The index at which the search is to begin.
+
+\param	charset  Pointer to the s_string that contains the set of characters to
+				be found in \a 'str'.
+
+\returns		The index of first character of \a 'str' that doesn't belong to \a
+				'charset', or -1 if all characters of \a 'str' are present in \a
+				'charset'.
 *//*==========================================================================*/
 ssize_t		 s_strcpbrk		( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict charset, ssize_t charsetstart );
 /*=========================================================================*//**
 \brief			Finds the position of the first character of the s_string \a
-                str that does not belong to the C-string \a charset.
-\param str      Pointer to the s_string that will be scanned to find any
-				characters from \a charset.
-\param start	The index at which the search is to begin.
-\param charset  Pointer to the C-string that contains the set of characters to
-				be found in \a str.
-\returns        The index of first character of \a str that doesn't belong to \a
-				charset, or -1 if all characters of \a str are present in \a
-                charset.
+				'str' that does not belong to the C-string \a 'charset'.
+
+\param	str		Pointer to the s_string that will be scanned to find any
+				characters from \a 'charset'.
+
+\param	start	The index at which the search is to begin.
+
+\param	charset  Pointer to the C-string that contains the set of characters to
+				be found in \a 'str'.
+
+\returns		The index of first character of \a 'str' that doesn't belong to \a
+				'charset', or -1 if all characters of \a 'str' are present in \a
+				'charset'.
 *//*==========================================================================*/
-ssize_t      s_strcpbrk_c   ( const s_string_t * restrict str, ssize_t start, const char * restrict charset );
+ssize_t		 s_strcpbrk_c	( const s_string_t * restrict str, ssize_t start, const char	   * restrict charset );
 /*=========================================================================*//**
-\brief          Returns the value of the character at position \a index of
-				s_string \a str.
-\param str      Pointer to the s_string.
-\param index	The position of the character to be read from \a str. If \a
-				index is negative, it is counted from the end of the string
+\brief			Returns the value of the character at position \a 'index' of
+				s_string \a 'str'.
+
+\param	str		Pointer to the s_string.
+
+\param	index	The position of the character to be read from \a 'str'. If \a
+				'index' is negative, it is counted from the end of the string
 				towards the beginning. -1 is the index of the last character of
-				\a str.
-\returns        The value of the character at position \a index, or '\0' if
-				\a index is invalid or an error occurred.
+				\a 'str'.
+
+\returns		The value of the character at position \a 'index', or '\0' if
+				\a 'index' is invalid or an error occurred.
 *//*==========================================================================*/
-int          s_charat       ( const s_string_t * restrict str, ssize_t index );
+int			 s_charat		( const s_string_t * restrict str, ssize_t index );
 /*=========================================================================*//**
-\brief          Returns a 'const char*' to the C-string that holds the characters
-				in s_string \a str, starting at index \a start. This pointer
+\brief			Returns a 'const char*' to the C-string that holds the characters
+				in s_string \a 'str', starting at index \a 'start'. This pointer
 				can be passed to the standard C library functions.
-\param str      Pointer to the s_string.
-\param start    Index of the first characters of \a str that the pointer will point.
-\returns        Pointer to the C-string. It will never be NULL. In case the result
+
+\param	str		Pointer to the s_string.
+
+\param	start	Index of the first characters of \a 'str' that the pointer will point.
+
+\returns		Pointer to the C-string. It will never be NULL. In case the result
 				would be a NULL pointer, the function returns a pointer to a
 				static empty string.
 *//*==========================================================================*/
-const char  *s_constcstr    ( const s_string_t * restrict str, ssize_t start );
+const char  *s_constcstr	( const s_string_t * restrict str, ssize_t start );
 /*=========================================================================*//**
-\brief          Replaces a single character of s_string \a dst at position \a
-				index with the character in \a value.
-\param dst      Pointer to the s_string to be changed.
-\param index    Position of the character that will be replaced. \a index can
+\brief			Replaces a single character of s_string \a 'dst' at position \a
+				'index' with the character in \a 'value'.
+
+\param	dst		Pointer to the s_string to be changed.
+
+\param	index	Position of the character that will be replaced. \a 'index' can
 				point to a character beyond the current length of the string,
 				but it must not be beyond the maximum length the string can
-				hold. If \a index is beyond the current length, the bytes
+				hold. If \a 'index' is beyond the current length, the bytes
 				between the current end of the string and the newly inserted
-				character are filled with \a filler. \a index can be negative,
+				character are filled with \a 'filler'. \a 'index' can be negative,
 				in which case it is counted back from the end. index -1 is the
 				last character of the string.
-\param value    Character to be inserted into \a dst.
-\param filler   Character used to fill any extra space created by inserting a
+
+\param	value	Character to be inserted into \a 'dst'.
+
+\param	filler	Character used to fill any extra space created by inserting a
 				character beyond the current length of the string.
-\returns        The new length of the string in case of success or a negative
+
+\returns		The new length of the string in case of success or a negative
 				value in case of failure.
 *//*==========================================================================*/
-ssize_t      s_setcharat    (       s_string_t * restrict dst, ssize_t index, int value, int filler );
+ssize_t		 s_setcharat	(		s_string_t * restrict dst, ssize_t index, int value, int filler );
 /*=========================================================================*//**
-\brief          Appends a single character to the end of string \a dst. If \a
-				dst is already at its maximum length, the operation will be
+\brief			Appends a single character to the end of string \a 'dst'. If \a
+				'dst' is already at its maximum length, the operation will be
 				ignored.
-\param dst      Pointer to the s_string to receive the character in \a value.
-\param value    Character to be appended to \a dst.
-\returns        The new length of \a dst after the character \a value is
+
+\param	dst		Pointer to the s_string to receive the character in \a 'value'.
+
+\param	value	Character to be appended to \a 'dst'.
+
+\returns		The new length of \a 'dst' after the character \a 'value' is
 				appended or a negative value if an error occurred.
 *//*==========================================================================*/
-ssize_t      s_appendchar   (       s_string_t * restrict dst, int value );
+ssize_t		 s_appendchar	(		s_string_t * restrict dst, int value );
 /*=========================================================================*//**
-\brief          Deletes a portion of s_string \a str between indexes \a start and
-				\a end, inclusive.
-\param str      Pointer to the s_string to have characters deleted.
-\param start    The index of the first character of the portion to be deleted.
-\param end      The index of the last character of the portion to be deleted.
-\returns        How many characters were removed or a negative value if an error
+\brief			Deletes a portion of s_string \a 'str' between indexes \a 'start' and
+				\a 'end', inclusive.
+
+\param	str		Pointer to the s_string to have characters deleted.
+
+\param	start	The index of the first character of the portion to be deleted.
+
+\param	end		The index of the last character of the portion to be deleted.
+
+\returns		How many characters were removed or a negative value if an error
 				occurred.
 *//*==========================================================================*/
-ssize_t      s_delete_e		(       s_string_t * restrict str, ssize_t start, ssize_t end );
+ssize_t		 s_delete_e		(		s_string_t * restrict str, ssize_t start, ssize_t end );
 /*=========================================================================*//**
-\brief          Deletes a portion of s_string \a str starting at index \a start
-				and with length \a len.
-\param str      Pointer to the s_string to have characters deleted.
-\param start    The index of the first character of the portion to be deleted.
-\param len      The length of the portion to be deleted.
-\returns        How many characters were removed or a negative value if an error
+\brief			Deletes a portion of s_string \a 'str' starting at index \a 'start'
+				and with length \a 'len'.
+
+\param	str		Pointer to the s_string to have characters deleted.
+
+\param	start	The index of the first character of the portion to be deleted.
+
+\param	len		The length of the portion to be deleted.
+
+\returns		How many characters were removed or a negative value if an error
 				occurred.
 *//*==========================================================================*/
-ssize_t      s_delete_l		(       s_string_t * restrict str, ssize_t start, ssize_t len );
+ssize_t		 s_delete_l		(		s_string_t * restrict str, ssize_t start, ssize_t len );
 /*=========================================================================*//**
-\brief          Truncates the length of string \a dst to at most \a len
+\brief			Truncates the length of string \a 'dst' to at most \a 'len'
 				characters.
-\param dst      Pointer to the s_string to be truncated.
-\param len      The new length of s_string \a dst, or if it is negative, how
+
+\param	dst		Pointer to the s_string to be truncated.
+
+\param	len		The new length of s_string \a 'dst', or if it is negative, how
 				many characters are to be removed.
-\returns        How many characters were removed or a negative value if an error
+
+\returns		How many characters were removed or a negative value if an error
 				occurred.
 *//*==========================================================================*/
-ssize_t      s_truncate     (       s_string_t * restrict dst, ssize_t len );
+ssize_t		 s_truncate		(		s_string_t * restrict dst, ssize_t len );
 /*=========================================================================*//**
-\brief  		Appends the contents of the portion of s_string pointed to by \a
-				src starting at \a srcstart to the end of the s_string pointed
-				to by \a dst. In case the resulting string would be longer than
-				the maximum length \a dst can hold, only enough characters to
-				fill \a dst will be copied.
-\param dst		Pointer to the destination s_string.
-\param src		Pointer to the source s_string.
-\param srcstart
-\returns		The new length of \a dst after the appending or a negative value
+\brief			Appends the contents of the portion of s_string pointed to by \a
+				'src' starting at \a 'srcstart' to the end of the s_string pointed
+				to by \a 'dst'. In case the resulting string would be longer than
+				the maximum length \a 'dst' can hold, only enough characters to
+				fill \a 'dst' will be copied.
+
+\param	dst		Pointer to the destination s_string.
+
+\param	src		Pointer to the source s_string.
+
+\param	srcstart
+
+\returns		The new length of \a 'dst' after the appending or a negative value
 				if an error occurred.
 *//*==========================================================================*/
-ssize_t		s_strcat       (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t		 s_strcat		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
 /*=========================================================================*//**
-\brief  		Appends the contents of the C-string pointed to by \a src to the
-				end of the s_string pointed to by \a dst. In case the resulting
-				string would be longer than the maximum length \a dst can hold,
-				only enough characters to fill \a dst will be copied.
+\brief			Appends the contents of the C-string pointed to by \a 'src' to the
+				end of the s_string pointed to by \a 'dst'. In case the resulting
+				string would be longer than the maximum length \a 'dst' can hold,
+				only enough characters to fill \a 'dst' will be copied.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source C-string.
-\returns		The new length of \a dst after the appending or a negative value
+
+\returns		The new length of \a 'dst' after the appending or a negative value
 				if an error occurred.
 *//*==========================================================================*/
-ssize_t		s_strcat_c     (       s_string_t * restrict dst, const char       * restrict src );
+ssize_t		 s_strcat_c		(		s_string_t * restrict dst, const char		* restrict src );
 /*=========================================================================*//**
-\brief  		Appends characters from the beginning of the s_string pointed to
-				by \a src to the end of the s_string pointed to by \a dst to
-				make \a dst up to \a len characters long. If \a dst is already \a
-				len characters long or more, no characters will be copied. If \a
-				src does not contain enough characters then \a dst will not
-				reach length \a len.
+\brief			Appends characters from the beginning of the s_string pointed to
+				by \a 'src' to the end of the s_string pointed to by \a 'dst' to
+				make \a 'dst' up to \a 'len' characters long. If \a 'dst' is already \a
+				'len' characters long or more, no characters will be copied. If \a
+				'src' does not contain enough characters then \a 'dst' will not
+				reach length \a 'len'.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source s_string.
-\param	len		The length \a dst should have after the append.
-\returns		The number of characters stored in \a dst or a negative number
+
+\param	len		The length \a 'dst' should have after the append.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strlcat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		 s_strlcat		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
-\brief  		Appends characters from the beginning of the C-string pointed to
-				by \a src to the end of the s_string pointed to by \a dst to
-				make \a dst up to \a len characters long. If \a dst is alredy \a
-				len characters long or more, no characters will be copied. If \a
-				src does not contain enough characters then \a dst will not
-				reach length \a len.
+\brief			Appends characters from the beginning of the C-string pointed to
+				by \a 'src' to the end of the s_string pointed to by \a 'dst' to
+				make \a 'dst' up to \a 'len' characters long. If \a 'dst' is alredy \a
+				'len' characters long or more, no characters will be copied. If \a
+				'src' does not contain enough characters then \a 'dst' will not
+				reach length \a 'len'.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source C-string.
-\param	len		The length \a dst should have after the append.
-\returns		The number of characters stored in \a dst or a negative number
+
+\param	len		The length \a 'dst' should have after the append.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strlcat_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
+ssize_t		 s_strlcat_c	(		s_string_t * restrict dst, const char		* restrict src, ssize_t len );
 /*=========================================================================*//**
-\brief  		Appends up to \a len characters from the beginning of the
-				s_string pointed to by \a src to the end of the s_string pointed
-				to by \a dst.
+\brief			Appends up to \a 'len' characters from the beginning of the
+				s_string pointed to by \a 'src' to the end of the s_string pointed
+				to by \a 'dst'.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source s_string.
-\param	len		The maximum number of characters to copy from \a src to \a dst.
-\returns		The number of characters stored in \a dst or a negative number
+
+\param	len		The maximum number of characters to copy from \a 'src' to \a 'dst'.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strncat      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		 s_strncat		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
-\brief  		Appends up to \a len characters from the beginning of the
-				C-string pointed to by \a src to the end of the s_string pointed
-				to by \a dst.
+\brief			Appends up to \a 'len' characters from the beginning of the
+				C-string pointed to by \a 'src' to the end of the s_string pointed
+				to by \a 'dst'.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source C-string.
-\param	len		The maximum number of characters to copy from \a src to \a dst.
-\returns		The number of characters stored in \a dst or a negative number
+
+\param	len		The maximum number of characters to copy from \a 'src' to \a 'dst'.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strncat_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
+ssize_t		 s_strncat_c	(		s_string_t * restrict dst, const char		* restrict src, ssize_t len );
 /*=========================================================================*//**
-\brief  		Copies the contents of the s_string pointed to by \a src into
-				the s_string pointed to by \a dst. The previous content of \a
-				dst is lost.
+\brief			Copies the contents of the s_string pointed to by \a 'src' into
+				the s_string pointed to by \a 'dst'. The previous content of \a
+				'dst' is lost.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source s_string.
-\returns		The number of characters stored in \a dst or a negative number
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strcpy       (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t		 s_strcpy		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
 /*=========================================================================*//**
-\brief  		Copies the contents of the C-string pointed to by \a src into
-				the s_string pointed to by \a dst. The previous content of \a
-				dst is lost.
+\brief			Copies the contents of the C-string pointed to by \a 'src' into
+				the s_string pointed to by \a 'dst'. The previous content of \a
+				'dst' is lost.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source C-string (null character terminated).
-\returns		The number of characters stored in \a dst or a negative number
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strcpy_c     (       s_string_t * restrict dst, const char       * restrict src );
+ssize_t		 s_strcpy_c		(		s_string_t * restrict dst, const char		* restrict src );
 /*=========================================================================*//**
-\brief  		Copies up to \a len characters of the contents of the s_string
-				pointed to by \a src into the s_string pointed to by \a dst. The
-				previous content of \a dst is lost.
+\brief			Copies up to \a 'len' characters of the contents of the s_string
+				pointed to by \a 'src' into the s_string pointed to by \a 'dst'. The
+				previous content of \a 'dst' is lost.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source s_string.
-\param	len		The maximum number of characters to copy from \a src to \a dst.
-\returns		The number of characters stored in \a dst or a negative number
+
+\param	len		The maximum number of characters to copy from \a 'src' to \a 'dst'.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strlcpy      (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		 s_strlcpy		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
-\brief  		Copies up to \a len characters of the contents of the C-string
-				pointed to by \a src into the s_string pointed to by \a dst. The
-				previous content of \a dst is lost.
+\brief			Copies up to \a 'len' characters of the contents of the C-string
+				pointed to by \a 'src' into the s_string pointed to by \a 'dst'. The
+				previous content of \a 'dst' is lost.
+
 \param	dst		Pointer to the destination s_string.
+
 \param	src		Pointer to the source C-string.
-\param	len		The maximum number of characters to copy from \a src to \a dst.
-\returns		The number of characters stored in \a dst or a negative number
+
+\param	len		The maximum number of characters to copy from \a 'src' to \a 'dst'.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		s_strlcpy_c    (       s_string_t * restrict dst, const char       * restrict src, ssize_t len );
+ssize_t		 s_strlcpy_c	(		s_string_t * restrict dst, const char		* restrict src, ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares two s_strings \a s1 and \a s2 character by character.
+\brief			Compares two s_strings \a 's1' and \a 's2' character by character.
+
 \param	s1		The first s_string to be compared.
+
 \param	s2		The second s_string to be compared.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_strcmp       ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+int			 s_strcmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief  		Compares the s_string \a s1 and the C-string \a s2 character
+\brief			Compares the s_string \a 's1' and the C-string \a 's2' character
 				by character.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_strcmp_c     ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2 				   );
+int			 s_strcmp_c		( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2 				    );
 /*=========================================================================*//**
-\brief  		Compares the C-string \a s1 and the s_string \a s2 character
+\brief			Compares the C-string \a 's1' and the s_string \a 's2' character
 				by character.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int			 c_strcmp_s		( const char	   * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start );
+int			 c_strcmp_s		( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief  		Compares two s_strings \a s1 and \a s2 character by character
+\brief			Compares two s_strings \a 's1' and \a 's2' character by character
 				ignoring the case.
+
 \param	s1		The first s_string to be compared.
+
 \param	s2		The second s_string to be compared.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_stricmp      ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+int			 s_stricmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief  		Compares the s_string \a s1 and the C-string \a s2 character
+\brief			Compares the s_string \a 's1' and the C-string \a 's2' character
 				by character ignoring the case.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_stricmp_c    ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2				   );
+int			 s_stricmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2				    );
 /*=========================================================================*//**
-\brief  		Compares the C-string \a s1 and the s_string \a s2 character
+\brief			Compares the C-string \a 's1' and the s_string \a 's2' character
 				by character ignoring the case.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int			 c_stricmp_s	( const char       * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start );
+int			 c_stricmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of two s_strings \a s1 and \a
-				s2 character by character.
+\brief			Compares up to \a 'len' characters of two s_strings \a 's1' and \a
+				's2' character by character.
+
 \param	s1		The first s_string to be compared.
+
 \param	s2		The second s_string to be compared.
+
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_strncmp      ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 s_strncmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of an s_string \a s1 and a
-				C-string \a s2 character by character.
+\brief			Compares up to \a 'len' characters of an s_string \a 's1' and a
+				C-string \a 's2' character by character.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
+
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal, and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal, and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_strncmp_c    ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2,					ssize_t len );
+int			 s_strncmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2,					 ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of a C-_string \a s1 and an
-				s_string \a s2 character by character.
+\brief			Compares up to \a 'len' characters of a C-_string \a 's1' and an
+				s_string \a 's2' character by character.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
+
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal, and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal, and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int			 c_strncmp_s	( const char	   * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 c_strncmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of two s_strings \a s1 and \a
-				s2 character by character ignoring the case.
+\brief			Compares up to \a 'len' characters of two s_strings \a 's1' and \a
+				's2' character by character ignoring the case.
+
 \param	s1		The first s_string to be compared.
+
 \param	s2		The second s_string to be compared.
+
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_strnicmp     ( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 s_strnicmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of an s_string \a s1 and a
-				C-string \a s2 character by character ignoring the case.
+\brief			Compares up to \a 'len' characters of an s_string \a 's1' and a
+				C-string \a 's2' character by character ignoring the case.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
+
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal, and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal, and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int          s_strnicmp_c   ( const s_string_t * restrict s1, ssize_t s1start, const char       * restrict s2,					ssize_t len );
+int			 s_strnicmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2,					 ssize_t len );
 /*=========================================================================*//**
-\brief  		Compares up to \a len characters of a C-string \a s1 and an
-				s_string \a s2 character by character ignoring the case.
+\brief			Compares up to \a 'len' characters of a C-string \a 's1' and an
+				s_string \a 's2' character by character ignoring the case.
+
 \param	s1		The first string to be compared.
+
 \param	s2		The second string to be compared.
+
 \param	len		The maximum number of characters to compare.
-\returns		A negative value if \a s1 is lexicographically before \a s2,
-				zero if both are equal, and positive if \a s1 is
-				lexicographically after \a s2.
+
+\returns		A negative value if \a 's1' is lexicographically before \a 's2',
+				zero if both are equal, and positive if \a 's1' is
+				lexicographically after \a 's2'.
 *//*==========================================================================*/
-int			 c_strnicmp_s	( const char	   * restrict s1,					 const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 c_strnicmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Returns the length of the portion of s_string \a str beginning
-				at index \a start that is comprised only of characters belonging
-				to the portion of s_string \a charset beginning at index \a csstart.
+\brief			Returns the length of the portion of s_string \a 'str' beginning
+				at index \a 'start' that is comprised only of characters belonging
+				to the portion of s_string \a 'charset' beginning at index \a 'csstart'.
+
 \param	str		Pointer to the s_string that will be scanned to find any characters
-				from \a charset.
+				from \a 'charset'.
+
 \param	start	The index at which the search is to begin.
+
 \param	charset	Pointer to the s_string that contains the set of characters to
-				be found in \a str.
-\param	csstart	The index of the first character of \a charset that is to be
+				be found in \a 'str'.
+
+\param	csstart	The index of the first character of \a 'charset' that is to be
 				searched for. That character and all the others until the end of
-				\a charset will be included in the searched.
-\returns		The length of the portion at the beginning of \a str that is
-				comprised only of characters in \a charset, or a negative value
+				\a 'charset' will be included in the searched.
+
+\returns		The length of the portion at the beginning of \a 'str' that is
+				comprised only of characters in \a 'charset', or a negative value
 				if there is an error.
 *//*==========================================================================*/
 ssize_t		 s_strspn		( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict charset, ssize_t csstart );
 /*=========================================================================*//**
-\brief  		Returns the length of the portion of s_string \a str beginning
-				at index \a start that is comprised only of characters belonging
-				to C-string \a charset.
+\brief			Returns the length of the portion of s_string \a 'str' beginning
+				at index \a 'start' that is comprised only of characters belonging
+				to C-string \a 'charset'.
+
 \param	str		Pointer to the s_string that will be scanned to find any
-				characters from \a charset.
+				characters from \a 'charset'.
+
 \param	charset	Pointer to the C-string that contains the set of characters to
-				be found in \a str.
+				be found in \a 'str'.
+
 \param	start	The index at which the search is to begin.
-\returns		The length of the portion at the beginning of \a str that is
-				comprised only of characters in \a charset, or a negative value
+
+\returns		The length of the portion at the beginning of \a 'str' that is
+				comprised only of characters in \a 'charset', or a negative value
 				if there is an error.
 *//*==========================================================================*/
-ssize_t      s_strspn_c     ( const s_string_t * restrict str, ssize_t start, const char       * restrict charset );
+ssize_t		 s_strspn_c		( const s_string_t * restrict str, ssize_t start, const char	   * restrict charset );
 /*=========================================================================*//**
-\brief  		Returns the length of the portion of s_string \a str beginning
-				at index \a start that is comprised only of characters NOT
-				belonging to s_string \a charset.
+\brief			Returns the length of the portion of s_string \a 'str' beginning
+				at index \a 'start' that is comprised only of characters NOT
+				belonging to s_string \a 'charset'.
+
 \param	str		Pointer to the s_string that will be scanned to find any
-				characters from \a charset.
+				characters from \a 'charset'.
+
 \param	start	The index at which the search is to begin.
+
 \param	charset	Pointer to the s_string that contains the set of characters to
-				be found in \a str.
+				be found in \a 'str'.
+
 \param	csstart	.
-\returns		The length of the portion at the beginning of \a str that has
-				none of the characters in \a charset, or a negative value if
+
+\returns		The length of the portion at the beginning of \a 'str' that has
+				none of the characters in \a 'charset', or a negative value if
 				there is an error.
 *//*==========================================================================*/
 ssize_t		 s_strcspn		( const s_string_t * restrict str, ssize_t start, const s_string_t * restrict charset, ssize_t csstart );
 /*=========================================================================*//**
-\brief  		Returns the length of the portion of s_string \a str beginning
-				at index \a start that is comprised only of characters NOT
-				belonging to C-string \a charset.
+\brief			Returns the length of the portion of s_string \a 'str' beginning
+				at index \a 'start' that is comprised only of characters NOT
+				belonging to C-string \a 'charset'.
+
 \param	str		Pointer to the s_string that will be scanned to find any
-				characters from \a charset.
+				characters from \a 'charset'.
+
 \param	charset	Pointer to the C-string that contains the set of characters to
-				be found in \a str.
+				be found in \a 'str'.
+
 \param	start	The index at which the search is to start.
-\returns		The length of the portion at the beginning of \a str that has
-				none of the characters in \a charset, or a negative value if
+
+\returns		The length of the portion at the beginning of \a 'str' that has
+				none of the characters in \a 'charset', or a negative value if
 				there is an error.
 *//*==========================================================================*/
-ssize_t      s_strcspn_c    ( const s_string_t * restrict str, ssize_t start, const char       * restrict charset );
+ssize_t		 s_strcspn_c	( const s_string_t * restrict str, ssize_t start, const char	   * restrict charset );
 /*=========================================================================*//**
-\brief  		Finds the next token in s_string \a str delimited by characters
-				from s_string \a delim, starting the search from the position
-				\a start.
+\brief			Finds the next token in s_string \a 'str' delimited by characters
+				from s_string \a 'delim', starting the search from the position
+				\a 'start'.
 
 \param	str		Pointer to the s_string that will be scanned to find the token.
 
@@ -1036,369 +1298,456 @@ ssize_t      s_strcspn_c    ( const s_string_t * restrict str, ssize_t start, co
 				be used as delimiters. The set of delimiters can vary from one
 				call to another.
 
-\param	delimstart	Index of the first character in \a charset that belongs to the
-                delimiters set.
+\param	delimstart	Index of the first character in \a 'charset' that belongs to the
+				delimiters set.
 
 \param	length	Pointer to an ssize_t variable to receive the length of the
 				token just found. It can be NULL, in which case the length will
 				not be provided.
 
-\returns		The index of the character in \a str where the token begins, or
+\returns		The index of the character in \a 'str' where the token begins, or
 				-1 if no token was found.
 *//*==========================================================================*/
 ssize_t		 s_strtok		( const s_string_t * restrict str, ssize_t * restrict start, const s_string_t * restrict delim, ssize_t delimstart, ssize_t * restrict length );
 /*=========================================================================*//**
-\brief  		Finds the next token in the s_string \a str delimited by
-				characters from the C-string \a delim, starting the search from
-				the position \a start.
+\brief			Finds the next token in the s_string \a 'str' delimited by
+				characters from the C-string \a 'delim', starting the search from
+				the position \a 'start'.
+
 \param	str		Pointer to the s_string that will be scanned to find the token.
+
 \param	start	Pointer to an ssize_t variable that contains the index where the
 				search is to start. This variable will be updated with a value
 				that can be used as the start for the next search, skipping the
 				token just found.
+
 \param	delim	Pointer to the C-string that contains the set of characters to
 				be used as delimiters. The set of delimiters can vary from one
 				call to another.
-\param	delimstart	Index of the first character in \a charset that belongs to the
-                delimiters set.
+
+\param	delimstart	Index of the first character in \a 'charset' that belongs to the
+				delimiters set.
+
 \param	length	Pointer to an ssize_t variable to receive the length of the
 				token just found. It can be NULL, in which case the length will
 				not be provided.
-\returns		The index of the character in \a str where the token begins, or
+
+\returns		The index of the character in \a 'str' where the token begins, or
 				-1 if no token was found.
 *//*==========================================================================*/
-ssize_t		 s_strtok_c		( const s_string_t * restrict str, ssize_t * restrict start, const char * restrict delim, ssize_t * restrict length );
+ssize_t		 s_strtok_c		( const s_string_t * restrict str, ssize_t * restrict start, const char		  * restrict delim, ssize_t * restrict length );
 /*=========================================================================*//**
-\brief  		Finds the next token in the s_string \a str delimited by
-				characters from the s_string \a delim, starting the search from
-				the position \a start, and copies it to the s_string \a dst.
+\brief			Finds the next token in the s_string \a 'str' delimited by
+				characters from the s_string \a 'delim', starting the search from
+				the position \a 'start', and copies it to the s_string \a 'dst'.
+
 \param	dst		Pointer to the s_string that will receive the token found.
+
 \param	str		Pointer to the s_string that will be scanned to find the token.
+
 \param	delim	Pointer to the s_string that contains the set of characters to
 				be used as delimiters. The set of delimiters can vary from one
 				call to another.
+
 \param	start	Pointer to an ssize_t variable that contains the index where the
 				search is to start. This variable will be updated with a value
 				that can be used as the start for the next search, skipping the
 				token just found.
-\returns		The index of the character in \a str where the token begins, or
+
+\returns		The index of the character in \a 'str' where the token begins, or
 				-1 if no token was found.
 *//*==========================================================================*/
-ssize_t		 s_strtok_s		(       s_string_t * restrict dst, const s_string_t * restrict str, ssize_t * restrict start, const s_string_t * restrict delim, ssize_t delimstart );
+ssize_t		 s_strtok_s		(		s_string_t * restrict dst, const s_string_t * restrict str, ssize_t * restrict start, const s_string_t	  * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
-\brief  		Finds the next token in the s_string \a str delimited by
-				characters from the C-string \a delim, starting the search from
-				the position \a start, and copies it to the s_string \a dst.
+\brief			Finds the next token in the s_string \a 'str' delimited by
+				characters from the C-string \a 'delim', starting the search from
+				the position \a 'start', and copies it to the s_string \a 'dst'.
+
 \param	dst		Pointer to the s_string that will receive the token found.
+
 \param	str		Pointer to the s_string that will be scanned to find the token.
+
 \param	delim	Pointer to the C-string that contains the set of characters to
 				be used as delimiters. The set of delimiters can vary from one
 				call to another.
+
 \param	start	Pointer to an ssize_t variable that contains the index where the
 				search is to start. This variable will be updated with a value
 				that can be used as the start for the next search, skipping the
 				token just found.
-\returns		The index of the character in \a str where the token begins, or
+
+\returns		The index of the character in \a 'str' where the token begins, or
 				a -1 if no token was found.
 *//*==========================================================================*/
-ssize_t		 s_strtok_sc	(       s_string_t * restrict dst, const s_string_t * restrict str, ssize_t * restrict start, const char * restrict delim );
+ssize_t		 s_strtok_sc	(		s_string_t * restrict dst, const s_string_t * restrict str, ssize_t * restrict start, const char	  * restrict delim );
 /*=========================================================================*//**
-\brief  		Finds the next token in the s_string \a str delimited by
-				characters from the s_string \a delim, starting the search from
-				the position \a start, and creates a new dynamically allocated
+\brief			Finds the next token in the s_string \a 'str' delimited by
+				characters from the s_string \a 'delim', starting the search from
+				the position \a 'start', and creates a new dynamically allocated
 				s_string object with the token just found.
+
 \param	str		Pointer to the s_string that will be scanned to find the token.
+
 \param	delim	Pointer to the s_string that contains the set of characters to
 				be used as delimiters. The set of delimiters can vary from one
 				call to another.
+
 \param	start	Pointer to an ssize_t variable that contains the index where the
 				search is to start. This variable will be updated with a value
 				that can be used as the start for the next search, skipping the
 				token just found.
+
 \returns		A pointer to the new s_string object that contains the token
 				that has just been found.
 *//*==========================================================================*/
 s_string_t	*s_strtok_m		( const s_string_t * restrict str, ssize_t * restrict start, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
-\brief  		Finds the next token in the s_string \a str delimited by
-				characters from the C-string \a delim, starting the search from
-				the position \a start, and creates a new dynamically allocated
+\brief			Finds the next token in the s_string \a 'str' delimited by
+				characters from the C-string \a 'delim', starting the search from
+				the position \a 'start', and creates a new dynamically allocated
 				s_string object with the token just found.
+
 \param	str		Pointer to the s_string that will be scanned to find the token.
+
 \param	delim	Pointer to the C-string that contains the set of characters to
 				be used as delimiters. The set of delimiters can vary from one
 				call to another.
+
 \param	start	Pointer to an ssize_t variable that contains the index where the
 				search is to start. This variable will be updated with a value
 				that can be used as the start for the next search, skipping the
 				token just found.
+
 \returns		A pointer to the new s_string object that contains the token
 				that has just been found.
 *//*==========================================================================*/
-s_string_t	*s_strtok_mc	( const s_string_t * restrict str, ssize_t * restrict start, const char * restrict delim );
+s_string_t	*s_strtok_mc	( const s_string_t * restrict str, ssize_t * restrict start, const char		  * restrict delim );
 /*=========================================================================*//**
-\brief  		Creates in the heap a new dynamically allocated s_string object
-				and copies to it the character sequence from the s_string \a src
-				located between indexes \a start and \a end, inclusive.
+\brief			Creates in the heap a new dynamically allocated s_string object
+				and copies to it the character sequence from the s_string \a 'src'
+				located between indexes \a 'start' and \a 'end', inclusive.
+
 \param	src		Pointer to the s_string that will be duplicated.
-\param	start	The index of the first character from \a src that will be copied
+
+\param	start	The index of the first character from \a 'src' that will be copied
 				to the new s_string.
-\param	end		The index of the last character from \a src that will be copied
+
+\param	end		The index of the last character from \a 'src' that will be copied
 				to the new s_string.
+
 \returns		A pointer to a new, dynamically allocated s_string object that
 				contains a copy of the character sequence from the s_string \a
-				src. The new object must be freed with 'free' when not in use
+				'src'. The new object must be freed with 'free' when not in use
 				anymore.
 *//*==========================================================================*/
 s_string_t  *s_extract_me   ( const s_string_t * restrict src, ssize_t start, ssize_t end );
 /*=========================================================================*//**
-\brief  		Creates in the heap a new dynamically allocated s_string object
-				and copies to it the character sequence from the C-string \a src
-				located between indexes \a start and \a end, inclusive.
+\brief			Creates in the heap a new dynamically allocated s_string object
+				and copies to it the character sequence from the C-string \a 'src'
+				located between indexes \a 'start' and \a 'end', inclusive.
+
 \param	src		Pointer to the C-string that will be duplicated.
-\param	start	The index of the first character from \a src that will be copied
+
+\param	start	The index of the first character from \a 'src' that will be copied
 				to the new s_string.
-\param	end		The index of the last character from \a src that will be copied
+
+\param	end		The index of the last character from \a 'src' that will be copied
 				to the new s_string.
+
 \returns		A pointer to a new, dynamically allocated s_string object that
 				contains a copy of the character sequence from the C-string \a
-				src. The new object must be freed with 'free' when not in use
+				'src'. The new object must be freed with 'free' when not in use
 				anymore.
 *//*==========================================================================*/
-s_string_t  *s_extract_mec  ( const char * restrict src, ssize_t start, ssize_t end );
+s_string_t  *s_extract_mec  ( const char	   * restrict src, ssize_t start, ssize_t end );
 /*=========================================================================*//**
-\brief  		Creates in the heap a new dynamically allocated s_string object
+\brief			Creates in the heap a new dynamically allocated s_string object
 				and copies to it the character sequence from the s_string \a
-				src starting from index \a start and with length \a len.
+				'src' starting from index \a 'start' and with length \a 'len'.
+
 \param	src		Pointer to the s_string that will be duplicated.
-\param	start	The index of the first character from \a src that will be copied
+
+\param	start	The index of the first character from \a 'src' that will be copied
 				to the new s_string.
-\param	len		The length of the character sequence from \a src that will be
+
+\param	len		The length of the character sequence from \a 'src' that will be
 				copied to the new s_string.
+
 \returns		A pointer to a new, dynamically allocated s_string object that
 				contains a copy of the character sequence from the s_string \a
-				src. The new object must be freed with 'free' when not in use
+				'src'. The new object must be freed with 'free' when not in use
 				anymore.
 *//*==========================================================================*/
 s_string_t  *s_extract_ml   ( const s_string_t * restrict src, ssize_t start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Creates in the heap a new dynamically allocated s_string object
-				and copies to it the character sequence from the C-string \a src
-				starting from index \a start and with length \a len.
+\brief			Creates in the heap a new dynamically allocated s_string object
+				and copies to it the character sequence of length \a 'len' from
+				the C-string \a 'src'.
+
 \param	src		Pointer to the C-string that will be duplicated.
-\param	start	The index of the first character from \a src that will be copied
+
+\param	start	The index of the first character from \a 'src' that will be copied
 				to the new s_string.
-\param	len		The length of the character sequence from \a src that will be
+
+\param	len		The length of the character sequence from \a 'src' that will be
 				copied to the new s_string.
+
 \returns		A pointer to a new, dynamically allocated s_string object that
 				contains a copy of the character sequence from the C-string \a
-				src. The new object must be freed with 'free' when not in use
+				'src'. The new object must be freed with 'free' when not in use
 				anymore.
 *//*==========================================================================*/
-s_string_t  *s_extract_mlc  ( const char       * restrict src, ssize_t start, ssize_t len );
+s_string_t  *s_extract_mlc  ( const char	   * restrict src, ssize_t start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Extracts a sequence of characters from the s_string \a src
-				located between indexes \a start and \a end, inclusive, and
-				copies it to s_string \a dst. The original content of \a dst is
-				lost. If \a dst cannot hold all the characters, only the
-				characters that will fit in \a dst will be copied.
+\brief			Extracts a sequence of characters from the s_string \a 'src'
+				located between indexes \a 'start' and \a 'end', inclusive, and
+				copies it to s_string \a 'dst'. The original content of \a 'dst' is
+				lost. If \a 'dst' cannot hold all the characters, only the
+				characters that will fit in \a 'dst' will be copied.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
+				characters from \a 'src'.
+
 \param	src		Pointer to the s_string that will provide the sequence of
-				characters to be copied to \a dst.
-\param	start	The index of the first character from \a src that will be copied
-				to \a dst.
-\param	end		The index of the last character from \a src that will be copied
-				to \a dst.
-\returns		The number of characters that were copied to \a dst or a
+				characters to be copied to \a 'dst'.
+
+\param	start	The index of the first character from \a 'src' that will be copied
+				to \a 'dst'.
+
+\param	end		The index of the last character from \a 'src' that will be copied
+				to \a 'dst'.
+
+\returns		The number of characters that were copied to \a 'dst' or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_extract_e    (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t start, ssize_t end );
+ssize_t		 s_extract_e	(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t start, ssize_t end );
 /*=========================================================================*//**
-\brief  		Extracts a sequence of characters from the C-string \a src
-				located between indexes \a start and \a end, inclusive, and
-				copies it to s_string \a dst. The original content of \a dst is
-				lost. If \a dst cannot hold all the characters, only the
-				characters that will fit in \a dst will be copied.
+\brief			Extracts a sequence of characters from the C-string \a 'src'
+				located between indexes \a 'start' and \a 'end', inclusive, and
+				copies it to s_string \a 'dst'. The original content of \a 'dst' is
+				lost. If \a 'dst' cannot hold all the characters, only the
+				characters that will fit in \a 'dst' will be copied.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
+				characters from \a 'src'.
+
 \param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a dst.
-\param	start	The index of the first character from \a src that will be copied
-				to \a dst.
-\param	end		The index of the last character from \a src that will be copied
-				to \a dst.
-\returns		The number of characters that were copied to \a dst or a
+				characters to be copied to \a 'dst'.
+
+\param	start	The index of the first character from \a 'src' that will be copied
+				to \a 'dst'.
+
+\param	end		The index of the last character from \a 'src' that will be copied
+				to \a 'dst'.
+
+\returns		The number of characters that were copied to \a 'dst' or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_extract_ec   (       s_string_t * restrict dst, const char       * restrict src, ssize_t start, ssize_t end );
+ssize_t		 s_extract_ec	(		s_string_t * restrict dst, const char		* restrict src, ssize_t start, ssize_t end );
 /*=========================================================================*//**
-\brief  		Extracts a sequence of characters from the s_string \a src
-				starting at index \a start and with length \a len, and copies it
-				to s_string \a dst. The original content of \a dst is lost. If
-				\a dst cannot hold all the characters, only the characters that
-				will fit in \a dst will be copied.
+\brief			Extracts a sequence of characters from the s_string \a 'src'
+				starting at index \a 'start' and with length \a 'len', and copies it
+				to s_string \a 'dst'. The original content of \a 'dst' is lost. If
+				\a 'dst' cannot hold all the characters, only the characters that
+				will fit in \a 'dst' will be copied.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
+				characters from \a 'src'.
+
 \param	src		Pointer to the s_string that will provide the sequence of
-				characters to be copied to \a dst.
-\param	start	The index of the first character from \a src that will be copied
-				to \a dst.
-\param	len		The length of the character sequence from \a src that will be
-				copied to \a dst.
-\returns		The number of characters that were copied to \a dst or a
+				characters to be copied to \a 'dst'.
+
+\param	start	The index of the first character from \a 'src' that will be copied
+				to \a 'dst'.
+
+\param	len		The length of the character sequence from \a 'src' that will be
+				copied to \a 'dst'.
+
+\returns		The number of characters that were copied to \a 'dst' or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_extract_l    (       s_string_t * restrict dst, const s_string_t * restrict src, ssize_t start, ssize_t len );
+ssize_t		 s_extract_l	(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Extracts a sequence of characters from the C-string \a src
-				starting at index \a start and with length \a len, and copies it
-				to s_string \a dst. The original content of \a dst is lost. If
-				\a dst cannot hold all the characters, only the characters that
-				will fit in \a dst will be copied.
-\param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a dst.
-\param	start	The index of the first character from \a src that will be copied
-				to \a dst.
-\param	len		The length of the character sequence from \a src that will be
-				copied to \a dst.
-\returns		The number of characters that were copied to \a dst or a
-				negative value in case of error.
-*//*==========================================================================*/
-ssize_t      s_extract_lc   (       s_string_t * restrict dst, const char       * restrict src, ssize_t start, ssize_t len );
-/*=========================================================================*//**
-\brief  		Replaces a sequence of characters of s_string \a dst, located
-				between indexes \a start and \a end with characters obtained from
-				the s_string \a src starting at index \a srcstart. If there are
-				not enough characters in \a src, only the characters available
-				will be copied. Characters beyond the current length of \a dst
+\brief			Replaces a sequence of characters of s_string \a 'dst', located
+				between indexes \a 'start' and \a 'end' with characters obtained from
+				the s_string \a 'src' starting at index \a 'srcstart'. If there are
+				not enough characters in \a 'src', only the characters available
+				will be copied. Characters beyond the current length of \a 'dst'
 				can be changed and will make the string to grow, but it will not
 				grow beyond its maximum length.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	start	The index of the first character in \a dst that will be replaced
-				by the characters from \a src. If \a start is negative it is
-				counted from the end towards the beginning. -1 is the last position
-				of the string.
-\param	end		The index of the last character in \a dst that will be replaced
-				by the characters from \a src. If \a end is negative it is
-				counted from the end towards the beginning. -1 is the last position
-				of the string.
+				characters from \a 'src'.
+
+\param	start	The index of the first character in \a 'dst' that will be replaced
+				by the characters from \a 'src'. If \a 'start' is negative it is
+				counted from the end towards the beginning. -1 maps to the last
+				character of the string.
+
+\param	end		The index of the last character in \a 'dst' that will be replaced
+				by the characters from \a 'src'. If \a 'end' is negative it is
+				counted from the end towards the beginning. -1 maps to the last
+				character of the string.
+
 \param	src		Pointer to the s_string that will provide the sequence of
-				characters to be copied to \a dst.
-\param srcstart	The index of the first character of \a src that will be copied
-				to \a dst. If \a srcstart is negative it is counted from the end
-				towards the beginning. -1 is the last position of the string.
-\param filler   Character used to fill any extra space created by inserting
-				characters starting beyond the current length of the string.
-\returns		The number of characters of \a dst that were changed or a
+				characters to be copied to \a 'dst'.
+
+\param	srcstart	The index of the first character of \a 'src' that will be copied
+				to \a 'dst'. If \a 'srcstart' is negative it is counted from the end
+				towards the beginning. -1 maps to the last character of the string.
+
+\param	filler  If \a 'filler' is '\0', characters that would come from nonexistent
+				indexes in \a 'src' (i.e. before its start if \a 'srcstart' is negative
+				and its modulus is greater than \a 'src' length or after the end if
+				\a 'srcend' is greater than \a 'src' length) will not be changed,
+				otherwise those characters will be replaced with \a 'filler'. Also,
+				if \a 'filler' is not '\0', \a 'dststart' can be beyond the current
+				length of \a 'dst' and the gap between \a 'dst' length and \a 'dststart'
+				will be filled with \a 'filler', otherwise this type of operation is
+				not allowed and the string will not be changed.
+
+\returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_de    (       s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler );
+ssize_t		 s_replace_de	(		s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler );
 /*=========================================================================*//**
-\brief  		Replaces a sequence of characters of s_string \a dst, starting at
-				index \a start with characters obtained from s-string \a src.
-				If there are not enough characters in \a src, only the characters
+\brief			Replaces a sequence of characters of s_string \a 'dst', starting at
+				index \a 'start' with characters obtained from s-string \a 'src'.
+				If there are not enough characters in \a 'src', only the characters
 				available will be copied.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	start	The index of the first character in \a dst that will be replaced
-				by the characters from \a src.
+				characters from \a 'src'.
+
+\param	start	The index of the first character in \a 'dst' that will be replaced
+				by the characters from \a 'src'.
+
 \param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a dst.
-\param srcstart
-\param	srcend	The index of the last character in \a dst that will be replaced
-				by the characters from \a src.
-\param filler   If \a filler is '\0', characters that would come from inexistent
-				indexes in \a src (i.e. before the start or after the end) won't
-				be changed, otherwise those characters will be replaced with \a
-				filler. Also, if \a filler is not '\0', \a start can be beyond the
-				current string length and the gap between \a the string end and \a
-				start will be filled with \a filler, otherwise this type of
-				operation is now allowed and the string won't be changed.
-\returns		The number of characters of \a dst that were changed or a
+				characters to be copied to \a 'dst'.
+
+\param	srcstart
+
+\param	srcend	The index of the last character in \a 'dst' that will be replaced
+				by the characters from \a 'src'.
+
+\param	filler  If \a 'filler' is '\0', characters that would come from nonexistent
+				indexes in \a 'src' (i.e. before its start if \a 'srcstart' is negative
+				and its modulus is greater than \a 'src' length or after the end if
+				\a 'srcend' is greater than \a 'src' length) will not be changed,
+				otherwise those characters will be replaced with \a 'filler'. Also,
+				if \a 'filler' is not '\0', \a 'dststart' can be beyond the current
+				length of \a 'dst' and the gap between \a 'dst' length and \a 'dststart'
+				will be filled with \a 'filler', otherwise this type of operation is
+				not allowed and the string will not be changed.
+
+
+\returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_se    (       s_string_t * restrict dst, ssize_t start, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
+ssize_t		 s_replace_se	(		s_string_t * restrict dst, ssize_t start, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
 /*=========================================================================*//**
-\brief  		Replaces a sequence of characters of the s_string \a dst, located
-				between indexes \a start and \a end with characters obtained from
-				the beginning of the C-string \a src. If there are not enough
-				characters in \a src, only the characters available will be copied.
+\brief			Replaces a sequence of characters of the s_string \a 'dst', located
+				between indexes \a 'start' and \a 'end' with characters obtained from
+				the beginning of the C-string \a 'src'. If there are not enough
+				characters in \a 'src', only the characters available will be copied.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	start	The index of the first character in \a dst that will be replaced
-				by the characters from \a src.
+				characters from \a 'src'.
+
+\param	start	The index of the first character in \a 'dst' that will be replaced
+				by the characters from \a 'src'.
+
 \param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a dst.
-\param srcstart
-\param	srcend	The index of the last character in \a src that will be copied
-				to \a dst
-\param filler   If \a filler is '\0', characters that would come from inexistent
-				indexes in \a src (i.e. before the start or after the end) won't
-				be changed, otherwise those characters will be replaced with \a
-				filler. Also, if \a filler is not '\0', \a start can be beyond the
-				current string length and the gap between \a the string end and \a
-				start will be filled with \a filler, otherwise this type of
-				operation is now allowed and the string won't be changed.
-\returns		The number of characters of \a dst that were changed or a
+				characters to be copied to \a 'dst'.
+
+\param	srcstart
+
+\param	srcend	The index of the last character in \a 'src' that will be copied
+				to \a 'dst'
+
+\param	filler  If \a 'filler' is '\0', characters that would come from nonexistent
+				indexes in \a 'src' (i.e. before its start if \a 'srcstart' is negative
+				and its modulus is greater than \a 'src' length or after the end if
+				\a 'srcend' is greater than \a 'src' length) will not be changed,
+				otherwise those characters will be replaced with \a 'filler'. Also,
+				if \a 'filler' is not '\0', \a 'dststart' can be beyond the current
+				length of \a 'dst' and the gap between \a 'dst' length and \a 'dststart'
+				will be filled with \a 'filler', otherwise this type of operation is
+				not allowed and the string will not be changed.
+
+\returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_ec    (       s_string_t * restrict dst, ssize_t start, ssize_t end, const char       * restrict src, int filler );
+ssize_t		 s_replace_ec	(		s_string_t * restrict dst, ssize_t start, ssize_t end, const char		* restrict src, int filler );
 /*=========================================================================*//**
-\brief  		Replaces a sequence of characters of the s_string \a dst, starting
-				at index \a start and with length \a len with characters obtained
-				from the beginning of the s_string \a src. If there are not enough
-				characters in \a src, only the characters available will be copied.
+\brief			Replaces a sequence of characters of the s_string \a 'dst', starting
+				at index \a 'start' and with length \a 'len' with characters obtained
+				from the beginning of the s_string \a 'src'. If there are not enough
+				characters in \a 'src', only the characters available will be copied.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	start	The index of the first character in \a dst that will be replaced
-				by the characters from \a src.
-\param	len		The length of the character sequence from \a src that will be
-				copied to \a dst.
+				characters from \a 'src'.
+
+\param	start	The index of the first character in \a 'dst' that will be replaced
+				by the characters from \a 'src'.
+
+\param	len		The length of the character sequence from \a 'src' that will be
+				copied to \a 'dst'.
+
 \param	src		Pointer to the s_string that will provide the sequence of
-				characters to be copied to \a dst.
-\param srcstart
-\param filler   If \a filler is '\0', characters that would come from inexistent
-				indexes in \a src (i.e. before the start or after the end) won't
-				be changed, otherwise those characters will be replaced with \a
-				filler. Also, if \a filler is not '\0', \a start can be beyond the
-				current string length and the gap between \a the string end and \a
-				start will be filled with \a filler, otherwise this type of
-				operation is now allowed and the string won't be changed.
-\returns		The number of characters of \a dst that were changed or a
+				characters to be copied to \a 'dst'.
+
+\param	srcstart
+
+\param	filler  If \a 'filler' is '\0', characters that would come from nonexistent
+				indexes in \a 'src' (i.e. before its start if \a 'srcstart' is negative
+				and its modulus is greater than \a 'src' length or after the end if
+				\a 'srcend' is greater than \a 'src' length) will not be changed,
+				otherwise those characters will be replaced with \a 'filler'. Also,
+				if \a 'filler' is not '\0', \a 'dststart' can be beyond the current
+				length of \a 'dst' and the gap between \a 'dst' length and \a 'dststart'
+				will be filled with \a 'filler', otherwise this type of operation is
+				not allowed and the string will not be changed.
+
+\returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_l     (       s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart, int filler );
+ssize_t		 s_replace_l	(		s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart, int filler );
 /*=========================================================================*//**
-\brief  		Replaces a sequence of characters of the s_string \a dst, starting
-				at index \a start and with length \a len with characters obtained
-				from the beginning of the C-string \a src. If there are not enough
-				characters in \a src, only the characters available will be
+\brief			Replaces a sequence of characters of the s_string \a 'dst', starting
+				at index \a 'start' and with length \a 'len' with characters obtained
+				from the beginning of the C-string \a 'src'. If there are not enough
+				characters in \a 'src', only the characters available will be
 				copied.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	start	The index of the first character in \a dst that will be replaced
-				by the characters from \a src.
-\param	len		The length of the character sequence from \a src that will be
-				copied to \a dst.
+				characters from \a 'src'.
+
+\param	start	The index of the first character in \a 'dst' that will be replaced
+				by the characters from \a 'src'.
+
+\param	len		The length of the character sequence from \a 'src' that will be
+				copied to \a 'dst'.
+
 \param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a dst.
-\param	filler	If \a filler is '\0', characters that would come from inexistent
-				indexes in \a src (i.e. before the start or after the end) won't
-				be changed, otherwise those characters will be replaced with \a
-				filler. Also, if \a filler is not '\0', \a start can be beyond the
-				current string length and the gap between \a the string end and \a
-				start will be filled with \a filler, otherwise this type of
-				operation is now allowed and the string won't be changed.
-\returns		The number of characters that were copied to \a dst or a
+				characters to be copied to \a 'dst'.
+
+\param	filler  If \a 'filler' is '\0', characters that would come from nonexistent
+				indexes in \a 'src' (i.e. before its start if \a 'srcstart' is negative
+				and its modulus is greater than \a 'src' length or after the end if
+				\a 'srcend' is greater than \a 'src' length) will not be changed,
+				otherwise those characters will be replaced with \a 'filler'. Also,
+				if \a 'filler' is not '\0', \a 'dststart' can be beyond the current
+				length of \a 'dst' and the gap between \a 'dst' length and \a 'dststart'
+				will be filled with \a 'filler', otherwise this type of operation is
+				not allowed and the string will not be changed.
+
+\returns		The number of characters that were copied to \a 'dst' or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_replace_lc   (       s_string_t * restrict dst, ssize_t start, ssize_t len, const char       * restrict srcs, int filler );
+ssize_t		 s_replace_lc	(		s_string_t * restrict dst, ssize_t start, ssize_t len, const char		* restrict srcs, int filler );
 /*=========================================================================*//**
-\brief  		Converts uppercase letters from a portion of an s_string to
+\brief			Converts uppercase letters from a portion of an s_string to
 				lowercase.
 
 				Converts uppercase letters from s_string \a 'str' between indexes
@@ -1406,80 +1755,94 @@ ssize_t      s_replace_lc   (       s_string_t * restrict dst, ssize_t start, ss
 
 \param	str		Pointer to the s_string that will have its letters converted to
 				lowercase.
+
 \param	start	The index of the first character of the sequence in \a 'str' that
 				will be converted.
+
 \param	end		The index of the last character of the sequence in \a 'str' that
 				will be converted.
+
 \returns		The number of characters that were converted or a negative value
 				in case of error.
 *//*==========================================================================*/
-ssize_t      s_strlwr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
+ssize_t		 s_strlwr_e		(		s_string_t * restrict str, ssize_t start, ssize_t end );
 /*=========================================================================*//**
-\brief  		Converts uppercase letters from a portion of an s_string to
+\brief			Converts uppercase letters from a portion of an s_string to
 				lowercase.
 
 				Converts
 
 \param	str		Pointer to the s_string that will have its letters converted to
 				lowercase.
+
 \param	start	The index of the first character of the sequence in \a 'str' that
 				will be converted.
+
 \param	len		The length of the sequence in \a 'str' that will be converted.
+
 \returns		The number of characters that were converted or a negative value
 				in case of error.
 *//*==========================================================================*/
-ssize_t      s_strlwr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
+ssize_t		 s_strlwr_l		(		s_string_t * restrict str, ssize_t start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Converts all uppercase letters from an s_string to lowercase.
+\brief			Converts all uppercase letters from an s_string to lowercase.
 
 \param	str		Pointer to the s_string that will have its letters converted to
 				lowercase.
+
 \returns		The number of characters that were converted or a negative value
 				in case of error.
 *//*==========================================================================*/
 #define s_strlwr(s) s_strlwr_e( (s), 0, -1 )
 /*=========================================================================*//**
-\brief  		Converts lowercase letters from a portion of an s_string to
+\brief			Converts lowercase letters from a portion of an s_string to
 				uppercase.
 
 				Converts
 
 \param	str		Pointer to the s_string that will have its letters converted to
 				uppercase.
+
 \param	start	The index of the first character of the sequence in \a 'str' that
 				will be converted.
+
 \param	end		The index of the last character of the sequence in \a 'str' that
 				will be converted.
+
 \returns		The number of characters that were converted or a negative value
 				in case of error.
 *//*==========================================================================*/
-ssize_t      s_strupr_e     ( s_string_t * restrict str, ssize_t start, ssize_t end );
+ssize_t		 s_strupr_e		(		s_string_t * restrict str, ssize_t start, ssize_t end );
 /*=========================================================================*//**
-\brief  		Converts lowercase letters from a portion of an s_string to
+\brief			Converts lowercase letters from a portion of an s_string to
 				uppercase.
 
 				Converts
 
 \param	str		Pointer to the s_string that will have its letters converted to
 				uppercase.
+
 \param	start	The index of the first character of the sequence in \a 'str' that
 				will be converted.
+
 \param	len		The length of the sequence in \a 'str' that will be converted.
+
 \returns		The number of characters that were converted or a negative value
 				in case of error.
 *//*==========================================================================*/
-ssize_t      s_strupr_l     ( s_string_t * restrict str, ssize_t start, ssize_t len );
+ssize_t		 s_strupr_l		(		s_string_t * restrict str, ssize_t start, ssize_t len );
 /*=========================================================================*//**
-\brief  		Converts all lowercase letters from an s_string to uppercase.
+\brief			Converts all lowercase letters from an s_string to uppercase.
 
 \param	str		Pointer to the s_string that will have its letters converted to
 				uppercase.
+
 \returns		The number of characters that were converted or a negative value
 				in case of error.
 *//*==========================================================================*/
 #define s_strupr(str) s_strupr_e( (s), 0, -1 )
 /*=========================================================================*//**
-\brief  		Trims characters from left to right.
+\brief			Trims characters from left to right.
 
 				Deletes a contiguous sequence of characters from the s_string
 				'str', starting at index 'start' towards the right, that belong
@@ -1487,17 +1850,21 @@ ssize_t      s_strupr_l     ( s_string_t * restrict str, ssize_t start, ssize_t 
 				character that does not belong to 'delim'.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	start	The index in \a 'str' to start the deletion.
+
 \param	delim	s_string with the set of characters that are to be searched and
 				deleted from \a 'str'. If \a 'delim' is NULL, the characters to be
 				deleted are those recognized by the function \a 'isspace'.
+
 \param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_ltrim_s		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
-\brief  		Trims characters from left to right.
+\brief			Trims characters from left to right.
 
 				Deletes a contiguous sequence of characters from the s_string
 				'str', starting at index 'start' towards the right, that belong
@@ -1505,28 +1872,32 @@ ssize_t		 s_ltrim_s		(		s_string_t * restrict str, ssize_t start, const s_string
 				character that does not belong to 'delim'.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	start	The index in \a 'str' to start the deletion.
+
 \param	delim	C-string with the set of characters that are to be searched and
 				deleted from \a 'str'. If \a 'delim' is NULL, the characters to be
 				deleted are those recognized by the function \a 'isspace'.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_ltrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
 /*=========================================================================*//**
-\brief  		Trims spaces from the beginning of an s_string.
+\brief			Trims spaces from the beginning of an s_string.
 
 				Deletes a contiguous sequence of characters from the left of
 				s_string 'str' that belong to the set defined by the function
 				'isspace'.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 #define s_ltrim(str) s_ltrim_c( (str), 0, NULL )
 /*=========================================================================*//**
-\brief  		Trims characters from right to left.
+\brief			Trims characters from right to left.
 
 				Deletes a contiguous sequence of characters from the s_string
 				'str', starting at index 'start' towards the left, that belong
@@ -1534,17 +1905,21 @@ ssize_t		 s_ltrim_c		(		s_string_t * restrict str, ssize_t start, const char	   
 				character that does not belong to 'delim'.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	start	The index in \a 'str' to start the deletion.
+
 \param	delim	s_string with the set of characters that are to be deleted from
 				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
 				those recognized by the function \a 'isspace'.
+
 \param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_rtrim_s		(		s_string_t * restrict str, ssize_t start, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
-\brief  		Trims characters from right to left.
+\brief			Trims characters from right to left.
 
 				Deletes a contiguous sequence of characters from the s_string
 				'str', starting at index 'start' towards the left, that belong
@@ -1552,28 +1927,32 @@ ssize_t		 s_rtrim_s		(		s_string_t * restrict str, ssize_t start, const s_string
 				character that does not belong to 'delim'.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	start	The index in \a 'str' to start the deletion.
+
 \param	delim	C-string with the set of characters that are to be deleted from
 				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
 				those recognized by the function \a 'isspace'.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   * restrict delim );
 /*=========================================================================*//**
-\brief  		Trims spaces from the end of an s_string.
+\brief			Trims spaces from the end of an s_string.
 
 				Deletes a contiguous sequence of characters from the right of
 				s_string 'str' that belong to the set defined by the function
 				'isspace'.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
 #define s_rtrim(str) s_rtrim_c( (str), -1, NULL )
 /*=========================================================================*//**
-\brief  		Trims characters from the left and the right, and removes
+\brief			Trims characters from the left and the right, and removes
 				duplicated characters from the middle of an s_string.
 
 				Deletes contiguous sequences of characters from the s_string \a
@@ -1586,18 +1965,23 @@ ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   
 				will be used.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	start	The index in \a 'str' to start the deletion at the left.
+
 \param	end		The index in \a 'str' to start the deletion at the right.
+
 \param	delim	s_string with the set of characters that are to be deleted from
 				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
 				those recognized by the function \a 'isspace'.
+
 \param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_alltrim_se   ( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement );
+ssize_t		 s_alltrim_se	(		s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement );
 /*=========================================================================*//**
-\brief  		Trims characters from the left and the right, and removes
+\brief			Trims characters from the left and the right, and removes
 				duplicated characters from the middle of an s_string.
 
 				Deletes contiguous sequences of characters from the s_string \a
@@ -1610,17 +1994,21 @@ ssize_t      s_alltrim_se   ( s_string_t * restrict str, ssize_t start, ssize_t 
 				will be used.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	start	The index in \a 'str' to start the deletion at the left.
+
 \param	end		The index in \a 'str' to start the deletion at the right.
+
 \param	delim	C-string with the set of characters that are to be deleted from
 				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
 				those recognized by the function \a 'isspace'.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int replacement );
+ssize_t		 s_alltrim_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end, const char		* restrict delim, int replacement );
 /*=========================================================================*//**
-\brief  		Removes all spaces from the left and the right, and duplicated
+\brief			Removes all spaces from the left and the right, and duplicated
 				spaces from the middle of an s_string.
 
 				Removes all spaces from the left and the right, and duplicated
@@ -1628,12 +2016,13 @@ ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t 
 				be deleted are those recognized by the function \a 'isspace'.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-#define s_alltrim(s)        s_alltrim_ce( (s), 0, -1, NULL, ' ' );
+#define s_alltrim(s)		s_alltrim_ce( (s), 0, -1, NULL, ' ' );
 /*=========================================================================*//**
-\brief  		Trims characters from the left and the right, and removes
+\brief			Trims characters from the left and the right, and removes
 				duplicated characters from the middle of an s_string.
 
 				Deletes contiguous sequences of characters from the s_string \a
@@ -1645,15 +2034,17 @@ ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t 
 				sequence.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	delim	s_string with the set of characters that are to be deleted from
 				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
 				those recognized by the function \a 'isspace'.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-#define s_alltrim_s(s,d)    s_alltrim_se( (s), 0, -1, (d), 0, '\0' );
+#define s_alltrim_s(s,d)	s_alltrim_se( (s), 0, -1, (d), 0, '\0' );
 /*=========================================================================*//**
-\brief  		Trims characters from the left and the right, and removes
+\brief			Trims characters from the left and the right, and removes
 				duplicated characters from the middle of an s_string.
 
 				Deletes contiguous sequences of characters from the s_string \a
@@ -1665,169 +2056,379 @@ ssize_t      s_alltrim_ce   ( s_string_t * restrict str, ssize_t start, ssize_t 
 				sequence.
 
 \param	str		Pointer to the s_string that will be trimmed.
+
 \param	delim	C-string with the set of characters that are to be deleted from
 				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
 				those recognized by the function \a 'isspace'.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-#define s_alltrim_c(s,d)    s_alltrim_se( (s), 0, -1, (d), '\0' );
+#define s_alltrim_c(s,d)	s_alltrim_se( (s), 0, -1, (d), '\0' );
 /*=========================================================================*//**
-\brief  		Extracts a sequence of characters of length \a len from s_string
-				\a src, starting at index \a srcstart and inserts it into the
-				s_string \a dst, starting at index \a dststart. If there are not
-				enough characters in \a src from \a srcstart to its end, only
-				the characters available will be copied. If there is no room in
-				\a dst from \a dststart to its maximum length, the extra
-				characters will be ignored.
+\brief			Extracts a sequence of characters from one s_string and inserts
+				it in another s_string.
+
+				Extracts a sequence of characters from s_string \a 'src', between
+				indexes \a 'srcstart' and \a 'srcend' inclusive, and inserts it
+				into the s_string \a 'dst', starting at index \a 'dststart'. If
+				there are not enough characters in \a 'src' from \a 'srcstart' to
+				its end, only the characters available will be copied. If there is
+				no room in \a 'dst' from \a 'dststart' to its maximum length, the
+				extra characters will be ignored.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	dststart The index of the first character in \a dst that will be replaced
-				by the characters from \a src.
-\param	len		The length of the sequence of characters that will be copied
-				from \a src to \a dst.
+				characters from \a 'src'.
+
+\param	dststart The index of the character in \a 'dst' where the characters from
+				\a 'src' will be inserted.
+
 \param	src		Pointer to the s_string that will provide the sequence of
-				characters to be copied to \a dst.
-\param	srcstart The index of the first character in \a src that will be inserted
-				in \a dst.
-\param filler   If \a filler is '\0', characters that would come from inexistent
-				indexes in \a src (i.e. before the start or after the end) won't
-				be changed, otherwise those characters will be replaced with \a
-				filler. Also, if \a filler is not '\0', \a start can be beyond the
-				current string length and the gap between \a the string end and \a
-				start will be filled with \a filler, otherwise this type of
-				operation is now allowed and the string won't be changed.
-\returns		The number of characters of \a dst that were changed or a
+				characters to be copied to \a 'dst'.
+
+\param	srcstart The index of the first character in \a 'src' that will be inserted
+				in \a 'dst'.
+
+\param	srcend	The index of the last character in \a 'src' that will be inserted
+				in \a 'dst'.
+
+\param	filler  If \a 'filler' is '\0', characters that would come from nonexistent
+				indexes in \a 'src' (i.e. before its start if \a 'srcstart' is negative
+				and its modulus is greater than \a 'src' length or after the end if
+				\a 'srcend' is greater than \a 'src' length) will not be changed,
+				otherwise those characters will be replaced with \a 'filler'.
+
+\returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_insert_de	(       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, ssize_t srcstart, int filler );
-ssize_t      s_insert_se	(       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
-ssize_t      s_insert_ec	(       s_string_t * restrict dst, ssize_t dststart, ssize_t dstend, const s_string_t * restrict src, int filler );
-ssize_t      s_insert_l		(       s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler );
+ssize_t		 s_insert_e		(		s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
 /*=========================================================================*//**
-\brief  		Extracts a sequence of characters of length \a len from C-string
-				\a src, starting at index \a srcstart and inserts it into the
-				s_string \a dst, starting at index \a dststart. If there are not
-				enough characters in \a src from \a srcstart to its end, only
+\brief			Extracts a sequence of characters from one s_string and inserts
+				it in another s_string.
+
+				Extracts a sequence of characters from s_string \a 'src' starting
+				at index \a 'srcstart' and with length \a 'len' and inserts it into
+				the s_string \a 'dst', starting at index \a 'dststart'. If there are
+				not enough characters in \a 'src' from \a 'srcstart' to its end, only
 				the characters available will be copied. If there is no room in
-				\a dst from \a dststart to its maximum length, the extra
+				\a 'dst' from \a 'dststart' to its maximum length, the extra
 				characters will be ignored.
+
 \param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a src.
-\param	dststart The index of the first character in \a dst that will be replaced
-				by the characters from \a src.
-\param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a dst.
-\param	srcstart The index of the first character in \a src that will be inserted
-				in \a dst.
+				characters from \a 'src'.
+
+\param	dststart The index of the character in \a 'dst' where the characters from
+				\a 'src' will be inserted.
+
+\param	src		Pointer to the s_string that will provide the sequence of
+				characters to be copied to \a 'dst'.
+
+\param	srcstart The index of the first character in \a 'src' that will be inserted
+				in \a 'dst'.
+
 \param	len		The length of the sequence of characters that will be copied
-				from \a src to \a dst.
-\param filler   Character used to fill any extra space created by inserting
-				characters beyond the current length of the string.
-\returns		The number of characters that were copied to \a dst or a
+				from \a 'src' to \a 'dst'.
+
+\param	filler   If \a 'filler' is '\0', characters that would come from inexistent
+				indexes in \a 'src' (i.e. before the start or after the end) won't
+				be changed, otherwise those characters will be replaced with \a
+				'filler'. Also, if \a 'filler' is not '\0', \a 'start' can be beyond the
+				current string length and the gap between \a 'the' string end and \a
+				'start' will be filled with \a 'filler', otherwise this type of
+				operation is now allowed and the string won't be changed.
+
+\returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t      s_insert_lc	(       s_string_t * restrict dst, ssize_t dststart, const char       * restrict src, ssize_t srcstart, size_t len, int filler );
+ssize_t		 s_insert_l		(		s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*=========================================================================*//**
-\brief  		Fills a portion of s_string \a dst starting at index \a start
-				and with length \a len with the character in \a filler.
-\param	dst		Pointer to the s_string that will be filled with character from
-				\a filler.
-\param	start	The index of the first character in \a dst that will be changed.
-				if \a start is negative, it is counted from the current end of
-				the string towards the beginning. -1 is the last character of the
-				string. If \a start is beyond the current end of the string,
-				additional characters from \a filler will be inserted between
-				the end of the string and \a start to fill the gap.
+\brief			Extracts a sequence of characters from a C-string and inserts it
+				in an s_string.
+
+				Extracts a sequence of characters of length \a 'len' from C-string
+				\a 'src', and inserts it into the s_string \a 'dst', starting at
+				index \a 'dststart'. If there are not enough characters in \a 'src',
+				only the characters available will be copied. If there is no room
+				in \a 'dst' from \a 'dststart' to its maximum length, the extra
+				characters will be ignored.
+
+\param	dst		Pointer to the s_string that will receive the sequence of
+				characters from \a 'src'.
+
+\param	dststart The index of the first character in \a 'dst' that will be replaced
+				by the characters from \a 'src'.
+
+\param	src		Pointer to the C-string that will provide the sequence of
+				characters to be copied to \a 'dst'.
+
+\param	len		The length of the sequence of characters that will be copied
+				from \a 'src' to \a 'dst'.
+
+\param	filler   Character used to fill any extra space created by inserting
+				characters beyond the current length of the string.
+
+\returns		The number of characters that were copied to \a 'dst' or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_insert_lc	(		s_string_t * restrict dst, ssize_t dststart, const char		  * restrict src, size_t len, int filler );
+/*=========================================================================*//**
+\brief			Fills a portion of an s_string with a character.
+
+				Fills a portion of s_string \a 'dst' starting at index \a 'start'
+				and with length \a 'len' with the character in \a 'filler'.
+
+\param	dst		Pointer to the s_string that will be filled with character \a
+				'filler'.
+
+\param	dststart The index of the first character in \a 'dst' that will be changed.
+				if \a 'start' is negative, it is counted from the current end of
+				the string towards the beginning. -1 maps to the last character
+				of the string. If \a 'start' is beyond the current end of the
+				string, additional characters from \a 'filler' will be inserted
+				between the end of the string and \a 'start' to fill the gap.
+
 \param	len		The length of the sequence of characters that will be changed.
-				If \a len is negative, it is counted back from the maximum length
+				If \a 'len' is negative, it is counted back from the maximum length
 				that the string can hold. -1 means that the string will be filled
 				to its maximum allowed length.
+
 \param	filler	Character used to fill the string.
-\returns		The number of characters that were changed in \a dst or a
+
+\returns		The number of characters that were changed in \a 'dst' or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_fill_l		(		s_string_t * restrict dst, ssize_t start, ssize_t len, int filler );
-/*============================================================================*/
-ssize_t		 s_fill_ls		(		s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart );
-ssize_t		 s_fill_lc		(		s_string_t * restrict dst, ssize_t start, ssize_t len, const char * restrict src );
+ssize_t		 s_fill_l		(		s_string_t * restrict dst, ssize_t dststart, ssize_t len, int filler );
 /*=========================================================================*//**
-\brief  		Creates in the heap a dynamically allocated copy of the s_string
-				\a src.
-\param	src		Pointer to the s_string that will be duplicated.
-\param start
-\returns		A pointer to a new, dynamically allocated s_string object that
-				contains a copy of the characters from the s_string \a src. The
-				new object must be freed with 'free' when not in use anymore.
+\brief			Fills a portion of an s_string with repetitions of a portion of
+				another s_string.
+
+				Fills a portion of s_string \a 'dst' starting at index \a 'dststart'
+				and with length \a 'len' with a segment of s_string \a 'src'
+				starting at index \a 'srcstart'. The segment from \a 'src' will
+				bre repeated as many times as needed, and the last repetition
+				may be incomplete.
+
+\param	dst		Pointer to the s_string that will be filled with characters from
+				\a 'src'.
+
+\param	dststart The index of the first character in \a 'dst' that will be changed.
+				if \a 'start' is negative, it is counted from the current end of
+				the string towards the beginning. -1 maps to the last character
+				of the string. If \a 'start' is beyond the current end of the
+				string, additional characters from \a 'src' will be inserted
+				between the end of the string and \a 'start' to fill the gap.
+
+\param	len		The length of the sequence of characters that will be changed.
+				If \a 'len' is negative, it is counted back from the maximum length
+				that the string can hold. -1 means that the string will be filled
+				to its maximum allowed length.
+
+\param	src		s_string that will provide the characters to fill \a 'dst'.
+
+\param	srcstart Index of the first character of \a 'src' that will be used to
+				fill \a 'dst'.
+
+\returns		The number of characters that were changed in \a 'dst' or a
+				negative value in case of error.
 *//*==========================================================================*/
-s_string_t  *s_strdup       ( const s_string_t * restrict src, ssize_t start );
+ssize_t		 s_fill_ls		(		s_string_t * restrict dst, ssize_t dststart, ssize_t len, const s_string_t * restrict src, ssize_t srcstart );
 /*=========================================================================*//**
-\brief  		Creates in the heap a dynamically allocated copy of the C-string
-				\a src.
-\param	src		Pointer to the s_string that will be duplicated.
-\returns		A pointer to a new, dynamically allocated s_string object that
-				contains a copy of the characters from the C-string \a src. The
-				new object must be freed with 'free' when not in use anymore.
+\brief			Fills a portion of an s_string with repetitions of the contents
+				of another C-string.
+
+				Fills a portion of s_string \a 'dst' starting at index \a 'dststart'
+				and with length \a 'len' with the contents of C-string \a 'src'.
+				The contents of \a 'src' will be repeated as many times as needed,
+				and the last repetition may be incomplete.
+
+\param	dst		Pointer to the s_string that will be filled with characters from
+				\a 'src'.
+
+\param	dststart The index of the first character in \a 'dst' that will be changed.
+				if \a 'start' is negative, it is counted from the current end of
+				the string towards the beginning. -1 maps to the last character
+				of the string. If \a 'start' is beyond the current end of the
+				string, additional characters from \a 'src' will be inserted
+				between the end of the string and \a 'start' to fill the gap.
+
+\param	len		The length of the sequence of characters that will be changed.
+				If \a 'len' is negative, it is counted back from the maximum length
+				that the string can hold. -1 means that the string will be filled
+				to its maximum allowed length.
+
+\param	src		s_string that will provide the characters to fill \a 'dst'.
+
+\returns		The number of characters that were changed in \a 'dst' or a
+				negative value in case of error.
 *//*==========================================================================*/
-s_string_t  *s_strdup_c     ( const char       * restrict src );
+ssize_t		 s_fill_lc		(		s_string_t * restrict dst, ssize_t dststart, ssize_t len, const char * restrict src );
 /*=========================================================================*//**
-\brief  		Creates in the heap a dynamically allocated s_string object
-				capable of holding at most the minimum between \a len and the
-				length of \a src, and copies that amount of characters from \a
-				src to it.
+\brief			Creates in the heap a dynamically allocated copy of the portion
+				of s_string \a 'src' starting at index \a 'start'.
+
 \param	src		Pointer to the s_string that will be duplicated.
-\param	start
-\param	len		The maximum number of characters that the new s_string will be
-				able to hold.
+
+\param	srcstart Index of the first character of the portion of \a 'src' that will
+				be duplicated.
+
 \returns		A pointer to a new, dynamically allocated s_string object that
-				contains a copy of the characters from the s_string \a src. The
+				contains a copy of the characters from the s_string \a 'src'. The
 				new object must be freed with 'free' when not in use anymore.
+				If \a 'src' is NULL or it is empty or \a 'start' is beyond \a
+				'src' length or some error occurs, \a 's_strdup' will return NULL.
 *//*==========================================================================*/
-s_string_t  *s_strldup      ( const s_string_t * restrict src, ssize_t start, ssize_t len );
+s_string_t  *s_strdup		( const s_string_t * restrict src, ssize_t srcstart );
 /*=========================================================================*//**
-\brief  		Creates in the heap a dynamically allocated s_string object
-				capable of holding at most the minimum between \a len and the
-				length of \a src, and copies that amount of characters from \a
-				src to it.
-\param	src		Pointer to the s_string that will be duplicated.
-\param	start
-\param	len		The maximum number of characters that the new s_string will be
-				able to hold.
-\returns		A pointer to a new, dynamically allocated s_string object that
-				contains a copy of the characters from the s_string \a src. The
-				new object must be freed with 'free' when not in use anymore.
-*//*==========================================================================*/
-s_string_t  *s_strldup_c    ( const char       * restrict src, ssize_t len );
-/*=========================================================================*//**
-\brief  		Creates in the heap a dynamically allocated s_string object
-				capable of holding at most the maximum between \a len and the
-				length of \a src, and copies all the characters from \a src to
-				it.
-\param	src		Pointer to the s_string that will be duplicated.
-\param	len		The minimum number of characters that the new s_string will be
-				able to hold.
-\returns		A pointer to a new, dynamically allocated s_string object that
-				contains a copy of the characters from the s_string \a src. The
-				new object must be freed with 'free' when not in use anymore.
-*//*==========================================================================*/
-s_string_t  *s_strndup      ( const s_string_t * restrict src, ssize_t start, ssize_t len );
-/*=========================================================================*//**
-\brief  		Creates in the heap a dynamically allocated s_string object
-				capable of holding at most the maximum between \a len and the
-				length of \a src, and copies all the characters from \a src to
-				it.
+\brief			Creates in the heap a dynamically allocated copy of the C-string
+				\a 'src'.
+
 \param	src		Pointer to the C-string that will be duplicated.
-\param	len		The minimum number of characters that the new s_string will be
-				able to hold.
+
 \returns		A pointer to a new, dynamically allocated s_string object that
-				contains a copy of the characters from the s_string \a src. The
+				contains a copy of the characters from the C-string \a 'src'. The
 				new object must be freed with 'free' when not in use anymore.
+				If \a 'src' is NULL or it is empty or some error occurs, \a
+				's_strdup_c' will return NULL.
 *//*==========================================================================*/
-s_string_t  *s_strndup_c    ( const char       * restrict src, ssize_t len );
+s_string_t  *s_strdup_c		( const char	   * restrict src );
+/*=========================================================================*//**
+\brief			Creates in the heap a dynamically allocated s_string object
+				capable of holding at most the lesser of \a 'len' and the length
+				of \a 'src' minus \a 'start', and copies that amount of characters
+				from \a 'src' to it.
+
+\param	src		Pointer to the s_string that will be duplicated.
+
+\param	start	The index of the first character of \a 'src' to be copied to the
+				new object.
+
+\param	len		The maximum number of characters that the new s_string will be
+				able to hold in case \a 'src' is longer. In case \a 'src' is
+				shorter than \a 'len', then the length of \a 'src' will prevail.
+
+\returns		A pointer to a new, dynamically allocated s_string object that
+				contains a copy of the characters from the s_string \a 'src'. The
+				new object must be freed with 'free' when not in use anymore.
+				If \a 'src' is NULL or it is empty or \a 'start' is beyond \a
+				'src' length or \a 'len' is zero, or some error occurs, \a
+				's_strldup' will return NULL.
+*//*==========================================================================*/
+s_string_t  *s_strldup		( const s_string_t * restrict src, ssize_t start, ssize_t len );
+/*=========================================================================*//**
+\brief			Creates in the heap a dynamically allocated s_string object
+				capable of holding at most the lesser of \a 'len' and the
+				length of \a 'src', and copies that amount of characters from \a
+				'src' to it.
+
+\param	src		Pointer to the s_string that will be duplicated.
+
+\param	len		The maximum number of characters that the new s_string will be
+				able to hold in case \a 'src' is longer. In case \a 'src' is
+				shorter than \a 'len', then the length of \a 'src' will prevail.
+
+\returns		A pointer to a new, dynamically allocated s_string object that
+				contains a copy of the characters from the C-string \a 'src'. The
+				new object must be freed with 'free' when not in use anymore.
+				If \a 'src' is NULL or it is empty or \a 'len' is zero or some
+				error occurs, \a 's_strldup_c' will return NULL.
+*//*==========================================================================*/
+s_string_t  *s_strldup_c	( const char	   * restrict src, ssize_t len );
+/*=========================================================================*//**
+\brief			Creates in the heap a dynamically allocated s_string object
+				capable of holding at most the greater between \a 'len' and the
+				length of \a 'src' minus \a 'start', and copies all the characters
+				from \a 'src' starting at index \a 'start' to it.
+
+\param	src		Pointer to the s_string that will be duplicated.
+
+\param	start	The index of the first character of \a 'src' to be copied to the
+				new object.
+
+\param	len		The minimum number of characters that the new s_string will be
+				able to hold in case \a 'src' is shorter. In case \a 'src' is
+				longer than \a 'len', then the length of \a 'src' will prevail.
+
+\returns		A pointer to a new, dynamically allocated s_string object that
+				contains a copy of the characters from the s_string \a 'src'. The
+				new object must be freed with 'free' when not in use anymore.
+				If \a 'src' is NULL or it is empty and \a 'len' is zero or \a
+				'start' is beyond \a 'src' length or \a 'len' is zero, or some error occurs, \a
+				's_strndup' will return NULL.
+*//*==========================================================================*/
+s_string_t  *s_strndup		( const s_string_t * restrict src, ssize_t start, ssize_t len );
+/*=========================================================================*//**
+\brief			Creates in the heap a dynamically allocated s_string object
+				capable of holding at most the greater between \a 'len' and the
+				length of \a 'src', and copies all the characters from \a 'src' to
+				it.
+
+\param	src		Pointer to the C-string that will be duplicated.
+
+\param	len		The minimum number of characters that the new s_string will be
+				able to hold in case \a 'src' is shorter. In case \a 'src' is
+				longer than \a 'len', then the length of \a 'src' will prevail.
+
+\returns		A pointer to a new, dynamically allocated s_string object that
+				contains a copy of the characters from the C-string \a 'src'. The
+				new object must be freed with 'free' when not in use anymore.
+				If \a 'src' is NULL or it is empty and \a 'len' is zero or some
+				error occurs, \a 's_strndup_c' will return NULL.
+*//*==========================================================================*/
+s_string_t  *s_strndup_c	( const char	   * restrict src, ssize_t len );
+/*=========================================================================*//**
+\brief			Formats a series of characters and values and stores the result
+				in the s_string \a 'dst'.
+
+\param	dst		Pointer to the s_string that will receive the result.
+
+\param	dststart Index in \a 'dst' where the beginning of the result will be stored.
+
+\param	filler	Character to be used to fill the gap between the current end of
+				\a 'dst' and \a 'dststart', in case \a 'dststart' is beyond the
+				current end of \a 'dst'. If \a 'filler' is '\0' and \a 'dststart'
+				is beyond the end of \a 'dst', \a 's_sprintf' will not produce
+				a result and will not change \a 'dst'.
+
+\param	fmt		s_string with the formatting string following the same rules of
+				'*printf' functions.
+
+\param	fmtstart Index in \a 'fmt' where the effective formatting wil start.
+
+\param	...		Optional parameters with values to be formatted.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
+				in case of error. \a 's_sprintf_c' will not store in \a 'dst'
+				more characters than it can hold.
+*//*==========================================================================*/
+int			 s_sprintf		(		s_string_t * restrict dst, ssize_t dststart, int filler, const s_string_t * restrict fmt, ssize_t fmtstart, ... );
+/*=========================================================================*//**
+\brief			Formats a series of characters and values and stores the result
+				in the s_string \a 'dst'.
+
+\param	dst		Pointer to the s_string that will receive the result.
+
+\param	dststart Index in \a 'dst' where the beginning of the result will be stored.
+
+\param	filler	Character to be used to fill the gap between the current end of
+				\a 'dst' and \a 'dststart', in case \a 'dststart' is beyond the
+				current end of \a 'dst'. If \a 'filler' is '\0' and \a 'dststart'
+				is beyond the end of \a 'dst', \a 's_sprintf_c' will not produce
+				a result and will not change \a 'dst'.
+
+\param	fmt		C-string with the formatting string following the same rules of
+				'*printf' functions.
+
+\param	...		Optional parameters with values to be formatted.
+
+\returns		The number of characters stored in \a 'dst' or a negative number
+				in case of error. \a 's_sprintf_c' will not store in \a 'dst'
+				more characters than it can hold.
+*//*==========================================================================*/
+int
+#if			!defined DOXYGEN
+__attribute__((format(printf, 4, 5)))
+#endif	/*	!defined DOXYGEN */
+			 s_sprintf_c	(		s_string_t * restrict dst, ssize_t dststart, int filler, const char		  * restrict fmt, ... );
 /*============================================================================*/
-int			s_sprintf		( s_string_t * restrict dst, ssize_t dststart, int filler, const s_string_t * restrict fmt, ssize_t fmtstart, ... );
-/*============================================================================*/
-int			__attribute__((format(printf, 4, 5))) s_sprintf_c	( s_string_t * restrict dst, ssize_t dststart, int filler, const char * restrict fmt, ... );
-/*============================================================================*/
-#endif  /*  !defined __S_STRING_H__ */
+#endif	/*	!defined __S_STRING_H__ */
 /*============================================================================*/
