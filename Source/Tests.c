@@ -69,7 +69,7 @@ int main( int ArgC, char *ArgV[] )
 
     printf( "\n\nSX = \"%s\"", s_constcstr( SX, 0 ));
 
-    printf( "\nPosition of \"value\" inside SX: %lld\n", s_strstr_c( SX, 0, "value" ));
+    printf( "\nPosition of \"value\" inside SX: %ld\n", (long)s_strstr_c( SX, 0, "value" ));
 
     printf( "\nMyVar = %d, \"%s\", %d\n", MyVar.Field1, s_constcstr( MyVar.Name, 0 ), MyVar.Field2 );
 

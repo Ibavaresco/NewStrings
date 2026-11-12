@@ -4402,6 +4402,166 @@ ssize_t s_alltrim_ce( s_string_t * restrict str, ssize_t start, ssize_t end, con
 	return Len - IndexPut;
 	}
 /*============================================================================*/
+ssize_t s_remove_se( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart )
+	{
+	char	*Ptr;
+	ssize_t	Len, Index, IndexPut;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( start >= Len || end < -Len )
+		return -1;
+
+	if( start < 0 && ( start += Len ) < 0 )
+		start	= 0;
+
+	if( end < 0 )
+		end    += Len;
+	else if( end > Len )
+		end		= Len;
+
+	if( end < start )
+		return -1;
+
+	Ptr	= s_cstr( str );
+
+	if( delim == NULL )
+		{
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			if( isspace( Ptr[Index] ))
+				Index++;
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				}
+			}
+		}
+	else
+		{
+		const char	*DelimPtr;
+		ssize_t		DelimLen;
+
+		if( delim->MustBeZero != 0 )
+			return -1;
+
+		if(( DelimLen = s_strlen( delim )) <= 0 )
+			return -1;
+
+		if( delimstart < -DelimLen || delimstart >= DelimLen )
+			return -1;
+
+		if( delimstart < 0 )
+			delimstart += DelimLen;
+
+		DelimPtr = s_constcstr( delim, 0 );
+
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			if( strchr( &DelimPtr[delimstart], Ptr[Index] ) != NULL )
+				Index++;
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				}
+			}
+		}
+
+	while( Index < Len )
+		Ptr[IndexPut++]	= Ptr[Index++];
+
+	if( IndexPut != Len )
+		{
+		Ptr[IndexPut]	= '\0';
+		SetUsedLen( str, IndexPut );
+		}
+
+	return Len - IndexPut;
+	}
+/*============================================================================*/
+ssize_t s_remove_ce( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim )
+	{
+	char	*Ptr;
+	ssize_t	Len, Index, IndexPut;
+
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	Len	= s_strlen( str );
+
+	if( start >= Len || end < -Len )
+		return -1;
+
+	if( start < 0 && ( start += Len ) < 0 )
+		start	= 0;
+
+	if( end < 0 )
+		end    += Len;
+	else if( end > Len )
+		end		= Len;
+
+	if( end < start )
+		return -1;
+
+	Ptr	= s_cstr( str );
+
+	if( delim == NULL )
+		{
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			if( isspace( Ptr[Index] ))
+				Index++;
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				}
+			}
+		}
+	else
+		{
+		ssize_t		DelimLen;
+
+		if(( DelimLen = strlen( delim )) <= 0 )
+			return -1;
+
+		for( IndexPut = Index = start; Index <= end; )
+			{
+			if( strchr( delim, Ptr[Index] ) != NULL )
+				Index++;
+			else
+				{
+				if( IndexPut != Index )
+					Ptr[IndexPut]	= Ptr[Index];
+				IndexPut++;
+				Index++;
+				}
+			}
+		}
+
+	while( Index < Len )
+		Ptr[IndexPut++]	= Ptr[Index++];
+
+	if( IndexPut != Len )
+		{
+		Ptr[IndexPut]	= '\0';
+		SetUsedLen( str, IndexPut );
+		}
+
+	return Len - IndexPut;
+	}
+/*============================================================================*/
 /*TODO*/
 ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_t * restrict src, ssize_t srcstart, ssize_t len, int filler )
 	{

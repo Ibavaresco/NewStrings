@@ -1976,6 +1976,11 @@ ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   
 
 \param	delimstart Index of the first character of \a 'delim' that belongs to the set.
 
+\param	replacement Character to replace contiguous sequences of characters that
+				belong to the set defined by \a 'delim'. If \a 'replacement' is
+				'\0', then the first character of each sequence will be kept,
+				otherwise \a 'replacement' will be used.
+
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
@@ -2002,6 +2007,11 @@ ssize_t		 s_alltrim_se	(		s_string_t * restrict str, ssize_t start, ssize_t end,
 \param	delim	C-string with the set of characters that are to be deleted from
 				\a 'str'. If \a 'delim' is NULL, the characters to be deleted are
 				those recognized by the function \a 'isspace'.
+
+\param	replacement Character to replace contiguous sequences of characters that
+				belong to the set defined by \a 'delim'. If \a 'replacement' is
+				'\0', then the first character of each sequence will be kept,
+				otherwise \a 'replacement' will be used.
 
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
@@ -2066,6 +2076,56 @@ ssize_t		 s_alltrim_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end,
 *//*==========================================================================*/
 #define s_alltrim_c(s,d)	s_alltrim_se( (s), 0, -1, (d), '\0' );
 /*=========================================================================*//**
+\brief			Removes characters of an s_string.
+
+				Removes all characters from the s_string \a 'str' that belong to
+				the set defined by s_string \a 'delim',	between index 'start' and
+				\a 'end', inclusive.
+
+\param	str		Pointer to the s_string that will have characters removed.
+
+\param	start	The index in \a 'str' of the first character of the segment that
+				will have its characters removed.
+
+\param	end		The index in \a 'str' of the last character of the segment that
+				will have its characters removed.
+
+\param	delim	s_string with the set of characters that are to be removed from
+				\a 'str'. If \a 'delim' is NULL, the characters to be removed are
+				those recognized by the function \a 'isspace'.
+
+\param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+
+\returns		The number of characters of \a 'str' that were removed or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_remove_se	(		s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart );
+/*=========================================================================*//**
+\brief			Removes characters of an s_string.
+
+				Removes all characters from the s_string \a 'str' that belong to
+				the set defined by s_string \a 'delim',	between index 'start' and
+				\a 'end', inclusive.
+
+\param	str		Pointer to the s_string that will have characters removed.
+
+\param	start	The index in \a 'str' of the first character of the segment that
+				will have its characters removed.
+
+\param	end		The index in \a 'str' of the last character of the segment that
+				will have its characters removed.
+
+\param	delim	s_string with the set of characters that are to be removed from
+				\a 'str'. If \a 'delim' is NULL, the characters to be removed are
+				those recognized by the function \a 'isspace'.
+
+\param	delimstart Index of the first character of \a 'delim' that belongs to the set.
+
+\returns		The number of characters of \a 'str' that were removed or a
+				negative value in case of error.
+*//*==========================================================================*/
+ssize_t		 s_remove_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end, const char		* restrict delim );
+/*=========================================================================*//**
 \brief			Extracts a sequence of characters from one s_string and inserts
 				it in another s_string.
 
@@ -2129,13 +2189,13 @@ ssize_t		 s_insert_e		(		s_string_t * restrict dst, ssize_t dststart, const s_st
 \param	len		The length of the sequence of characters that will be copied
 				from \a 'src' to \a 'dst'.
 
-\param	filler   If \a 'filler' is '\0', characters that would come from inexistent
+\param	filler	If \a 'filler' is '\0', characters that would come from inexistent
 				indexes in \a 'src' (i.e. before the start or after the end) won't
 				be changed, otherwise those characters will be replaced with \a
 				'filler'. Also, if \a 'filler' is not '\0', \a 'start' can be beyond the
-				current string length and the gap between \a 'the' string end and \a
+				current string length and the gap between the string end and \a
 				'start' will be filled with \a 'filler', otherwise this type of
-				operation is now allowed and the string won't be changed.
+				operation is not allowed and the string won't be changed.
 
 \returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
