@@ -1,7 +1,0 @@
-<map id="s_strldup_c" name="s_strldup_c">
-<area shape="rect" id="Node000001" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the minimum be..." alt="" coords="147,31,235,57"/>
-<area shape="rect" id="Node000002" href="$s__string_8c.html#af6e5ff03a8b5abc0f96670d261279496" title="Finds the next token in the s_string str delimited by characters from the s_string delim,..." alt="" coords="9,5,95,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,34,96,29,95,24,134,32"/>
-<area shape="rect" id="Node000003" href="$s__string_8c.html#ab2e911d5e0c85efdfe520b92bcf1d677" title="Finds the next token in the s_string str delimited by characters from the C&#45;string delim,..." alt="" coords="5,56,99,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="129,55,100,63,99,58,134,54"/>
-</map>

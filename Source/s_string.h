@@ -1044,7 +1044,8 @@ ssize_t		 s_strlcpy_c	(		s_string_t * restrict dst, const char		* restrict src, 
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_strcmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
@@ -1057,7 +1058,8 @@ int			 s_strcmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_str
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_strcmp_c		( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2 				    );
 /*=========================================================================*//**
@@ -1070,7 +1072,8 @@ int			 s_strcmp_c		( const s_string_t * restrict s1,  ssize_t s1start, const cha
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 c_strcmp_s		( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
@@ -1083,7 +1086,8 @@ int			 c_strcmp_s		( const char	   * restrict s1,					const s_string_t * restric
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_stricmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
@@ -1096,7 +1100,8 @@ int			 s_stricmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_st
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_stricmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2				    );
 /*=========================================================================*//**
@@ -1109,7 +1114,8 @@ int			 s_stricmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const cha
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 c_stricmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start );
 /*=========================================================================*//**
@@ -1124,7 +1130,8 @@ int			 c_stricmp_s	( const char	   * restrict s1,					const s_string_t * restric
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_strncmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
@@ -1139,7 +1146,8 @@ int			 s_strncmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_st
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal, and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_strncmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2,					 ssize_t len );
 /*=========================================================================*//**
@@ -1154,7 +1162,8 @@ int			 s_strncmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const cha
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal, and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 c_strncmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
@@ -1169,7 +1178,8 @@ int			 c_strncmp_s	( const char	   * restrict s1,					const s_string_t * restric
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_strnicmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
@@ -1184,7 +1194,8 @@ int			 s_strnicmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_s
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal, and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 s_strnicmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2,					 ssize_t len );
 /*=========================================================================*//**
@@ -1199,7 +1210,8 @@ int			 s_strnicmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const ch
 
 \returns		A negative value if \a 's1' is lexicographically before \a 's2',
 				zero if both are equal, and positive if \a 's1' is
-				lexicographically after \a 's2'.
+				lexicographically after \a 's2'. When the value is not zero, its
+				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
 int			 c_strnicmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
@@ -1609,42 +1621,7 @@ ssize_t		 s_extract_l	(		s_string_t * restrict dst, const s_string_t * restrict 
 \returns		The number of characters of \a 'dst' that were changed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_replace_de	(		s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler );
-/*=========================================================================*//**
-\brief			Replaces a sequence of characters of s_string \a 'dst', starting at
-				index \a 'start' with characters obtained from s-string \a 'src'.
-				If there are not enough characters in \a 'src', only the characters
-				available will be copied.
-
-\param	dst		Pointer to the s_string that will receive the sequence of
-				characters from \a 'src'.
-
-\param	start	The index of the first character in \a 'dst' that will be replaced
-				by the characters from \a 'src'.
-
-\param	src		Pointer to the C-string that will provide the sequence of
-				characters to be copied to \a 'dst'.
-
-\param	srcstart
-
-\param	srcend	The index of the last character in \a 'dst' that will be replaced
-				by the characters from \a 'src'.
-
-\param	filler  If \a 'filler' is '\0', characters that would come from nonexistent
-				indexes in \a 'src' (i.e. before its start if \a 'srcstart' is negative
-				and its modulus is greater than \a 'src' length or after the end if
-				\a 'srcend' is greater than \a 'src' length) will not be changed,
-				otherwise those characters will be replaced with \a 'filler'. Also,
-				if \a 'filler' is not '\0', \a 'dststart' can be beyond the current
-				length of \a 'dst' and the gap between \a 'dst' length and \a 'dststart'
-				will be filled with \a 'filler', otherwise this type of operation is
-				not allowed and the string will not be changed.
-
-
-\returns		The number of characters of \a 'dst' that were changed or a
-				negative value in case of error.
-*//*==========================================================================*/
-ssize_t		 s_replace_se	(		s_string_t * restrict dst, ssize_t start, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler );
+ssize_t		 s_replace_e	(		s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler );
 /*=========================================================================*//**
 \brief			Replaces a sequence of characters of the s_string \a 'dst', located
 				between indexes \a 'start' and \a 'end' with characters obtained from
@@ -1984,7 +1961,7 @@ ssize_t		 s_rtrim_c		(		s_string_t * restrict str, ssize_t start, const char	   
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_alltrim_se	(		s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement );
+ssize_t		 s_alltrim_e	(		s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement );
 /*=========================================================================*//**
 \brief			Trims characters from the left and the right, and removes
 				duplicated characters from the middle of an s_string.
@@ -2016,7 +1993,7 @@ ssize_t		 s_alltrim_se	(		s_string_t * restrict str, ssize_t start, ssize_t end,
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_alltrim_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end, const char		* restrict delim, int replacement );
+ssize_t		 s_alltrim_ec	(		s_string_t * restrict str, ssize_t start, ssize_t end, const char		* restrict delim, int replacement );
 /*=========================================================================*//**
 \brief			Removes all spaces from the left and the right, and duplicated
 				spaces from the middle of an s_string.
@@ -2030,7 +2007,7 @@ ssize_t		 s_alltrim_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end,
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-#define s_alltrim(s)		s_alltrim_ce( (s), 0, -1, NULL, ' ' );
+#define s_alltrim(s)		s_alltrim_ec( (s), 0, -1, NULL, ' ' );
 /*=========================================================================*//**
 \brief			Trims characters from the left and the right, and removes
 				duplicated characters from the middle of an s_string.
@@ -2052,7 +2029,7 @@ ssize_t		 s_alltrim_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end,
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-#define s_alltrim_s(s,d)	s_alltrim_se( (s), 0, -1, (d), 0, '\0' );
+#define s_alltrim_s(s,d)	s_alltrim_e( (s), 0, -1, (d), 0, '\0' );
 /*=========================================================================*//**
 \brief			Trims characters from the left and the right, and removes
 				duplicated characters from the middle of an s_string.
@@ -2074,7 +2051,7 @@ ssize_t		 s_alltrim_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end,
 \returns		The number of characters of \a 'str' that were deleted or a
 				negative value in case of error.
 *//*==========================================================================*/
-#define s_alltrim_c(s,d)	s_alltrim_se( (s), 0, -1, (d), '\0' );
+#define s_alltrim_c(s,d)	s_alltrim_ec( (s), 0, -1, (d), '\0' );
 /*=========================================================================*//**
 \brief			Removes characters of an s_string.
 
@@ -2099,7 +2076,7 @@ ssize_t		 s_alltrim_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end,
 \returns		The number of characters of \a 'str' that were removed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_remove_se	(		s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart );
+ssize_t		 s_remove_e		(		s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart );
 /*=========================================================================*//**
 \brief			Removes characters of an s_string.
 
@@ -2124,7 +2101,7 @@ ssize_t		 s_remove_se	(		s_string_t * restrict str, ssize_t start, ssize_t end, 
 \returns		The number of characters of \a 'str' that were removed or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_remove_ce	(		s_string_t * restrict str, ssize_t start, ssize_t end, const char		* restrict delim );
+ssize_t		 s_remove_ec	(		s_string_t * restrict str, ssize_t start, ssize_t end, const char		* restrict delim );
 /*=========================================================================*//**
 \brief			Extracts a sequence of characters from one s_string and inserts
 				it in another s_string.

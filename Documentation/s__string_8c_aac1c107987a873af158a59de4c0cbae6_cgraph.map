@@ -1,8 +1,0 @@
-<map id="s_replace_lc" name="s_replace_lc">
-<area shape="rect" id="Node000001" title="Replaces a sequence of characters of the s_string dst, starting at index start and with length len wi..." alt="" coords="5,31,100,57"/>
-<area shape="rect" id="Node000002" href="$s__string_8c.html#ad8a4667d5b847aae82b80bbe78949c44" title="Returns the number of characters that the s_string str is holding." alt="" coords="148,5,215,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,32,135,28,130,29,101,37"/>
-<area shape="rect" id="Node000003" href="$s__string_8c.html#a7c00fdfc8f5e5f966ea79f37531f1e27" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="263,31,355,57"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="100,41,248,41,247,47,100,47"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="216,23,250,32,245,32,215,28"/>
-</map>

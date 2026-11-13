@@ -1,9 +1,0 @@
-<map id="s_charat" name="s_charat">
-<area shape="rect" id="Node000001" title="Returns the value of the character at position index of s_string str." alt="" coords="5,5,77,32"/>
-<area shape="rect" id="Node000002" href="$s__string_8c.html#a53fd1fdf21d9bb60101c74e35e77dccc" title="Returns a &#39;const char*&#39; to the C&#45;string that holds the characters in s_string str,..." alt="" coords="125,5,214,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,16,112,18,107,19,77,21"/>
-<area shape="rect" id="Node000003" href="$s__string_8c.html#ad8a4667d5b847aae82b80bbe78949c44" title="Returns the number of characters that the s_string str is holding." alt="" coords="262,5,329,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,16,249,19,244,19,215,21"/>
-<area shape="rect" id="Node000004" href="$s__string_8c.html#a7c00fdfc8f5e5f966ea79f37531f1e27" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="377,5,470,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="330,16,364,19,359,19,330,21"/>
-</map>

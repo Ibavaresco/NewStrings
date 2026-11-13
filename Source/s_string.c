@@ -1245,8 +1245,8 @@ int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t 
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( s2Ptr[Index] != s1Ptr[Index] )
-			return (int)( s2Ptr[Index] - s1Ptr[Index] );
+		if( s1Ptr[Index] != s2Ptr[Index] )
+			return s1Ptr[Index] - s2Ptr[Index] < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1295,8 +1295,8 @@ int s_strcmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * re
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( s2[Index] != s1Ptr[Index] )
-			return (int)( s2[Index] - s1Ptr[Index] );
+		if( s1Ptr[Index] != s2[Index] )
+			return s1Ptr[Index] - s2[Index] < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1345,8 +1345,8 @@ int c_strcmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_
 	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( s2Ptr[Index] != s1[Index] )
-			return (int)( s2Ptr[Index] - s1[Index] );
+		if( s1[Index] != s2Ptr[Index] )
+			return s1[Index] - s2Ptr[Index] < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1402,8 +1402,8 @@ int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( s2Ptr[Index] ) != toupper( s1Ptr[Index] ))
-			return (int)( toupper( s2Ptr[Index] ) - toupper( s1Ptr[Index] ));
+		if( toupper( s1Ptr[Index] ) != toupper( s2Ptr[Index] ))
+			return toupper( s1Ptr[Index] ) - toupper( s2Ptr[Index] ) < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1452,8 +1452,8 @@ int s_stricmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( s2[Index] ) != toupper( s1Ptr[Index] ))
-			return (int)( toupper( s2[Index] ) - toupper( s1Ptr[Index] ));
+		if( toupper( s1Ptr[Index] ) != toupper( s2[Index] ))
+			return toupper( s1Ptr[Index] ) - toupper( s2[Index] ) < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1502,8 +1502,8 @@ int c_stricmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( s2Ptr[Index] ) != toupper( s1[Index] ))
-			return (int)( toupper( s2Ptr[Index] ) - toupper( s1[Index] ));
+		if( toupper( s1[Index] ) != toupper( s2Ptr[Index] ))
+			return toupper( s1[Index] ) - toupper( s2Ptr[Index] ) < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1517,7 +1517,7 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
-	if( len <= 0 )
+	if( len == 0 )
 		/* ...two empty strings will be always equal. */
 		return 0;
 
@@ -1534,7 +1534,7 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1546,7 +1546,13 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
+
+	Len	= ssmin( s1Len, s2Len );
+
+	if( len < -Len )
+		return 0;
+	if( len < 0 )
+		len	+= Len;
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
@@ -1564,8 +1570,8 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( s2Ptr[Index] != s1Ptr[Index] )
-			return (int)( s2Ptr[Index] - s1Ptr[Index] );
+		if( s1Ptr[Index] != s2Ptr[Index] )
+			return s1Ptr[Index] - s2Ptr[Index] < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1573,12 +1579,13 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2, ssize_t len )
 	{
 	const char	*s1Ptr;
+
 	ssize_t		Index;
 	ssize_t		Len;
 	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
-	if( len <= 0 )
+	if( len == 0 )
 		/* ...two empty strings will be always equal. */
 		return 0;
 
@@ -1595,7 +1602,7 @@ int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= strlen( s2 );
 
@@ -1607,7 +1614,13 @@ int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
+
+	Len	= ssmin( s1Len, s2Len );
+
+	if( len < -Len )
+		return 0;
+	if( len < 0 )
+		len	+= Len;
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
@@ -1619,21 +1632,22 @@ int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( s2[Index] != s1Ptr[Index] )
-			return (int)( s2[Index] - s1Ptr[Index] );
+		if( s1Ptr[Index] != s2[Index] )
+			return s1Ptr[Index] - s2[Index] < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
 /*============================================================================*/
 int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
 	{
+
 	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
 	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
-	if( len <= 0 )
+	if( len == 0 )
 		/* ...two empty strings will be always equal. */
 		return 0;
 
@@ -1650,7 +1664,7 @@ int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1662,7 +1676,13 @@ int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
+
+	Len	= ssmin( s1Len, s2Len );
+
+	if( len < -Len )
+		return 0;
+	if( len < 0 )
+		len	+= Len;
 
 	if( s2start < -s2Len || s2start >= s2Len )
 		s2start		= s2Len;
@@ -1674,8 +1694,8 @@ int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( s2Ptr[Index] != s1[Index] )
-			return (int)( s2Ptr[Index] - s1[Index] );
+		if( s1[Index] != s2Ptr[Index] )
+			return s1[Index] - s2Ptr[Index] < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1689,7 +1709,7 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
-	if( len <= 0 )
+	if( len == 0 )
 		/* ...two empty strings will be always equal. */
 		return 0;
 
@@ -1706,7 +1726,7 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1718,7 +1738,13 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
+
+	Len	= ssmin( s1Len, s2Len );
+
+	if( len < -Len )
+		return 0;
+	if( len < 0 )
+		len	+= Len;
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
@@ -1736,8 +1762,8 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( s2Ptr[Index] ) != toupper( s1Ptr[Index] ))
-			return (int)( toupper( s2Ptr[Index] ) - toupper( s1Ptr[Index] ));
+		if( toupper( s1Ptr[Index] ) != toupper( s2Ptr[Index] ))
+			return toupper( s1Ptr[Index] ) - toupper( s2Ptr[Index] ) < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -1745,12 +1771,13 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2, ssize_t len )
 	{
 	const char	*s1Ptr;
+
 	ssize_t		Index;
 	ssize_t		Len;
 	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
-	if( len <= 0 )
+	if( len == 0 )
 		/* ...two empty strings will be always equal. */
 		return 0;
 
@@ -1767,7 +1794,7 @@ int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * 
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= strlen( s2 );
 
@@ -1779,7 +1806,13 @@ int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * 
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
+
+	Len	= ssmin( s1Len, s2Len );
+
+	if( len < -Len )
+		return 0;
+	if( len < 0 )
+		len	+= Len;
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
@@ -1791,21 +1824,22 @@ int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * 
 	s1Ptr		= s_constcstr( s1, s1start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( s2[Index] ) != toupper( s1Ptr[Index] ))
-			return (int)( toupper( s2[Index] ) - toupper( s1Ptr[Index] ));
+		if( toupper( s1Ptr[Index] ) != toupper( s2[Index] ))
+			return toupper( s1Ptr[Index] ) - toupper( s2[Index] ) < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
 /*============================================================================*/
 int c_strnicmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
 	{
+
 	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
 	ssize_t		s2Len, s1Len;
 
 	/* We are comparing zero bytes... */
-	if( len <= 0 )
+	if( len == 0 )
 		/* ...two empty strings will be always equal. */
 		return 0;
 
@@ -1822,7 +1856,7 @@ int c_strnicmp_s( const char * restrict s1, const s_string_t * restrict s2, ssiz
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1834,7 +1868,13 @@ int c_strnicmp_s( const char * restrict s1, const s_string_t * restrict s2, ssiz
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
+
+	Len	= ssmin( s1Len, s2Len );
+
+	if( len < -Len )
+		return 0;
+	if( len < 0 )
+		len	+= Len;
 
 	if( s2start < -s2Len || s2start >= s2Len )
 		s2start		= s2Len;
@@ -1846,8 +1886,8 @@ int c_strnicmp_s( const char * restrict s1, const s_string_t * restrict s2, ssiz
 	s2Ptr		= s_constcstr( s2, s2start );
 
 	for( Index = 0; Index < Len; Index++ )
-		if( toupper( s2Ptr[Index] ) != toupper( s1[Index] ))
-			return (int)( toupper( s2Ptr[Index] ) - toupper( s1[Index] ));
+		if( toupper( s1[Index] ) != toupper( s2Ptr[Index] ))
+			return toupper( s1[Index] ) - toupper( s2Ptr[Index] ) < 0 ? -( Index + 1 ) : ( Index + 1 );
 
 	return 0;
 	}
@@ -3773,9 +3813,9 @@ dst:    | D | E | F |        | D | B | F |        de = dstend
 </pre>
 *//*==========================================================================*/
 /*=========================================================================*//**
-s_replace_de tested OK!
+s_replace_e tested OK!
 *//*==========================================================================*/
-ssize_t s_replace_de( s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler )
+ssize_t s_replace_e( s_string_t * restrict dst, ssize_t start, ssize_t end, const s_string_t * restrict src, ssize_t srcstart, int filler )
 	{
 	ssize_t		SrcLen, DstLen, DstMaxLen, Len, TransfLen;
 	ssize_t 	LeftFill	= 0, RightFill	= 0;
@@ -3956,83 +3996,6 @@ ssize_t s_replace_de( s_string_t * restrict dst, ssize_t start, ssize_t end, con
 
 	return Len;
 #endif
-	}
-/*=========================================================================*//**
-<pre>
-s_replace_se
---------------------------------------------------------------------------------
-            ss  se               ss  se           ss = srcstart
-        +---+---+---+        +---+---+---+        se = srcend
-src:    | A | B | C |        | A | B | C |
-        +---+---+---+        +---+---+---+
-                        =>
-        +---+---+---+        +---+---+---+        ds = dststart
-dst:    | D | E | F |        | D | B | F |
-        +---+---+---+        +---+---+---+
-            ds                   ds
-
---------------------------------------------------------------------------------
-</pre>
-*//*==========================================================================*/
-/*============================================================================*/
-ssize_t s_replace_se( s_string_t * restrict dst, ssize_t start, const s_string_t * restrict src, ssize_t srcstart, ssize_t srcend, int filler )
-	{
-	ssize_t	SrcLen, DstLen, DstMaxLen, Len, SrcStart;
-	char	*DstPtr;
-
-	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
-		return -1;
-
-	DstMaxLen = s_strmaxlen( dst );
-
-	if( start >= DstMaxLen )
-		return -1;
-
-	SrcLen = s_strlen( src );
-
-	if( srcend < -SrcLen )
-		return -1;
-
-	SrcStart	= 0;
-
-	DstLen = s_strlen( dst );
-
-	if( start < -DstLen )
-		{
-		SrcStart= -( start + DstLen );
-		start	= 0;
-		}
-	else if( start < 0 )
-		start  += DstLen;
-
-	if( srcend >= DstMaxLen )
-		srcend		= DstMaxLen - 1;
-	else if( srcend < 0 )
-		srcend	   += DstLen;
-
-	if( srcstart > srcend || SrcStart >= SrcLen )
-		return -1;
-
-	Len			= ssmin( srcend - start + 1, SrcLen - SrcStart );
-	DstPtr		= s_cstr( dst );
-
-	if( start > DstLen )
-		{
-		if( filler == 0 )
-			return -1;
-		else
-			memset( DstPtr, filler, start - DstLen );
-		}
-
-	memcpy( DstPtr + start, s_constcstr( src, SrcStart ), Len );
-
-	if( start + Len > DstLen )
-		{
-		*DstPtr	= '\0';
-		SetUsedLen( dst, start + Len );
-		}
-
-	return Len;
 	}
 /*=========================================================================*//**
 <pre>
@@ -4753,7 +4716,7 @@ ssize_t s_rtrim_c( s_string_t * restrict str, ssize_t start, const char * restri
 	}
 /*=========================================================================*//**
 <pre>
-s_alltrim_se
+s_alltrim_e
 --------------------------------------------------------------------------------
 delim:          x..z
 replacement:    '#'
@@ -4767,7 +4730,7 @@ str:    | A | cs* | B | cs* | C | cs* | D |    =>  | A | B |#| C | D |    e  = e
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_alltrim_se( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement )
+ssize_t s_alltrim_e( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart, int replacement )
 	{
 	char	*Ptr;
 	ssize_t	Len, Index, IndexPut;
@@ -4888,7 +4851,7 @@ str:    | A | cs* | B | cs* | C | cs* | D |    =>  | A | B |#| C | D |    e  = e
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_alltrim_ce( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int replacement )
+ssize_t s_alltrim_ec( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim, int replacement )
 	{
 	char	*Ptr;
 	ssize_t	Len, Index, IndexPut;
@@ -4983,7 +4946,7 @@ ssize_t s_alltrim_ce( s_string_t * restrict str, ssize_t start, ssize_t end, con
 	}
 /*=========================================================================*//**
 <pre>
-s_remove_se
+s_remove_e
 --------------------------------------------------------------------------------
 charset:    " *-,."
 
@@ -4996,7 +4959,7 @@ str:    |+Some Text. More Text, *1234*XYZD*|    =>  |+SomeTextMoreText1234XYZD*|
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_remove_se( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart )
+ssize_t s_remove_e( s_string_t * restrict str, ssize_t start, ssize_t end, const s_string_t * restrict delim, ssize_t delimstart )
 	{
 	char	*Ptr;
 	ssize_t	Len, Index, IndexPut;
@@ -5083,7 +5046,7 @@ ssize_t s_remove_se( s_string_t * restrict str, ssize_t start, ssize_t end, cons
 	}
 /*=========================================================================*//**
 <pre>
-s_remove_ce
+s_remove_ec
 --------------------------------------------------------------------------------
 charset:    " *-,."
 
@@ -5096,7 +5059,7 @@ str:    |+Some Text. More Text, *1234*XYZD*|    =>  |+SomeTextMoreText1234XYZD*|
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_remove_ce( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim )
+ssize_t s_remove_ec( s_string_t * restrict str, ssize_t start, ssize_t end, const char * restrict delim )
 	{
 	char	*Ptr;
 	ssize_t	Len, Index, IndexPut;

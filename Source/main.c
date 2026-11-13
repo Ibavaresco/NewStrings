@@ -228,14 +228,14 @@ static void Test_s_replace_de( void )
 		for( i = -43; i < -1; i++ )
 			{
 			s_strcpy( Dst, Str, 0 );
-			ssize_t	n = s_replace_de( Dst, i, i + 43, Src, -9, Filler );
+			ssize_t	n = s_replace_e( Dst, i, i + 43, Src, -9, Filler );
 			printf( "\r%3ld %3d %3d %3d \"%s\"", (long)n, i, i + 7, -9, s_constcstr( Dst, 0 ));
 			usleep( 100000 );
 			}
 		for( ; i > -43; i-- )
 			{
 			s_strcpy( Dst, Str, 0 );
-			ssize_t	n = s_replace_de( Dst, i, i + 43, Src, -9, Filler );
+			ssize_t	n = s_replace_e( Dst, i, i + 43, Src, -9, Filler );
 			printf( "\r%3ld %3d %3d %3d \"%s\"", (long)n, i, i + 7, -9, s_constcstr( Dst, 0 ));
 			usleep( 100000 );
 			}
@@ -289,8 +289,8 @@ typedef struct
 	{
 	int	a;
 	int	b;
-	field_s_string(s,50);
-	field_s_string(t,50);
+	field_s_string( s, 50 );
+	field_s_string( t, 50 );
 	} s_s_t;
 /*============================================================================*/
 int main( int ArgC, char *ArgV[] )
@@ -301,7 +301,7 @@ int main( int ArgC, char *ArgV[] )
 
 	printf( "\n*%s*\n", s_constcstr( s, 0 ));
 
-	printf( "\nCharacters removed: %ld\n", (long)s_alltrim_se( s, 1, -2, d, 0, '\0' ));
+	printf( "\nCharacters removed: %ld\n", (long)s_alltrim_e( s, 1, -2, d, 0, '\0' ));
 
 	printf( "\n*%s*\n", s_constcstr( s, 0 ));
 

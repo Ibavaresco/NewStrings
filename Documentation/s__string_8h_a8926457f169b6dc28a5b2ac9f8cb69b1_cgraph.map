@@ -1,7 +1,0 @@
-<map id="s_strdup_c" name="s_strdup_c">
-<area shape="rect" id="Node000001" title="Creates in the heap a dynamically allocated copy of the C&#45;string src." alt="" coords="5,5,91,32"/>
-<area shape="rect" id="Node000002" href="$s__string_8c.html#ad6674b3b7d5474402da49e3c160cf7e1" title="Copies the contents of the C&#45;string pointed to by src into the s_string pointed to by dst...." alt="" coords="139,5,224,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,16,126,18,120,19,91,21"/>
-<area shape="rect" id="Node000003" href="$s__string_8c.html#a7c00fdfc8f5e5f966ea79f37531f1e27" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="272,5,364,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="224,16,259,19,254,19,224,21"/>
-</map>

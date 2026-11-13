@@ -1,5 +1,0 @@
-<map id="s_strlcpy" name="s_strlcpy">
-<area shape="rect" id="Node000001" title="Copies up to len characters of the contents of the s_string pointed to by src into the s_string point..." alt="" coords="139,5,213,32"/>
-<area shape="rect" id="Node000002" href="$s__string_8c.html#aabf07408a87c64ddf49bcac8bc118260" title="Extracts a sequence of characters from the s_string src starting at index start and with length len,..." alt="" coords="5,5,91,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,19,91,21,91,16,126,18"/>
-</map>

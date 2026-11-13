@@ -1,7 +1,0 @@
-<map id="s_extract_e" name="s_extract_e">
-<area shape="rect" id="Node000001" title="Extracts a sequence of characters from the s_string src located between indexes start and end,..." alt="" coords="225,5,314,32"/>
-<area shape="rect" id="Node000002" href="$main_8c.html#a0cddf3f8d387d298a9eb59a5a96320b5" title=" " alt="" coords="103,5,177,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,19,177,21,177,16,212,19"/>
-<area shape="rect" id="Node000003" href="$main_8c.html#ad021e264f22928004ae9a99cd789662c" title=" " alt="" coords="5,5,55,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
-</map>

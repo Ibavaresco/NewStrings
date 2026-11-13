@@ -1,9 +1,0 @@
-<map id="s_extract_mlc" name="s_extract_mlc">
-<area shape="rect" id="Node000001" title="Creates in the heap a new dynamically allocated s_string object and copies to it the character sequen..." alt="" coords="5,5,109,32"/>
-<area shape="rect" id="Node000002" href="$s__string_8c.html#a019dd349a2974166ed5a5ff4809e34ef" title="Creates in the heap a dynamically allocated s_string object capable of holding at most the maximum be..." alt="" coords="157,5,249,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,16,144,18,138,19,109,21"/>
-<area shape="rect" id="Node000003" href="$s__string_8c.html#ad6674b3b7d5474402da49e3c160cf7e1" title="Copies the contents of the C&#45;string pointed to by src into the s_string pointed to by dst...." alt="" coords="297,5,382,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="250,16,284,19,279,19,250,21"/>
-<area shape="rect" id="Node000004" href="$s__string_8c.html#a7c00fdfc8f5e5f966ea79f37531f1e27" title="Returns the maximum number of characters that the s_string str can hold." alt="" coords="430,5,523,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="383,16,417,19,412,19,383,21"/>
-</map>
