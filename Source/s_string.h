@@ -881,7 +881,7 @@ ssize_t		 s_delete_l		(		s_string_t * restrict str, ssize_t start, ssize_t len )
 \returns		How many characters were removed or a negative value if an error
 				occurred.
 *//*==========================================================================*/
-ssize_t		 s_truncate		(		s_string_t * restrict dst, ssize_t len );
+ssize_t		 s_truncate		(		s_string_t * restrict str, ssize_t len );
 /*=========================================================================*//**
 \brief			Appends the contents of the portion of s_string pointed to by \a
 				'src' starting at \a 'srcstart' to the end of the s_string pointed
@@ -1579,6 +1579,7 @@ ssize_t		 s_extract_ec	(		s_string_t * restrict dst, const char		* restrict src,
 				negative value in case of error.
 *//*==========================================================================*/
 ssize_t		 s_extract_l	(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t start, ssize_t len );
+ssize_t		 s_extract_lc	(		s_string_t * restrict dst, const char		* restrict src, ssize_t start, ssize_t len );
 /*=========================================================================*//**
 \brief			Replaces a sequence of characters of s_string \a 'dst', located
 				between indexes \a 'start' and \a 'end' with characters obtained from
@@ -1722,7 +1723,7 @@ ssize_t		 s_replace_l	(		s_string_t * restrict dst, ssize_t start, ssize_t len, 
 \returns		The number of characters that were copied to \a 'dst' or a
 				negative value in case of error.
 *//*==========================================================================*/
-ssize_t		 s_replace_lc	(		s_string_t * restrict dst, ssize_t start, ssize_t len, const char		* restrict srcs, int filler );
+ssize_t		 s_replace_lc	(		s_string_t * restrict dst, ssize_t start, ssize_t len, const char		* restrict src, int filler );
 /*=========================================================================*//**
 \brief			Converts uppercase letters from a portion of an s_string to
 				lowercase.

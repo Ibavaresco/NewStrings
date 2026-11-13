@@ -188,14 +188,14 @@ ssize_t s_strlen( const s_string_t * restrict str )
 	return 0;
 	}
 /*============================================================================*/
-ssize_t s_strllen( const s_string_t * restrict str, ssize_t len )
+ssize_t s_strllen( const s_string_t * restrict str, ssize_t max )
 	{
-	return ssmin( ssmax( 0, len ), s_strlen( str ));
+	return ssmin( ssmax( 0, max ), s_strlen( str ));
 	}
 /*============================================================================*/
-ssize_t s_strnlen( const s_string_t * restrict str, ssize_t len )
+ssize_t s_strnlen( const s_string_t * restrict str, ssize_t min )
 	{
-	return ssmax( len, s_strlen( str ));
+	return ssmax( min, s_strlen( str ));
 	}
 /*============================================================================*/
 static int SetUsedLen( s_string_t * restrict str, size_t NewLength )
@@ -395,17 +395,17 @@ str:    | A | B | C |    =>  | A | C |
 /*=========================================================================*//**
 s_delete_e Tested OK!!!
 *//*==========================================================================*/
-ssize_t s_delete_e( s_string_t * restrict dst, ssize_t start, ssize_t end )
+ssize_t s_delete_e( s_string_t * restrict str, ssize_t start, ssize_t end )
 	{
 	ssize_t	UsedLen;
 	char	*Ptr;
 
 	/* Either the s_string is invalid or it cannot be changed... */
-	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
 		/* ...that's an error. */
 		return -1;
 
-	UsedLen = s_strlen( dst );
+	UsedLen = s_strlen( str );
 
 	/* Either the portion to remove begins after the end of the string or
 	   it ends before the beginning of the string... */
@@ -437,7 +437,7 @@ ssize_t s_delete_e( s_string_t * restrict dst, ssize_t start, ssize_t end )
 		return 0;
 
 	/* Get the pointer to the storage area. But is is invalid... */
-	if(( Ptr = s_cstr( dst )) == NULL )
+	if(( Ptr = s_cstr( str )) == NULL )
 		/* ...there's nothing we can do, it is an error. */
 		return -1;
 
@@ -452,7 +452,7 @@ ssize_t s_delete_e( s_string_t * restrict dst, ssize_t start, ssize_t end )
 	Ptr[UsedLen]	= '\0';
 
 	/* Update the used length of the string. */
-	SetUsedLen( dst, UsedLen );
+	SetUsedLen( str, UsedLen );
 
 	/* Return how many characters were effectively removed. */
 	return end - start + 1;
@@ -473,17 +473,17 @@ str:    | A |   B   | C |    =>  | A | C |
 /*=========================================================================*//**
 s_delete_l Tested OK!!!
 *//*==========================================================================*/
-ssize_t s_delete_l( s_string_t * restrict dst, ssize_t start, ssize_t len )
+ssize_t s_delete_l( s_string_t * restrict str, ssize_t start, ssize_t len )
 	{
 	ssize_t	UsedLen;
 	char	*Ptr;
 
 	/* Either the s_string is invalid or it cannot be changed... */
-	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
 		/* ...that's an error. */
 		return -1;
 
-	UsedLen = s_strlen( dst );
+	UsedLen = s_strlen( str );
 
 	/* Either the portion to remove begins after the end of the string or
 	   its length is zero... */
@@ -508,7 +508,7 @@ ssize_t s_delete_l( s_string_t * restrict dst, ssize_t start, ssize_t len )
 		len	= UsedLen - start;
 
 	/* Get the pointer to the storage area. But is is invalid... */
-	if(( Ptr = s_cstr( dst )) == NULL )
+	if(( Ptr = s_cstr( str )) == NULL )
 		/* ...there's nothing we can do, it is an error. */
 		return -1;
 
@@ -521,7 +521,7 @@ ssize_t s_delete_l( s_string_t * restrict dst, ssize_t start, ssize_t len )
 	Ptr[UsedLen]	= '\0';
 
 	/* Update the used length of the string. */
-	SetUsedLen( dst, UsedLen );
+	SetUsedLen( str, UsedLen );
 
 	/* Return how many characters were effectively removed. */
 	return len;
@@ -539,15 +539,15 @@ str:    | A | B |        =>  | A |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_truncate( s_string_t * restrict dst, ssize_t len )
+ssize_t s_truncate( s_string_t * restrict str, ssize_t len )
 	{
 	ssize_t	UsedLen;
 	char	*Ptr;
 
-	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
+	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
 		return -1;
 
-	UsedLen = s_strlen( dst );
+	UsedLen = s_strlen( str );
 
 	/* The new length is longer than the current length... */
 	if( len >= UsedLen )
@@ -559,12 +559,12 @@ ssize_t s_truncate( s_string_t * restrict dst, ssize_t len )
 	else if( len < 0 )
 		len	   += UsedLen;
 
-	if(( Ptr = s_cstr( dst )) == NULL )
+	if(( Ptr = s_cstr( str )) == NULL )
 		return -1;
 
 	Ptr[len]	= '\0';
 
-	SetUsedLen( dst, len );
+	SetUsedLen( str, len );
 
 	return len;
 	}
@@ -2506,7 +2506,7 @@ ssize_t s_strcpbrk_c( const s_string_t * restrict str, ssize_t start, const char
 	return -1;
 	}
 /*============================================================================*/
-s_string_t *s_strdup( const s_string_t * restrict src, ssize_t start )
+s_string_t *s_strdup( const s_string_t * restrict src, ssize_t srcstart )
 	{
 	ssize_t		SrcLen;
 	ssize_t		Size;
@@ -2520,13 +2520,13 @@ s_string_t *s_strdup( const s_string_t * restrict src, ssize_t start )
 	if( SrcLen == 0 )
 		return NULL;
 
-	if( start < -SrcLen || start >= SrcLen )
+	if( srcstart < -SrcLen || srcstart >= SrcLen )
 		return NULL;
 
-	if( start < 0 )
-		start  += SrcLen;
+	if( srcstart < 0 )
+		srcstart  += SrcLen;
 
-	SrcLen -= start;
+	SrcLen -= srcstart;
 
 	Size	= _s_calcsize( SrcLen );
 
@@ -2535,7 +2535,7 @@ s_string_t *s_strdup( const s_string_t * restrict src, ssize_t start )
 
 	_s_string_init( Str, SrcLen, 2 );
 
-	s_strcpy( Str, src, start );
+	s_strcpy( Str, src, srcstart );
 
 	return Str;
 	}
@@ -3662,7 +3662,7 @@ dst:    | A |     B     | D |            | A |cccc...cccc| D |
 /*=========================================================================*//**
 s_fill_l tested OK!
 *//*==========================================================================*/
-ssize_t s_fill_l( s_string_t * restrict dst, ssize_t start, ssize_t len, int filler )
+ssize_t s_fill_l( s_string_t * restrict dst, ssize_t dststart, ssize_t len, int filler )
 	{
 	char	*DstPtr;
 	ssize_t	DstLen;
@@ -3670,18 +3670,18 @@ ssize_t s_fill_l( s_string_t * restrict dst, ssize_t start, ssize_t len, int fil
 	if( filler == '\0' )
 		return -1;
 
-	if(( len = s_fill_l_calculate( dst, &DstLen, &start, len )) <= 0 )
+	if(( len = s_fill_l_calculate( dst, &DstLen, &dststart, len )) <= 0 )
 		return len;
 
 	if(( DstPtr = s_cstr( dst )) == NULL )
 		return -1;
 
-	memset( &DstPtr[start], filler, len );
+	memset( &DstPtr[dststart], filler, len );
 
-	if( start + len > DstLen )
+	if( dststart + len > DstLen )
 		{
-		DstPtr[start+len]	= '\0';
-		SetUsedLen( dst, start + len );
+		DstPtr[dststart+len]	= '\0';
+		SetUsedLen( dst, dststart + len );
 		}
 
 	return len;
@@ -3705,7 +3705,7 @@ dst:    | C |     D     | E |            | C | B |...| B | E |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t start, ssize_t len, const s_string_t * restrict src, ssize_t srcstart )
+ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t dststart, ssize_t len, const s_string_t * restrict src, ssize_t srcstart )
 	{
 	char		*DstPtr;
 	const char	*SrcPtr;
@@ -3714,7 +3714,7 @@ ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t start, ssize_t len, const 
 	if( src == NULL || src->MustBeZero != 0 )
 		return -1;
 
-	if(( len = s_fill_l_calculate( dst, &DstLen, &start, len )) <= 0 )
+	if(( len = s_fill_l_calculate( dst, &DstLen, &dststart, len )) <= 0 )
 		return len;
 
 	if(( DstPtr = s_cstr( dst )) == NULL )
@@ -3730,16 +3730,16 @@ ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t start, ssize_t len, const 
 
 	SrcPtr = s_constcstr( src, 0 );
 
-	for( RemainingLen = len; RemainingLen > 0; RemainingLen -= FragmentLen, start += FragmentLen )
+	for( RemainingLen = len; RemainingLen > 0; RemainingLen -= FragmentLen, dststart += FragmentLen )
 		{
 		FragmentLen	= ssmin( RemainingLen, SrcLen );
-		memcpy( &DstPtr[start], SrcPtr, FragmentLen );
+		memcpy( &DstPtr[dststart], SrcPtr, FragmentLen );
 		}
 
-	if( start >= DstLen )
+	if( dststart >= DstLen )
 		{
-		DstPtr[start]	= '\0';
-		SetUsedLen( dst, start );
+		DstPtr[dststart]	= '\0';
+		SetUsedLen( dst, dststart );
 		}
 
 	return len;
@@ -3762,7 +3762,7 @@ dst:    | C |     D     | E |            | C | A |...| A | E |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_fill_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const char * restrict src )
+ssize_t s_fill_lc( s_string_t * restrict dst, ssize_t dststart, ssize_t len, const char * restrict src )
 	{
 	char		*DstPtr;
 	ssize_t		DstLen, SrcLen, RemainingLen, FragmentLen;
@@ -3770,7 +3770,7 @@ ssize_t s_fill_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const 
 	if( src == NULL )
 		return -1;
 
-	if(( len = s_fill_l_calculate( dst, &DstLen, &start, len )) <= 0 )
+	if(( len = s_fill_l_calculate( dst, &DstLen, &dststart, len )) <= 0 )
 		return len;
 
 	if(( DstPtr = s_cstr( dst )) == NULL )
@@ -3781,16 +3781,16 @@ ssize_t s_fill_lc( s_string_t * restrict dst, ssize_t start, ssize_t len, const 
 	if( SrcLen <= 0 )
 		return -1;
 
-	for( RemainingLen = len; RemainingLen > 0; RemainingLen -= FragmentLen, start += FragmentLen )
+	for( RemainingLen = len; RemainingLen > 0; RemainingLen -= FragmentLen, dststart += FragmentLen )
 		{
 		FragmentLen	= ssmin( RemainingLen, SrcLen );
-		memcpy( &DstPtr[start], src, FragmentLen );
+		memcpy( &DstPtr[dststart], src, FragmentLen );
 		}
 
-	if( start >= DstLen )
+	if( dststart >= DstLen )
 		{
-		DstPtr[start]	= '\0';
-		SetUsedLen( dst, start );
+		DstPtr[dststart]	= '\0';
+		SetUsedLen( dst, dststart );
 		}
 
 	return len;
@@ -5220,8 +5220,6 @@ ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_
 
 	return len;
 	}
-/*============================================================================*/
-ssize_t s_extins_lc( s_string_t * restrict dst, ssize_t dststart, const char * restrict src, ssize_t srcstart, ssize_t len, int filler );
 /*============================================================================*/
 /* I'm tempted to remove this function, because the format string cannot be checked by the compiler. */
 /*============================================================================*/
