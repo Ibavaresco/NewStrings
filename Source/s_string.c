@@ -982,6 +982,10 @@ ssize_t s_strcpy( s_string_t * restrict dst, const s_string_t * restrict src, ss
 	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
+		return -1;
+
 	DstPtr		= s_cstr( dst );
 
 	/* The source is a null pointer or it is an empty string... */
@@ -1095,6 +1099,10 @@ ssize_t s_strlcpy( s_string_t * restrict dst, const s_string_t * restrict src, s
 	ssize_t		BytesToCopy;
 
 	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 )
+		return -1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
 		return -1;
 
 	DstPtr		= s_cstr( dst );
@@ -1227,6 +1235,10 @@ int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t 
 		return -1;
 	if( s2Len == 0 )
 		return +1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( s1 == s2 )
+		return -1;
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
@@ -1381,6 +1393,10 @@ int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 		return -1;
 	if( s2Len == 0 )
 		return +1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( s1 == s2 )
+		return -1;
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start	= s1Len;
@@ -1540,6 +1556,10 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 		return -1;
 	if( s2Len == 0 )
 		return +1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( s1 == s2 )
+		return -1;
 
 	Len	= ssmin( s1Len, s2Len );
 
@@ -1732,6 +1752,10 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 		return -1;
 	if( s2Len == 0 )
 		return +1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( s1 == s2 )
+		return -1;
 
 	Len	= ssmin( s1Len, s2Len );
 
@@ -2019,6 +2043,10 @@ ssize_t s_strstr( const s_string_t * restrict s1, ssize_t s1start, const s_strin
 		/* ...no search is possible. */
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( s1 == s2 )
+		return -1;
+
 	/* 'src' is an empty string... */
 	if(( s2Len = s_strlen( s2 )) == 0 )
 		/* ...it will never be found inside 'str'. */
@@ -2191,6 +2219,10 @@ ssize_t s_stristr( const s_string_t * restrict s1, ssize_t s1start, const s_stri
 		/* ...no search is possible. */
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( s1 == s2 )
+		return -1;
+
 	/* 's2' is an empty string... */
 	if(( s2Len = s_strlen( s2 )) == 0 )
 		/* ...it will never be found inside 's1'. */
@@ -2361,6 +2393,10 @@ ssize_t s_strpbrk( const s_string_t * restrict str, ssize_t start, const s_strin
 	if( str == NULL || str->MustBeZero != 0 || charset == NULL || charset->MustBeZero != 0 )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == charset )
+		return -1;
+
 	/* 'charset' is an empty string... */
 	if(( CharSetLen = s_strlen( charset )) == 0 )
 		return -1;
@@ -2432,6 +2468,10 @@ ssize_t s_strcpbrk( const s_string_t * restrict str, ssize_t start, const s_stri
 	const char	*StrPtr, *CharSetPtr;
 
 	if( str == NULL || str->MustBeZero != 0 || charset == NULL || charset->MustBeZero != 0 )
+		return -1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == charset )
 		return -1;
 
 	/* 'charset' is an empty string... */
@@ -2705,6 +2745,10 @@ ssize_t s_strtok( const s_string_t * restrict str, ssize_t * restrict start, con
 	if( str == NULL || str->MustBeZero != 0 || delim == NULL || delim->MustBeZero != 0 || start == NULL )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == delim )
+		return -1;
+
 	/* 'delim' is an empty string... */
 	if(( DelimLen = s_strlen( delim )) == 0 )
 		return -1;
@@ -2846,6 +2890,10 @@ ssize_t s_strtok_s( s_string_t * restrict dst, const s_string_t * restrict str, 
 	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || str == NULL || str->MustBeZero != 0 || delim == NULL || delim->MustBeZero != 0 || start == NULL )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == str || dst == delim || str == delim )
+		return -1;
+
 	/* 'delim' is an empty string... */
 	if(( DelimLen = s_strlen( delim )) == 0 )
 		return -1;
@@ -2908,6 +2956,10 @@ ssize_t s_strtok_sc( s_string_t * restrict dst, const s_string_t * restrict str,
 	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || str == NULL || str->MustBeZero != 0 || delim == NULL || start == NULL )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == str )
+		return -1;
+
 	/* 'delim' is an empty string... */
 	if(( DelimLen = strlen( delim )) == 0 )
 		return -1;
@@ -2967,6 +3019,10 @@ s_string_t *s_strtok_m( const s_string_t * restrict str, ssize_t * restrict star
 	const char	*StrPtr, *DelimPtr;
 
 	if( str == NULL || str->MustBeZero != 0 || delim == NULL || delim->MustBeZero != 0 || start == NULL )
+		return NULL;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == delim )
 		return NULL;
 
 	/* 'delim' is an empty string... */
@@ -3444,6 +3500,10 @@ ssize_t s_extract_e( s_string_t * restrict dst, const s_string_t * restrict src,
 	if( dst == NULL || dst->MustBeZero != 0 || !dst->Writable )
 		return -1;	/* Would it be better returning zero??? */
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
+		return -1;
+
 	if( src == NULL || src->MustBeZero != 0 || ( SrcLen = s_strlen( src )) == 0 || start >= SrcLen )
 		return s_strcpy_c( dst, "" );
 
@@ -3532,6 +3592,10 @@ ssize_t s_extract_l( s_string_t * restrict dst, const s_string_t * restrict src,
 	ssize_t	SrcLen;
 
 	if( dst == NULL || dst->MustBeZero != 0 || !dst->Writable )
+		return -1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
 		return -1;
 
 	if( len <= 0 || src == NULL || src->MustBeZero != 0 || ( SrcLen = s_strlen( src )) == 0 || start >= SrcLen )
@@ -3712,6 +3776,10 @@ ssize_t s_fill_ls( s_string_t * restrict dst, ssize_t dststart, ssize_t len, con
 	if( src == NULL || src->MustBeZero != 0 )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
+		return -1;
+
 	if(( len = s_fill_l_calculate( dst, &DstLen, &dststart, len )) <= 0 )
 		return len;
 
@@ -3821,6 +3889,10 @@ ssize_t s_replace_e( s_string_t * restrict dst, ssize_t start, ssize_t end, cons
 	const char	*SrcPtr;
 
 	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
+		return -1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
 		return -1;
 
 	DstMaxLen	= s_strmaxlen( dst );
@@ -4097,6 +4169,10 @@ ssize_t s_replace_l( s_string_t * restrict dst, ssize_t start, ssize_t len, cons
 	char	*DstPtr;
 
 	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
+		return -1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
 		return -1;
 
 	if( len < 0 )
@@ -4420,6 +4496,10 @@ ssize_t s_ltrim_s( s_string_t * restrict str, ssize_t start, const s_string_t * 
 	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == delim )
+		return -1;
+
 	Len	= s_strlen( str );
 
 	if( Len == 0 || start >= Len )
@@ -4582,6 +4662,10 @@ ssize_t s_rtrim_s( s_string_t * restrict str, ssize_t start, const s_string_t * 
 	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == delim )
+		return -1;
+
 	Len	= s_strlen( str );
 
 	if( Len == 0 || start < -Len )
@@ -4735,6 +4819,10 @@ ssize_t s_alltrim_e( s_string_t * restrict str, ssize_t start, ssize_t end, cons
 	int		PreviousWasSpace	= -1;
 
 	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
+		return -1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == delim )
 		return -1;
 
 	Len	= s_strlen( str );
@@ -4965,6 +5053,10 @@ ssize_t s_remove_e( s_string_t * restrict str, ssize_t start, ssize_t end, const
 	if( str == NULL || str->MustBeZero != 0 || str->Writable == 0 )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( str == delim )
+		return -1;
+
 	Len	= s_strlen( str );
 
 	if( start >= Len || end < -Len )
@@ -5160,6 +5252,10 @@ ssize_t s_insert_l( s_string_t * restrict dst, ssize_t dststart, const s_string_
 	if( dst == NULL || dst->MustBeZero != 0 || dst->Writable == 0 || src == NULL || src->MustBeZero != 0 )
 		return -1;
 
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == src )
+		return -1;
+
 	if( len <= 0 )
 		return 0;
 
@@ -5230,6 +5326,10 @@ int s_sprintf( s_string_t * restrict dst, ssize_t dststart, int filler, const s_
 	ssize_t		MaxLen, UsedLen, FmtLen;
 
 	if( dst == NULL || dst->Writable == 0 || dst->MustBeZero != 0 || fmt == NULL || fmt->MustBeZero != 0 )
+		return -1;
+
+	/* 'restrict' is not enough, damn compiler just emits a warning... */
+	if( dst == fmt )
 		return -1;
 
 	if(( MaxLen = s_strmaxlen( dst )) <= 0 )
