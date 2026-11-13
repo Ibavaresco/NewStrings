@@ -1215,7 +1215,7 @@ int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t 
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1227,7 +1227,6 @@ int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t 
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
@@ -1256,7 +1255,7 @@ int s_strcmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * re
 	const char	*s1Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 #if 0
 	/* Both s1 and s2 are null pointers... */
@@ -1271,7 +1270,7 @@ int s_strcmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * re
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= strlen( s2 );
 
@@ -1283,7 +1282,6 @@ int s_strcmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * re
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start	= s1Len;
@@ -1306,7 +1304,7 @@ int c_strcmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_
 	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 #if 0
 	/* Both s1 and s2 are null pointers... */
@@ -1321,7 +1319,7 @@ int c_strcmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1333,7 +1331,6 @@ int c_strcmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
 
 	if( s2start < -s2Len || s2start >= s2Len )
 		s2start		= s2Len;
@@ -1372,7 +1369,7 @@ int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1384,7 +1381,6 @@ int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start	= s1Len;
@@ -1413,7 +1409,7 @@ int s_stricmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 	const char	*s1Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 #if 0
 	/* Both s1 and s2 are null pointers... */
@@ -1428,7 +1424,7 @@ int s_stricmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= s_strlen( s1 );
 	s2Len		= strlen( s2 );
 
@@ -1440,7 +1436,6 @@ int s_stricmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
 
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
@@ -1463,7 +1458,7 @@ int c_stricmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 #if 0
 	/* Both s1 and s2 are null pointers... */
@@ -1478,7 +1473,7 @@ int c_stricmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	if( s2 == NULL )
 		/* ...so s1 is bigger than s2. */
 		return +1;
-#else
+#endif
 	s1Len		= strlen( s1 );
 	s2Len		= s_strlen( s2 );
 
@@ -1490,7 +1485,6 @@ int c_stricmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 		return -1;
 	if( s2Len == 0 )
 		return +1;
-#endif
 
 	if( s2start < -s2Len || s2start >= s2Len )
 		s2start		= s2Len;
@@ -1582,7 +1576,7 @@ int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
 	if( len == 0 )
@@ -1644,7 +1638,7 @@ int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
 	if( len == 0 )
@@ -1774,7 +1768,7 @@ int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * 
 
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
 	if( len == 0 )
@@ -1836,7 +1830,7 @@ int c_strnicmp_s( const char * restrict s1, const s_string_t * restrict s2, ssiz
 	const char	*s2Ptr;
 	ssize_t		Index;
 	ssize_t		Len;
-	ssize_t		s2Len, s1Len;
+	ssize_t		s1Len, s2Len;
 
 	/* We are comparing zero bytes... */
 	if( len == 0 )
@@ -2062,7 +2056,7 @@ ssize_t s_strstr( const s_string_t * restrict s1, ssize_t s1start, const s_strin
 	s1Len -= s1start;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  s2Len > s1Len )
+	if( s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
@@ -2121,6 +2115,7 @@ ssize_t s_strstr_c( const s_string_t * restrict s1, ssize_t s1start, const char 
 
 	s1Ptr	= s_constcstr( s1, s1start );
 
+
 	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
@@ -2166,9 +2161,10 @@ ssize_t c_strstr_s( const char * restrict s1, const s_string_t * restrict s2, ss
 		return -1;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  s2Len > s1Len )
+	if( s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
+
 
 	s2Ptr	= s_constcstr( s2, s2start );
 
@@ -2232,7 +2228,7 @@ ssize_t s_stristr( const s_string_t * restrict s1, ssize_t s1start, const s_stri
 	s1Len -= s1start;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  s2Len > s1Len )
+	if( s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
 
@@ -2291,6 +2287,7 @@ ssize_t s_stristr_c( const s_string_t *s1, ssize_t s1start, const char *s2 )
 
 	s1Ptr	= s_constcstr( s1, s1start );
 
+
 	for( Index = 0; Index <= s1Len - s2Len ; Index++ )
 		{
 		size_t	j;
@@ -2336,9 +2333,10 @@ ssize_t c_stristr_s( const char *s1, const s_string_t *s2, ssize_t s2start )
 		return -1;
 
 	/* The string to be searched is longer than the string to search in... */
-	if(  s2Len > s1Len )
+	if( s2Len > s1Len )
 		/* ...it will never be found. */
 		return -1;
+
 
 	s2Ptr	= s_constcstr( s2, s2start );
 
