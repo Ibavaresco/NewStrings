@@ -585,7 +585,7 @@ dst:    | C |                | C | B |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_strcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t sstart )
+ssize_t s_strcat( s_string_t *dst, const s_string_t *src, ssize_t sstart )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -649,7 +649,7 @@ dst:    | C |                | C | A |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_strcat_c( s_string_t * restrict dst, const char * restrict src )
+ssize_t s_strcat_c( s_string_t *dst, const char *src )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -705,7 +705,7 @@ dst:    | D |                      | D |   B   |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_strlcat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+ssize_t s_strlcat( s_string_t *dst, const s_string_t *src, ssize_t srcstart, ssize_t len )
 	{
 	ssize_t		ResultLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -777,7 +777,7 @@ dst:    | C |                      | C |   A   |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_strlcat_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
+ssize_t s_strlcat_c( s_string_t *dst, const char *src, ssize_t len )
 	{
 	ssize_t		ResultLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -844,7 +844,7 @@ dst:    | D |                        | D |   B   |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_strncat( s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len )
+ssize_t s_strncat( s_string_t *dst, const s_string_t *src, ssize_t srcstart, ssize_t len )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -914,7 +914,7 @@ dst:    | C |                    | C |   A   |
 </pre>
 *//*==========================================================================*/
 /*============================================================================*/
-ssize_t s_strncat_c( s_string_t * restrict dst, const char * restrict src, ssize_t len )
+ssize_t s_strncat_c( s_string_t *dst, const char *src, ssize_t len )
 	{
 	ssize_t		DstMaxLen, DstUsedLen;
 	ssize_t		SrcUsedLen;
@@ -1202,7 +1202,7 @@ ssize_t s_strncpy( s_string_t * restrict dst, const s_string_t * restrict src, s
 	}
 */
 /*============================================================================*/
-int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
+int s_strcmp( const s_string_t *s1, ssize_t s1start, const s_string_t *s2, ssize_t s2start )
 	{
 	const char	*s1Ptr;
 	const char	*s2Ptr;
@@ -1236,10 +1236,6 @@ int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t 
 	if( s2Len == 0 )
 		return +1;
 
-	/* 'restrict' is not enough, damn compiler just emits a warning... */
-	if( s1 == s2 )
-		return -1;
-
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start		= s1Len;
 	else if( s1start < 0 )
@@ -1262,7 +1258,7 @@ int s_strcmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t 
 	return 0;
 	}
 /*============================================================================*/
-int s_strcmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 )
+int s_strcmp_c( const s_string_t *s1, ssize_t s1start, const char *s2 )
 	{
 	const char	*s1Ptr;
 	ssize_t		Index;
@@ -1311,7 +1307,7 @@ int s_strcmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * re
 	return 0;
 	}
 /*============================================================================*/
-int c_strcmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start )
+int c_strcmp_s( const char *s1, const s_string_t *s2, ssize_t s2start )
 	{
 	const char	*s2Ptr;
 	ssize_t		Index;
@@ -1360,7 +1356,7 @@ int c_strcmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_
 	return 0;
 	}
 /*============================================================================*/
-int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
+int s_stricmp( const s_string_t *s1, ssize_t s1start, const s_string_t *s2, ssize_t s2start )
 	{
 	const char	*s1Ptr;
 	const char	*s2Ptr;
@@ -1394,10 +1390,6 @@ int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	if( s2Len == 0 )
 		return +1;
 
-	/* 'restrict' is not enough, damn compiler just emits a warning... */
-	if( s1 == s2 )
-		return -1;
-
 	if( s1start < -s1Len || s1start >= s1Len )
 		s1start	= s1Len;
 	else if( s1start < 0 )
@@ -1420,7 +1412,7 @@ int s_stricmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	return 0;
 	}
 /*============================================================================*/
-int s_stricmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 )
+int s_stricmp_c( const s_string_t *s1, ssize_t s1start, const char *s2 )
 	{
 	const char	*s1Ptr;
 	ssize_t		Index;
@@ -1469,7 +1461,7 @@ int s_stricmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 	return 0;
 	}
 /*============================================================================*/
-int c_stricmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start )
+int c_stricmp_s( const char *s1, const s_string_t *s2, ssize_t s2start )
 	{
 	const char	*s2Ptr;
 	ssize_t		Index;
@@ -1518,7 +1510,7 @@ int c_stricmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	return 0;
 	}
 /*============================================================================*/
-int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
+int s_strncmp( const s_string_t *s1, ssize_t s1start, const s_string_t *s2, ssize_t s2start, ssize_t len )
 	{
 	const char	*s1Ptr;
 	const char	*s2Ptr;
@@ -1557,10 +1549,6 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	if( s2Len == 0 )
 		return +1;
 
-	/* 'restrict' is not enough, damn compiler just emits a warning... */
-	if( s1 == s2 )
-		return -1;
-
 	Len	= ssmin( s1Len, s2Len );
 
 	if( len < -Len )
@@ -1590,7 +1578,7 @@ int s_strncmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t
 	return 0;
 	}
 /*============================================================================*/
-int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2, ssize_t len )
+int s_strncmp_c( const s_string_t *s1, ssize_t s1start, const char *s2, ssize_t len )
 	{
 	const char	*s1Ptr;
 
@@ -1652,7 +1640,7 @@ int s_strncmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * r
 	return 0;
 	}
 /*============================================================================*/
-int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
+int c_strncmp_s( const char *s1, const s_string_t *s2, ssize_t s2start, ssize_t len )
 	{
 
 	const char	*s2Ptr;
@@ -1714,7 +1702,7 @@ int c_strncmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize
 	return 0;
 	}
 /*============================================================================*/
-int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
+int s_strnicmp( const s_string_t *s1, ssize_t s1start, const s_string_t *s2, ssize_t s2start, ssize_t len )
 	{
 	const char	*s1Ptr;
 	const char	*s2Ptr;
@@ -1753,10 +1741,6 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 	if( s2Len == 0 )
 		return +1;
 
-	/* 'restrict' is not enough, damn compiler just emits a warning... */
-	if( s1 == s2 )
-		return -1;
-
 	Len	= ssmin( s1Len, s2Len );
 
 	if( len < -Len )
@@ -1786,7 +1770,7 @@ int s_strnicmp( const s_string_t * restrict s1, ssize_t s1start, const s_string_
 	return 0;
 	}
 /*============================================================================*/
-int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2, ssize_t len )
+int s_strnicmp_c( const s_string_t *s1, ssize_t s1start, const char *s2, ssize_t len )
 	{
 	const char	*s1Ptr;
 
@@ -1848,7 +1832,7 @@ int s_strnicmp_c( const s_string_t * restrict s1, ssize_t s1start, const char * 
 	return 0;
 	}
 /*============================================================================*/
-int c_strnicmp_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start, ssize_t len )
+int c_strnicmp_s( const char *s1, const s_string_t *s2, ssize_t s2start, ssize_t len )
 	{
 
 	const char	*s2Ptr;
@@ -2032,7 +2016,7 @@ ssize_t s_strrichr( const s_string_t * restrict str, ssize_t start, int c )
 	return ( Index >= 0 && Index < StrLen ) ? Index : -1;
 	}
 /*============================================================================*/
-ssize_t s_strstr( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
+ssize_t s_strstr( const s_string_t *s1, ssize_t s1start, const s_string_t *s2, ssize_t s2start )
 	{
 	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
@@ -2041,10 +2025,6 @@ ssize_t s_strstr( const s_string_t * restrict s1, ssize_t s1start, const s_strin
 	/* At least one of the strings is a NULL pointer... */
 	if( s1 == NULL || s1->MustBeZero != 0 || s2 == NULL || s2->MustBeZero != 0 )
 		/* ...no search is possible. */
-		return -1;
-
-	/* 'restrict' is not enough, damn compiler just emits a warning... */
-	if( s1 == s2 )
 		return -1;
 
 	/* 'src' is an empty string... */
@@ -2103,7 +2083,7 @@ ssize_t s_strstr( const s_string_t * restrict s1, ssize_t s1start, const s_strin
 	return -1;
 	}
 /*============================================================================*/
-ssize_t s_strstr_c( const s_string_t * restrict s1, ssize_t s1start, const char * restrict s2 )
+ssize_t s_strstr_c( const s_string_t *s1, ssize_t s1start, const char *s2 )
 	{
 	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
@@ -2156,7 +2136,7 @@ ssize_t s_strstr_c( const s_string_t * restrict s1, ssize_t s1start, const char 
 	return -1;
 	}
 /*============================================================================*/
-ssize_t c_strstr_s( const char * restrict s1, const s_string_t * restrict s2, ssize_t s2start )
+ssize_t c_strstr_s( const char *s1, const s_string_t *s2, ssize_t s2start )
 	{
 	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
@@ -2208,7 +2188,7 @@ ssize_t c_strstr_s( const char * restrict s1, const s_string_t * restrict s2, ss
 	return -1;
 	}
 /*============================================================================*/
-ssize_t s_stristr( const s_string_t * restrict s1, ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start )
+ssize_t s_stristr( const s_string_t *s1, ssize_t s1start, const s_string_t *s2, ssize_t s2start )
 	{
 	ssize_t		s1Len, s2Len;
 	ssize_t		Index;
@@ -2217,10 +2197,6 @@ ssize_t s_stristr( const s_string_t * restrict s1, ssize_t s1start, const s_stri
 	/* At least one of the strings is a NULL pointer... */
 	if( s1 == NULL || s1->MustBeZero != 0 || s2 == NULL || s2->MustBeZero != 0 )
 		/* ...no search is possible. */
-		return -1;
-
-	/* 'restrict' is not enough, damn compiler just emits a warning... */
-	if( s1 == s2 )
 		return -1;
 
 	/* 's2' is an empty string... */

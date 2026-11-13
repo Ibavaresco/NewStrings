@@ -627,7 +627,7 @@ ssize_t		 s_strrichr		( const s_string_t * restrict str, ssize_t start, int c );
 \returns		The index of the start of first occurrence of \a 's2' if found,
 				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t		 s_strstr		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 s_strstr		( const s_string_t *s1,  ssize_t s1start, const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Finds the first occurrence of C-string \a 's2' in the s_string
 				\a 's1' starting from the position \a 's1start' towards the end of
@@ -642,7 +642,7 @@ ssize_t		 s_strstr		( const s_string_t * restrict s1,  ssize_t s1start, const s_
 \returns		The index of the s1start of first occurrence of \a 's2' if found,
 				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t		 s_strstr_c		( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2 );
+ssize_t		 s_strstr_c		( const s_string_t *s1,  ssize_t s1start, const char		 *s2 );
 /*=========================================================================*//**
 \brief			Finds the first occurrence of sub-string \a 's2' (s_string) in
 				the s_string \a 's1' starting from the position \a 's1start' towards
@@ -658,7 +658,7 @@ ssize_t		 s_strstr_c		( const s_string_t * restrict s1,  ssize_t s1start, const 
 \returns		The index of the s1start of first occurrence of \a 's2' if found,
 				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t		 c_strstr_s		( const char	   * restrict s1,  const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 c_strstr_s		( const char	   *s1,  const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Finds the first occurrence of sub-string \a 's2' (s_string) in
 				the s_string \a 's1' starting from the position \a 'start' towards
@@ -676,7 +676,7 @@ ssize_t		 c_strstr_s		( const char	   * restrict s1,  const s_string_t * restric
 \returns		The index of the start of first occurrence of \a 's2' if found,
 				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t		 s_stristr		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 s_stristr		( const s_string_t *s1,  ssize_t s1start, const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Finds the first occurrence of sub-string \a 's2' (C-string) in
 				the s_string \a 's1' starting from the position \a 's1start' towards
@@ -692,7 +692,7 @@ ssize_t		 s_stristr		( const s_string_t * restrict s1,  ssize_t s1start, const s
 \returns		The index of the s1start of first occurrence of \a 's2' if found,
 				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t		 s_stristr_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2 );
+ssize_t		 s_stristr_c	( const s_string_t *s1,  ssize_t s1start, const char		 *s2 );
 /*=========================================================================*//**
 \brief			Finds the first occurrence of sub-string \a 's2' (s_string) in
 				the C-string \a 's1' starting from the position \a 's1start' towards
@@ -708,7 +708,7 @@ ssize_t		 s_stristr_c	( const s_string_t * restrict s1,  ssize_t s1start, const 
 \returns		The index of the s1start of first occurrence of \a 's2' if found,
 				or -1 if \a 's2' is not present in the string.
 *//*==========================================================================*/
-ssize_t		 c_stristr_s	( const char	   * restrict s1,  const s_string_t * restrict s2, ssize_t s2start );
+ssize_t		 c_stristr_s	( const char	   *s1,  const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Finds the position of the first character of the s_string \a
 				'str' that belongs to the s_string \a 'charset'.
@@ -898,7 +898,7 @@ ssize_t		 s_truncate		(		s_string_t * restrict str, ssize_t len );
 \returns		The new length of \a 'dst' after the appending or a negative value
 				if an error occurred.
 *//*==========================================================================*/
-ssize_t		 s_strcat		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart );
+ssize_t		 s_strcat		(		s_string_t *dst, const s_string_t *src, ssize_t srcstart );
 /*=========================================================================*//**
 \brief			Appends the contents of the C-string pointed to by \a 'src' to the
 				end of the s_string pointed to by \a 'dst'. In case the resulting
@@ -912,7 +912,7 @@ ssize_t		 s_strcat		(		s_string_t * restrict dst, const s_string_t * restrict sr
 \returns		The new length of \a 'dst' after the appending or a negative value
 				if an error occurred.
 *//*==========================================================================*/
-ssize_t		 s_strcat_c		(		s_string_t * restrict dst, const char		* restrict src );
+ssize_t		 s_strcat_c		(		s_string_t *dst, const char		*src );
 /*=========================================================================*//**
 \brief			Appends characters from the beginning of the s_string pointed to
 				by \a 'src' to the end of the s_string pointed to by \a 'dst' to
@@ -930,7 +930,7 @@ ssize_t		 s_strcat_c		(		s_string_t * restrict dst, const char		* restrict src )
 \returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		 s_strlcat		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		 s_strlcat		(		s_string_t *dst, const s_string_t *src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
 \brief			Appends characters from the beginning of the C-string pointed to
 				by \a 'src' to the end of the s_string pointed to by \a 'dst' to
@@ -948,7 +948,7 @@ ssize_t		 s_strlcat		(		s_string_t * restrict dst, const s_string_t * restrict s
 \returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		 s_strlcat_c	(		s_string_t * restrict dst, const char		* restrict src, ssize_t len );
+ssize_t		 s_strlcat_c	(		s_string_t *dst, const char		*src, ssize_t len );
 /*=========================================================================*//**
 \brief			Appends up to \a 'len' characters from the beginning of the
 				s_string pointed to by \a 'src' to the end of the s_string pointed
@@ -963,7 +963,7 @@ ssize_t		 s_strlcat_c	(		s_string_t * restrict dst, const char		* restrict src, 
 \returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		 s_strncat		(		s_string_t * restrict dst, const s_string_t * restrict src, ssize_t srcstart, ssize_t len );
+ssize_t		 s_strncat		(		s_string_t *dst, const s_string_t *src, ssize_t srcstart, ssize_t len );
 /*=========================================================================*//**
 \brief			Appends up to \a 'len' characters from the beginning of the
 				C-string pointed to by \a 'src' to the end of the s_string pointed
@@ -978,7 +978,7 @@ ssize_t		 s_strncat		(		s_string_t * restrict dst, const s_string_t * restrict s
 \returns		The number of characters stored in \a 'dst' or a negative number
 				in case of error.
 *//*==========================================================================*/
-ssize_t		 s_strncat_c	(		s_string_t * restrict dst, const char		* restrict src, ssize_t len );
+ssize_t		 s_strncat_c	(		s_string_t *dst, const char		*src, ssize_t len );
 /*=========================================================================*//**
 \brief			Copies the contents of the s_string pointed to by \a 'src' into
 				the s_string pointed to by \a 'dst'. The previous content of \a
@@ -1047,7 +1047,7 @@ ssize_t		 s_strlcpy_c	(		s_string_t * restrict dst, const char		* restrict src, 
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_strcmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+int			 s_strcmp		( const s_string_t *s1,  ssize_t s1start, const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Compares the s_string \a 's1' and the C-string \a 's2' character
 				by character.
@@ -1061,7 +1061,7 @@ int			 s_strcmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_str
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_strcmp_c		( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2 				    );
+int			 s_strcmp_c		( const s_string_t *s1,  ssize_t s1start, const char		 *s2 				    );
 /*=========================================================================*//**
 \brief			Compares the C-string \a 's1' and the s_string \a 's2' character
 				by character.
@@ -1075,7 +1075,7 @@ int			 s_strcmp_c		( const s_string_t * restrict s1,  ssize_t s1start, const cha
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 c_strcmp_s		( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start );
+int			 c_strcmp_s		( const char	   *s1,					const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Compares two s_strings \a 's1' and \a 's2' character by character
 				ignoring the case.
@@ -1089,7 +1089,7 @@ int			 c_strcmp_s		( const char	   * restrict s1,					const s_string_t * restric
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_stricmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start );
+int			 s_stricmp		( const s_string_t *s1,  ssize_t s1start, const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Compares the s_string \a 's1' and the C-string \a 's2' character
 				by character ignoring the case.
@@ -1103,7 +1103,7 @@ int			 s_stricmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_st
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_stricmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2				    );
+int			 s_stricmp_c	( const s_string_t *s1,  ssize_t s1start, const char		 *s2				    );
 /*=========================================================================*//**
 \brief			Compares the C-string \a 's1' and the s_string \a 's2' character
 				by character ignoring the case.
@@ -1117,7 +1117,7 @@ int			 s_stricmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const cha
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 c_stricmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start );
+int			 c_stricmp_s	( const char	   *s1,					const s_string_t *s2, ssize_t s2start );
 /*=========================================================================*//**
 \brief			Compares up to \a 'len' characters of two s_strings \a 's1' and \a
 				's2' character by character.
@@ -1133,7 +1133,7 @@ int			 c_stricmp_s	( const char	   * restrict s1,					const s_string_t * restric
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_strncmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 s_strncmp		( const s_string_t *s1,  ssize_t s1start, const s_string_t *s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
 \brief			Compares up to \a 'len' characters of an s_string \a 's1' and a
 				C-string \a 's2' character by character.
@@ -1149,7 +1149,7 @@ int			 s_strncmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_st
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_strncmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2,					 ssize_t len );
+int			 s_strncmp_c	( const s_string_t *s1,  ssize_t s1start, const char		 *s2,					 ssize_t len );
 /*=========================================================================*//**
 \brief			Compares up to \a 'len' characters of a C-_string \a 's1' and an
 				s_string \a 's2' character by character.
@@ -1165,7 +1165,7 @@ int			 s_strncmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const cha
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 c_strncmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 c_strncmp_s	( const char	   *s1,					const s_string_t *s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
 \brief			Compares up to \a 'len' characters of two s_strings \a 's1' and \a
 				's2' character by character ignoring the case.
@@ -1181,7 +1181,7 @@ int			 c_strncmp_s	( const char	   * restrict s1,					const s_string_t * restric
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_strnicmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 s_strnicmp		( const s_string_t *s1,  ssize_t s1start, const s_string_t *s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
 \brief			Compares up to \a 'len' characters of an s_string \a 's1' and a
 				C-string \a 's2' character by character ignoring the case.
@@ -1197,7 +1197,7 @@ int			 s_strnicmp		( const s_string_t * restrict s1,  ssize_t s1start, const s_s
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 s_strnicmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const char		 * restrict s2,					 ssize_t len );
+int			 s_strnicmp_c	( const s_string_t *s1,  ssize_t s1start, const char		 *s2,					 ssize_t len );
 /*=========================================================================*//**
 \brief			Compares up to \a 'len' characters of a C-string \a 's1' and an
 				s_string \a 's2' character by character ignoring the case.
@@ -1213,7 +1213,7 @@ int			 s_strnicmp_c	( const s_string_t * restrict s1,  ssize_t s1start, const ch
 				lexicographically after \a 's2'. When the value is not zero, its
 				modulus is the index where the difference was found plus one.
 *//*==========================================================================*/
-int			 c_strnicmp_s	( const char	   * restrict s1,					const s_string_t * restrict s2, ssize_t s2start, ssize_t len );
+int			 c_strnicmp_s	( const char	   *s1,					const s_string_t *s2, ssize_t s2start, ssize_t len );
 /*=========================================================================*//**
 \brief			Returns the length of the portion of s_string \a 'str' beginning
 				at index \a 'start' that is comprised only of characters belonging
