@@ -195,7 +195,7 @@ static void Test_s_strtok_mc( void )
 		}
 	}
 /*============================================================================*/
-static void Test_s_replace_de( void )
+static void Test_s_replace_e( void )
 	{
 #if 0
 	auto_s_string_c(	Str, 42, "********************************" );
@@ -207,13 +207,13 @@ static void Test_s_replace_de( void )
 	for( i = -51; i < 52; i++ )
 		{
 		s_strcpy( Dst, Str, 0 );
-		ssize_t	n = s_replace_de( Dst, i, i + 39, Src, -7, '-' );
+		ssize_t	n = s_replace_e( Dst, i, i + 39, Src, -7, '-' );
 		printf( "\n%3d %3d %3d %3d \"%s\"", n, i, i + 39, -7, s_constcstr( Dst, 0 ));
 		}
 	for( i = -10; i < 53; i++ )
 		{
 		s_strcpy( Dst, Str, 0 );
-		ssize_t	n = s_replace_de( Dst, i, i + 7, Src, -7, '-' );
+		ssize_t	n = s_replace_e( Dst, i, i + 7, Src, -7, '-' );
 		printf( "\n%3d %3d %3d %3d \"%s\"", n, i, i + 7, -7, s_constcstr( Dst, 0 ));
 		}
 #else
@@ -363,7 +363,7 @@ int main( int ArgC, char *ArgV[] )
 	Test_s_strtok_mc();
 #endif
 
-//	Test_s_replace_de();
+//	Test_s_replace_e();
 
 //	Test_s_fill_l();
 #endif
